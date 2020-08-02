@@ -1,9 +1,11 @@
 import 'package:commerce_models/address.dart';
 import 'package:commerce_models/info_section.dart';
+import 'package:commerce_models/product.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'test_data_address.dart';
 import 'test_data_info_section.dart';
+import 'test_data_product.dart';
 
 void main() {
   test('address', () {
@@ -33,6 +35,21 @@ void main() {
       expect(info, info2);
       expect(info2.toString(), stringValue);
       print('done info section test case $i\n');
+    }
+  });
+
+  test('product', () {
+    final n = productTestData.length;
+    for (int i = 0; i < n; i++) {
+      print('test product section test case $i');
+      final input = Map<String, dynamic>.from(productTestData[i]['input']);
+      final stringValue = productTestData[i]['value'];
+      final product = ProductModel.fromMap(input);
+      final map = product.toMap();
+      final product2 = ProductModel.fromMap(map);
+      expect(product, product2);
+      expect(product2.toString(), stringValue);
+      print('done product section test case $i\n');
     }
   });
 }
