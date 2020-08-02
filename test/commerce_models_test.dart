@@ -17,7 +17,7 @@ void main() {
     for (int i = 0; i < n; i++) {
       print('test address test case $i');
       final input = Map<String, dynamic>.from(addressTestData[i]['input']);
-      final stringValue = addressTestData[i]['value'];
+      final String stringValue = addressTestData[i]['value'];
       final address = AddressModel.fromMap(input);
       final map = address.toMap();
       final address2 = AddressModel.fromMap(map);
@@ -32,7 +32,7 @@ void main() {
     for (int i = 0; i < n; i++) {
       print('test info section test case $i');
       final input = Map<String, dynamic>.from(infoSectionTestData[i]['input']);
-      final stringValue = infoSectionTestData[i]['value'];
+      final String stringValue = infoSectionTestData[i]['value'];
       final info = InfoSectionModel.fromMap(input);
       final map = info.toMap();
       final info2 = InfoSectionModel.fromMap(map);
@@ -47,7 +47,7 @@ void main() {
     for (int i = 0; i < n; i++) {
       print('test product section test case $i');
       final input = Map<String, dynamic>.from(productTestData[i]['input']);
-      final stringValue = productTestData[i]['value'];
+      final String stringValue = productTestData[i]['value'];
       final product = ProductModel.fromMap(input);
       final map = product.toMap();
       final product2 = ProductModel.fromMap(map);
@@ -62,12 +62,20 @@ void main() {
     for (int i = 0; i < n; i++) {
       print('test item section test case $i');
       final input = Map<String, dynamic>.from(itemTestData[i]['input']);
-      final stringValue = itemTestData[i]['value'];
+      final String stringValue = itemTestData[i]['value'];
       final item = ItemModel.fromMap(input);
       final map = item.toMap();
       final item2 = ItemModel.fromMap(map);
       expect(item, item2);
       expect(item2.toString(), stringValue);
+
+      final addOneMap = item.addOneReturnMap();
+      final item3 = ItemModel.fromMap(addOneMap);
+      expect(item.quantity, item3.quantity - 1);
+
+      final thenMinusOneMap = item3.minusOneReturnMap();
+      final item4 = ItemModel.fromMap(thenMinusOneMap);
+      expect(item, item4);
 
       final productInput = itemTestData[i]['productInput'];
       if (productInput != null) {
@@ -86,7 +94,7 @@ void main() {
     for (int i = 0; i < n; i++) {
       print('test voucher section test case $i');
       final input = Map<String, dynamic>.from(voucherTestData[i]['input']);
-      final stringValue = voucherTestData[i]['value'];
+      final String stringValue = voucherTestData[i]['value'];
       final voucher = VoucherModel.fromMap(input);
       final map = voucher.toMap();
       final voucher2 = VoucherModel.fromMap(map);

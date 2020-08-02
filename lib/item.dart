@@ -80,6 +80,33 @@ class ItemModel {
     };
   }
 
+  Map<String, dynamic> addOneReturnMap() {
+    return {
+      'uid': uid,
+      'category': category.toString().split('.')[1],
+      'name': name,
+      'description': description,
+      'photoUrl': photoUrl,
+      'price': price,
+      'quantity': quantity + 1,
+    };
+  }
+
+  Map<String, dynamic> minusOneReturnMap() {
+    if (quantity > 1) {
+      return {
+        'uid': uid,
+        'category': category.toString().split('.')[1],
+        'name': name,
+        'description': description,
+        'photoUrl': photoUrl,
+        'price': price,
+        'quantity': quantity - 1,
+      };
+    }
+    return null;
+  }
+
   String toString() {
     String categoryString = category.toString().split('.')[1];
     return 'uid: $uid, name: $name, category: $categoryString, description: $description, photoUrl: $photoUrl, price: $price, quantity: $quantity';
