@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore_platform_interface/cloud_firestore_platform_interface.dart';
 
@@ -55,5 +53,5 @@ class AddressModel {
   }
 
   @override
-  int get hashCode => hashValues(this.toString(), '');
+  int get hashCode => this.toString().hashCode;
 }

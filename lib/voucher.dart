@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
@@ -68,5 +66,5 @@ class VoucherModel {
   }
 
   @override
-  int get hashCode => hashValues(this.toString(), '');
+  int get hashCode => this.toString().hashCode;
 }

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:commerce_models/info_section.dart';
 import 'package:flutter/foundation.dart';
 
@@ -89,5 +87,5 @@ class ProductModel {
   }
 
   @override
-  int get hashCode => hashValues(this.toString(), '');
+  int get hashCode => this.toString().hashCode;
 }
