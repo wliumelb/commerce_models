@@ -1,4 +1,5 @@
 import 'package:commerce_models/address.dart';
+import 'package:commerce_models/basket.dart';
 import 'package:commerce_models/info_section.dart';
 import 'package:commerce_models/item.dart';
 import 'package:commerce_models/product.dart';
@@ -6,6 +7,7 @@ import 'package:commerce_models/voucher.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'test_data_address.dart';
+import 'test_data_basket.dart';
 import 'test_data_info_section.dart';
 import 'test_data_item.dart';
 import 'test_data_product.dart';
@@ -101,6 +103,40 @@ void main() {
       expect(voucher, voucher2);
       expect(voucher2.toString(), stringValue);
       print('done voucher section test case $i\n');
+    }
+  });
+
+  test('basket', () {
+    final n = basketTestData.length;
+    for (int i = 0; i < n; i++) {
+      print('test basket section test case $i');
+      final input = List<Map<String, dynamic>>.from(basketTestData[i]['input']);
+      final String stringValue = basketTestData[i]['value'];
+      final basket = BasketModel.fromMapList(input);
+      final map = basket.toMapList();
+      final basket2 = BasketModel.fromMapList(map);
+      expect(basket, basket2);
+      expect(basket2.toString(), stringValue);
+
+      final addedItemMap =
+          Map<String, dynamic>.from(basketTestData[i]['addedItemInput']);
+      final addedItem = ItemModel.fromMap(addedItemMap);
+
+      List<Map<String, dynamic>> addedOneItemBasketMapList =
+          basket2.addOneItemReturnMapList(addedItem);
+
+      final basket3 = BasketModel.fromMapList(addedOneItemBasketMapList);
+
+      expect(basket3.quantity, basket.quantity + 1);
+      expect(basket3.totalPrice, basket.totalPrice + addedItem.price);
+
+      List<Map<String, dynamic>> thenMinusOneItemBasketMapList =
+          basket3.minusOneItemReturnMapList(addedItem);
+
+      final basket4 = BasketModel.fromMapList(thenMinusOneItemBasketMapList);
+      expect(basket, basket4);
+
+      print('done basket section test case $i\n');
     }
   });
 }
