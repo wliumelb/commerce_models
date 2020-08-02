@@ -69,11 +69,14 @@ void main() {
       expect(item, item2);
       expect(item2.toString(), stringValue);
 
-      print('now test fromProduct');
+      final productInput = itemTestData[i]['productInput'];
+      if (productInput != null) {
+        print('now test fromProduct');
+        final product = ProductModel.fromMap(productInput);
+        final item3 = ItemModel.fromProduct(product);
+        expect(item, item3);
+      }
 
-      final product = ProductModel.fromMap(productTestData[i]['input']);
-      final item3 = ItemModel.fromProduct(product);
-      expect(item, item3);
       print('done item section test case $i\n');
     }
   });
