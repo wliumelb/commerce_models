@@ -3,10 +3,13 @@ import 'dart:ui';
 import 'package:commerce_models/info_section.dart';
 import 'package:flutter/foundation.dart';
 
+import 'product_category.dart';
+
+/// ProductModel is used in the display page of the product
 class ProductModel {
   final String uid;
   final String name;
-  final Category category;
+  final ProductCategory category;
 
   /// the brief description for the product to be displayed next to the photos
   final String description;
@@ -21,7 +24,7 @@ class ProductModel {
   final num price;
 
   /// stock quantity
-  final int quantity;
+  final int stock;
   ProductModel({
     @required this.uid,
     @required this.category,
@@ -30,19 +33,17 @@ class ProductModel {
     @required this.photoUrlList,
     @required this.infoList,
     @required this.price,
-    @required this.quantity,
+    @required this.stock,
   });
 
-  get photoUrl => null;
-
-  static ProductModel fromMap(Map<String, dynamic> map, {int quantity}) {
-    Category category;
+  static ProductModel fromMap(Map<String, dynamic> map, {int stock}) {
+    ProductCategory category;
     switch (map['category']) {
       case 'fresh':
-        category = Category.fresh;
+        category = ProductCategory.fresh;
         break;
       case 'meat':
-        category = Category.meat;
+        category = ProductCategory.meat;
         break;
       default:
     }
@@ -59,7 +60,7 @@ class ProductModel {
       photoUrlList: map['photoUrlList'],
       infoList: infoList,
       price: map['price'],
-      quantity: map['quantity'] ?? 0,
+      stock: map['stock'] ?? 0,
     );
   }
 
@@ -72,14 +73,14 @@ class ProductModel {
       'photoUrlList': photoUrlList,
       'infoList': infoList.map((info) => info.toMap()).toList(),
       'price': price,
-      'quantity': quantity,
+      'stock': stock,
     };
   }
 
   String toString() {
     String categoryString = category.toString().split('.')[1];
     List infoStringList = infoList.map((info) => info.toString()).toList();
-    return 'uid: $uid, name: $name, category: $categoryString, description: $description, photoUrlList: $photoUrlList, infoList: $infoStringList, price: $price, quantity: $quantity';
+    return 'uid: $uid, name: $name, category: $categoryString, description: $description, photoUrlList: $photoUrlList, infoList: $infoStringList, price: $price, stock: $stock';
   }
 
   @override
@@ -89,10 +90,4 @@ class ProductModel {
 
   @override
   int get hashCode => hashValues(this.toString(), '');
-}
-
-enum Category {
-  fresh,
-  meat,
-  // more to come
 }

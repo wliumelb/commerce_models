@@ -1,11 +1,13 @@
 import 'package:commerce_models/address.dart';
 import 'package:commerce_models/info_section.dart';
+import 'package:commerce_models/item.dart';
 import 'package:commerce_models/product.dart';
 import 'package:commerce_models/voucher.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'test_data_address.dart';
 import 'test_data_info_section.dart';
+import 'test_data_item.dart';
 import 'test_data_product.dart';
 import 'test_data_voucher.dart';
 
@@ -52,6 +54,27 @@ void main() {
       expect(product, product2);
       expect(product2.toString(), stringValue);
       print('done product section test case $i\n');
+    }
+  });
+
+  test('item', () {
+    final n = itemTestData.length;
+    for (int i = 0; i < n; i++) {
+      print('test item section test case $i');
+      final input = Map<String, dynamic>.from(itemTestData[i]['input']);
+      final stringValue = itemTestData[i]['value'];
+      final item = ItemModel.fromMap(input);
+      final map = item.toMap();
+      final item2 = ItemModel.fromMap(map);
+      expect(item, item2);
+      expect(item2.toString(), stringValue);
+
+      print('now test fromProduct');
+
+      final product = ProductModel.fromMap(productTestData[i]['input']);
+      final item3 = ItemModel.fromProduct(product);
+      expect(item, item3);
+      print('done item section test case $i\n');
     }
   });
 
