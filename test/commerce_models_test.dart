@@ -5,6 +5,7 @@ import 'package:commerce_models/info_section.dart';
 import 'package:commerce_models/item.dart';
 import 'package:commerce_models/product.dart';
 import 'package:commerce_models/product_category.dart';
+import 'package:commerce_models/review.dart';
 import 'package:commerce_models/user.dart';
 import 'package:commerce_models/voucher.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -15,6 +16,7 @@ import 'test_data_basket.dart';
 import 'test_data_info_section.dart';
 import 'test_data_item.dart';
 import 'test_data_product.dart';
+import 'test_data_review.dart';
 import 'test_data_user.dart';
 import 'test_data_voucher.dart';
 
@@ -256,6 +258,21 @@ void main() {
       expect(user11, user);
 
       print('done user section test case $i\n');
+    }
+  });
+
+  test('review', () {
+    final n = reviewTestData.length;
+    for (int i = 0; i < n; i++) {
+      print('test review section test case $i');
+      final input = Map<String, dynamic>.from(reviewTestData[i]['input']);
+      final String stringValue = reviewTestData[i]['value'];
+      final review = ReviewModel.fromMap(input);
+      final map = review.toMap();
+      final review2 = ReviewModel.fromMap(map);
+      expect(review, review2);
+      expect(review2.toString(), stringValue);
+      print('done review section test case $i\n');
     }
   });
 }
