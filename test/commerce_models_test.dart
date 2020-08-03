@@ -4,6 +4,8 @@ import 'package:commerce_models/basket.dart';
 import 'package:commerce_models/info_section.dart';
 import 'package:commerce_models/item.dart';
 import 'package:commerce_models/product.dart';
+import 'package:commerce_models/product_category.dart';
+import 'package:commerce_models/user.dart';
 import 'package:commerce_models/voucher.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -13,6 +15,7 @@ import 'test_data_basket.dart';
 import 'test_data_info_section.dart';
 import 'test_data_item.dart';
 import 'test_data_product.dart';
+import 'test_data_user.dart';
 import 'test_data_voucher.dart';
 
 void main() {
@@ -171,6 +174,88 @@ void main() {
       }
 
       print('done bankCard section test case $i\n');
+    }
+  });
+
+  test('user', () {
+    final n = userTestData.length;
+    for (int i = 0; i < n; i++) {
+      print('test user section test case $i');
+      final input = Map<String, dynamic>.from(userTestData[i]['input']);
+      final String stringValue = userTestData[i]['value'];
+      final user = UserModel.fromMap(input);
+      final map = user.toMap();
+      final user2 = UserModel.fromMap(map);
+      expect(user, user2);
+      expect(user2.toString(), stringValue);
+
+      print('test change email, name and phone');
+      final newName = 'New Name';
+      final newEmail = 'email@changed.com';
+      final newPhone = '12345';
+      final user3 = UserModel.fromMap(user.changeNameReturnMap(newName));
+      expect(user3.name, newName);
+      final user4 = UserModel.fromMap(user3.changeEmailReturnMap(newEmail));
+      expect(user4.email, newEmail);
+      final user5 = UserModel.fromMap(user4.changePhoneReturnMap(newPhone));
+      expect(user5.phone, newPhone);
+      // change back to original. this looks ridiculous but it's fine.
+      final user6 = UserModel.fromMap(
+        UserModel.fromMap(
+          UserModel.fromMap(
+            user5.changeEmailReturnMap(user.email),
+          ).changeNameReturnMap(user.name),
+        ).changePhoneReturnMap(user.phone),
+      );
+      expect(user6, user);
+
+      print('test change address');
+      final newAddress = AddressModel(
+        position: null,
+        postcode: '2000',
+        state: 'NSW',
+        streetAddress: '123 Some Road',
+        suburb: 'Sydney',
+        unitNumber: '',
+      );
+      final user7 = UserModel.fromMap(user.changeAddressReturnMap(newAddress));
+      expect(user7.address, newAddress);
+
+      final user8 =
+          UserModel.fromMap(user.changeAddressReturnMap(user.address));
+      expect(user8, user);
+
+      print('test add and remove item');
+      final existingItem = user.basket.itemList.first;
+      final newItem = ItemModel(
+        category: ProductCategory.fresh,
+        name: 'New Fruit',
+        description: 'This is a new item',
+        photoUrl: 'photoUrl111',
+        price: 100,
+        quantity: 1,
+        uid: 'someUid',
+      );
+      final user9 =
+          UserModel.fromMap(user.addItemToBasketReturnMap(existingItem));
+      expect(user9.basket.itemList.first.quantity,
+          user.basket.itemList.first.quantity + 1);
+
+      final user10 = UserModel.fromMap(user9.addItemToBasketReturnMap(newItem));
+      expect(user10.basket.itemList.last, newItem);
+      expect(user10.basket.quantity, user.basket.quantity + 2);
+      expect(user10.basket.totalPrice,
+          user.basket.totalPrice + existingItem.price + newItem.price);
+
+      final user11 = UserModel.fromMap(
+        UserModel.fromMap(
+          user10.minusItemToBasketReturnMap(existingItem),
+        ).minusItemToBasketReturnMap(newItem),
+      );
+
+      expect(user11, user);
+
+      print('done user section test case $i\n');
     }
   });
 }
