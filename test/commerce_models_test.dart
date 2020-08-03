@@ -1,4 +1,5 @@
 import 'package:commerce_models/address.dart';
+import 'package:commerce_models/bank_card.dart';
 import 'package:commerce_models/basket.dart';
 import 'package:commerce_models/info_section.dart';
 import 'package:commerce_models/item.dart';
@@ -7,6 +8,7 @@ import 'package:commerce_models/voucher.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'test_data_address.dart';
+import 'test_data_bank_card.dart';
 import 'test_data_basket.dart';
 import 'test_data_info_section.dart';
 import 'test_data_item.dart';
@@ -118,6 +120,8 @@ void main() {
       expect(basket, basket2);
       expect(basket2.toString(), stringValue);
 
+      print('test adding item');
+
       final addedItemMap =
           Map<String, dynamic>.from(basketTestData[i]['addedItemInput']);
       final addedItem = ItemModel.fromMap(addedItemMap);
@@ -137,6 +141,36 @@ void main() {
       expect(basket, basket4);
 
       print('done basket section test case $i\n');
+    }
+  });
+
+  test('bankCard', () {
+    final n = bankCardTestData.length;
+    for (int i = 0; i < n; i++) {
+      print('test bankCard section test case $i');
+      final input = Map<String, dynamic>.from(bankCardTestData[i]['input']);
+      final String stringValue = bankCardTestData[i]['value'];
+      final bankCard = BankCardModel.fromMap(input);
+      final map = bankCard.toMap();
+      final bankCard2 = BankCardModel.fromMap(map);
+      expect(bankCard, bankCard2);
+      expect(bankCard2.toString(), stringValue);
+
+      print('test set as default');
+
+      final setAsDefaultMap = bankCard.setAsDefaultReturnMap();
+      final bankCard3 = BankCardModel.fromMap(setAsDefaultMap);
+
+      final setAsNotDefaultMap = bankCard.setAsNotDefaultReturnMap();
+      final bankCard4 = BankCardModel.fromMap(setAsNotDefaultMap);
+
+      if (bankCard.isDefault) {
+        expect(bankCard, bankCard3);
+      } else {
+        expect(bankCard, bankCard4);
+      }
+
+      print('done bankCard section test case $i\n');
     }
   });
 }
