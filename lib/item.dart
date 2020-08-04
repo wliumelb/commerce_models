@@ -43,7 +43,7 @@ class ItemModel {
     );
   }
 
-  static ItemModel fromMap(Map<String, dynamic> map, {int quantity}) {
+  static ItemModel fromMap(Map<String, dynamic> map) {
     ProductCategory category;
     switch (map['category']) {
       case 'fresh':
