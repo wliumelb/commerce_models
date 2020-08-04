@@ -3,6 +3,7 @@ import 'package:commerce_models/bank_card.dart';
 import 'package:commerce_models/basket.dart';
 import 'package:commerce_models/info_section.dart';
 import 'package:commerce_models/item.dart';
+import 'package:commerce_models/notification.dart';
 import 'package:commerce_models/order.dart';
 import 'package:commerce_models/product.dart';
 import 'package:commerce_models/product_category.dart';
@@ -16,6 +17,7 @@ import 'test_data_bank_card.dart';
 import 'test_data_basket.dart';
 import 'test_data_info_section.dart';
 import 'test_data_item.dart';
+import 'test_data_notification.dart';
 import 'test_data_order.dart';
 import 'test_data_product.dart';
 import 'test_data_review.dart';
@@ -310,6 +312,40 @@ void main() {
       expect(order5, order3);
 
       print('done order section test case $i\n');
+    }
+  });
+
+  test('notification', () {
+    final n = notificationTestData.length;
+    for (int i = 0; i < n; i++) {
+      print('test notification section test case $i');
+      final input = Map<String, dynamic>.from(notificationTestData[i]['input']);
+      final String stringValue = notificationTestData[i]['value'];
+      final notification = NotificationModel.fromMap(input);
+      final map = notification.toMap();
+      final notification2 = NotificationModel.fromMap(map);
+      expect(notification, notification2);
+      expect(notification2.toString(), stringValue);
+
+      if (!notification.isViewed) {
+        print('test set as viewed');
+        final notification3 =
+            NotificationModel.fromMap(notification.setAsViewedReturnMap());
+        expect(notification3.isViewed, true);
+        expect(
+          notification3.viewedTime.difference(DateTime.now()) <
+              Duration(seconds: 1),
+          true,
+        );
+        expect(notification3.sendTime, notification.sendTime);
+        expect(notification.body, notification3.body);
+        expect(notification.uid, notification3.uid);
+        expect(notification.targetUid, notification3.targetUid);
+        expect(notification.photoUrl, notification3.photoUrl);
+        expect(notification.title, notification3.title);
+        expect(notification.type, notification3.type);
+      }
+      print('done notification section test case $i\n');
     }
   });
 }
