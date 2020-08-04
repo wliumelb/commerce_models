@@ -1,3 +1,5 @@
+import 'package:commerce_models/basket.dart';
+
 final basketTestData = [
   {
     'input': [
@@ -68,3 +70,6 @@ final basketTestData = [
         "itemList: [uid: uid1, name: Kiwi Fruit, category: fresh, description: Big Kiwi Fruit from NZ, photoUrl: photoUrl1, price: 8.5, quantity: 4, uid: uid2, name: Wagu Beaf, category: meat, description: Best beaf, photoUrl: photoUrl2, price: 38, quantity: 1], quantity: 5, totalPrice: 72.0",
   }
 ];
+
+final List<BasketModel> basketModelList =
+    basketTestData.map((map) => BasketModel.fromMapList(map['input'])).toList();

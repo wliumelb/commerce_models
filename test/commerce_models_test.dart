@@ -3,6 +3,7 @@ import 'package:commerce_models/bank_card.dart';
 import 'package:commerce_models/basket.dart';
 import 'package:commerce_models/info_section.dart';
 import 'package:commerce_models/item.dart';
+import 'package:commerce_models/order.dart';
 import 'package:commerce_models/product.dart';
 import 'package:commerce_models/product_category.dart';
 import 'package:commerce_models/review.dart';
@@ -15,6 +16,7 @@ import 'test_data_bank_card.dart';
 import 'test_data_basket.dart';
 import 'test_data_info_section.dart';
 import 'test_data_item.dart';
+import 'test_data_order.dart';
 import 'test_data_product.dart';
 import 'test_data_review.dart';
 import 'test_data_user.dart';
@@ -273,6 +275,41 @@ void main() {
       expect(review, review2);
       expect(review2.toString(), stringValue);
       print('done review section test case $i\n');
+    }
+  });
+
+  test('order', () {
+    final n = orderTestData.length;
+    for (int i = 0; i < n; i++) {
+      print('test order section test case $i');
+      final input = Map<String, dynamic>.from(orderTestData[i]['input']);
+      final String stringValue = orderTestData[i]['value'];
+      final order = OrderModel.fromMap(input);
+      final map = order.toMap();
+      final order2 = OrderModel.fromMap(map);
+      expect(order, order2);
+      expect(order2.toString(), stringValue);
+
+      print('test from basket');
+      final user = UserModel.fromMap(userTestData[0]['input']);
+      final basket = BasketModel.fromMapList(basketTestData[0]['input']);
+      final voucher = VoucherModel.fromMap(voucherTestData[0]['input']);
+      final order3 = OrderModel.fromBasket(user, basket);
+
+      expect(order3.itemsTotalPrice, basket.totalPrice);
+      expect(
+          order3.orderTotalPrice, order3.itemsTotalPrice + order3.deliveryFee);
+      expect(order3.address, user.address);
+      expect(order3.phone, user.phone);
+
+      final order4 = OrderModel.fromMap(order3.addVoucherReturnMap(voucher));
+      expect(order4.voucherAmount, voucher.value);
+      expect(order4.orderTotalPrice, order3.orderTotalPrice - voucher.value);
+
+      final order5 = OrderModel.fromMap(order4.removeVoucherReturnMap(voucher));
+      expect(order5, order3);
+
+      print('done order section test case $i\n');
     }
   });
 }
