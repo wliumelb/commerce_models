@@ -11,9 +11,8 @@ final userTestData = [
       'email': 'email@email.com',
       'address': addressTestData[0]['input'],
       'basket': basketTestData[0]['input'],
-      'fcmToken': 'fcmToken123',
     },
     'value':
-        'uid: userUid1, name: Edwin, isAnonymous: false, phone: 0444444444, email: email@email.com, address: ${addressTestData[0]['value']}, basket: ${basketTestData[0]['value']}, fcmToken: fcmToken123',
+        'uid: userUid1, name: Edwin, isAnonymous: false, phone: 0444444444, email: email@email.com, address: ${addressTestData[0]['value']}, basket: ${basketTestData[0]['value']}',
   }
 ];

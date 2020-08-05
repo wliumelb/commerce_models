@@ -13,9 +13,6 @@ class UserModel {
   final AddressModel address;
   final BasketModel basket;
 
-  /// the token used by server to send firebase message; also distinguish new logins from other devices
-  final String fcmToken;
-
   UserModel({
     @required this.uid,
     @required this.name,
@@ -24,7 +21,6 @@ class UserModel {
     @required this.email,
     @required this.address,
     @required this.basket,
-    @required this.fcmToken,
   });
 
   static UserModel fromMap(Map<String, dynamic> map) {
@@ -42,7 +38,6 @@ class UserModel {
       email: map['email'],
       address: address,
       basket: basket,
-      fcmToken: map['fcmToken'],
     );
   }
 
@@ -55,12 +50,11 @@ class UserModel {
       'email': email,
       'address': address.toMap(),
       'basket': basket.toMapList(),
-      'fcmToken': fcmToken,
     };
   }
 
   String toString() =>
-      'uid: $uid, name: $name, isAnonymous: $isAnonymous, phone: $phone, email: $email, address: ${address.toString()}, basket: ${basket.toString()}, fcmToken: $fcmToken';
+      'uid: $uid, name: $name, isAnonymous: $isAnonymous, phone: $phone, email: $email, address: ${address.toString()}, basket: ${basket.toString()}';
 
   Map<String, dynamic> changeAddressReturnMap(AddressModel newAddress) => {
         ...toMap(),
