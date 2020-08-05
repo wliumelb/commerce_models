@@ -35,6 +35,12 @@ class BasketModel {
     );
   }
 
+  static BasketModel emptyBasket() => BasketModel(
+        itemList: [],
+        quantity: 0,
+        totalPrice: 0,
+      );
+
   List<Map<String, dynamic>> toMapList() =>
       itemList.map((item) => item.toMap()).toList();
 

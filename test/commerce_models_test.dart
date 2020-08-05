@@ -348,4 +348,21 @@ void main() {
       print('done notification section test case $i\n');
     }
   });
+
+  test('create_user', () {
+    final user = UserModel(
+      address: null,
+      basket: BasketModel.emptyBasket(),
+      email: null,
+      phone: '0129292',
+      name: 'Google Name',
+      uid: '12345',
+      isAnonymous: true,
+    );
+    final user2 =
+        UserModel.fromMap(user.changeEmailReturnMap('newEmail@gne.com'));
+    expect(user2.email, 'newEmail@gne.com');
+    final user3 = UserModel.fromMap(user.changeEmailReturnMap('null'));
+    expect(user, user3);
+  });
 }

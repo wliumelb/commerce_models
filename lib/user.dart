@@ -24,8 +24,9 @@ class UserModel {
   });
 
   static UserModel fromMap(Map<String, dynamic> map) {
-    final addressMap = Map<String, dynamic>.from(map['address']);
-    final address = AddressModel.fromMap(addressMap);
+    final address = map['address'] == null
+        ? null
+        : AddressModel.fromMap(Map<String, dynamic>.from(map['address']));
 
     final itemMapList = List<Map<String, dynamic>>.from(map['basket']);
     final basket = BasketModel.fromMapList(itemMapList);
@@ -48,7 +49,7 @@ class UserModel {
       'isAnonymous': isAnonymous,
       'phone': phone,
       'email': email,
-      'address': address.toMap(),
+      'address': address?.toMap(),
       'basket': basket.toMapList(),
     };
   }
