@@ -135,11 +135,14 @@ void main() {
           Map<String, dynamic>.from(basketTestData[i]['addedItemInput']);
       final addedItem = ItemModel.fromMap(addedItemMap);
 
+      final item = basket.getItem(addedItem.uid);
+      expect(item, null);
+
       List<Map<String, dynamic>> addedOneItemBasketMapList =
           basket2.addOneItemReturnMapList(addedItem);
 
       final basket3 = BasketModel.fromMapList(addedOneItemBasketMapList);
-
+      expect(basket3.getItem(addedItem.uid), addedItem);
       expect(basket3.quantity, basket.quantity + 1);
       expect(basket3.totalPrice, basket.totalPrice + addedItem.price);
 
