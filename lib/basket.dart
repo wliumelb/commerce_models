@@ -67,7 +67,7 @@ class BasketModel {
     return result;
   }
 
-  List<Map<String, dynamic>> minusOneItemReturnMapList(ItemModel removedItem) {
+  List<Map<String, dynamic>> removeOneItemReturnMapList(ItemModel removedItem) {
     return itemList.map((item) {
       if (item.uid == removedItem.uid) {
         // return null if item.quantity == 1, so need to remove possible null

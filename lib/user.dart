@@ -82,9 +82,9 @@ class UserModel {
         'basket': basket.addOneItemReturnMapList(addedItem),
       };
 
-  Map<String, dynamic> minusItemToBasketReturnMap(ItemModel removedItem) => {
+  Map<String, dynamic> removeItemFromBasketReturnMap(ItemModel removedItem) => {
         ...toMap(),
-        'basket': basket.minusOneItemReturnMapList(removedItem),
+        'basket': basket.removeOneItemReturnMapList(removedItem),
       };
 
   @override

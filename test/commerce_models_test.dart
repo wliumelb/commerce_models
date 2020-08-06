@@ -144,7 +144,7 @@ void main() {
       expect(basket3.totalPrice, basket.totalPrice + addedItem.price);
 
       List<Map<String, dynamic>> thenMinusOneItemBasketMapList =
-          basket3.minusOneItemReturnMapList(addedItem);
+          basket3.removeOneItemReturnMapList(addedItem);
 
       final basket4 = BasketModel.fromMapList(thenMinusOneItemBasketMapList);
       expect(basket, basket4);
@@ -255,8 +255,8 @@ void main() {
 
       final user11 = UserModel.fromMap(
         UserModel.fromMap(
-          user10.minusItemToBasketReturnMap(existingItem),
-        ).minusItemToBasketReturnMap(newItem),
+          user10.removeItemFromBasketReturnMap(existingItem),
+        ).removeItemFromBasketReturnMap(newItem),
       );
 
       expect(user11, user);
