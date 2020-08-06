@@ -14,7 +14,7 @@ class AddressModel {
     @required this.suburb,
     @required this.state,
     @required this.postcode,
-    @required this.position,
+    this.position,
   });
   static AddressModel fromMap(Map<String, dynamic> map) {
     return AddressModel(
