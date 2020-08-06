@@ -1,4 +1,8 @@
+import 'package:flutter/foundation.dart';
+
 class ReviewModel {
+  final String orderUid;
+
   /// true means satisfied with shopping experience, false means unsatisfied
   final bool shopping;
 
@@ -11,14 +15,16 @@ class ReviewModel {
   final String comment;
 
   ReviewModel({
-    this.shopping,
-    this.delivery,
-    this.products,
-    this.comment,
+    @required this.orderUid,
+    @required this.shopping,
+    @required this.delivery,
+    @required this.products,
+    @required this.comment,
   });
 
   static ReviewModel fromMap(Map<String, dynamic> map) {
     return ReviewModel(
+      orderUid: map['orderUid'],
       shopping: map['shopping'],
       delivery: map['delivery'],
       products: map['products'],
@@ -28,6 +34,7 @@ class ReviewModel {
 
   Map<String, dynamic> toMap() {
     return {
+      'orderUid': this.orderUid,
       'shopping': this.shopping,
       'delivery': this.delivery,
       'products': this.products,
@@ -36,7 +43,7 @@ class ReviewModel {
   }
 
   String toString() =>
-      'shopping: $shopping, delivery: $delivery, products: $products, comment: $comment';
+      'orderUid: $orderUid, shopping: $shopping, delivery: $delivery, products: $products, comment: $comment';
 
   @override
   bool operator ==(dynamic o) {
