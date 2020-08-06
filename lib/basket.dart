@@ -44,6 +44,9 @@ class BasketModel {
   List<Map<String, dynamic>> toMapList() =>
       itemList.map((item) => item.toMap()).toList();
 
+  ItemModel getItem(String itemUid) =>
+      itemList.firstWhere((item) => item.uid == itemUid);
+
   static List<Map<String, dynamic>> addFirstItemReturnMapList(ItemModel item) {
     return BasketModel(
       itemList: [item],
