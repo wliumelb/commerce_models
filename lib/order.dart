@@ -1,4 +1,3 @@
-import 'package:commerce_models/basket.dart';
 import 'package:commerce_models/user.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
@@ -133,9 +132,8 @@ class OrderModel {
     );
   }
 
-  /// create order from basket and user info. This order is not complete, should not call toMap
-  static OrderModel fromBasket(UserModel user, BasketModel basket) {
-    final deliveryFee = 6;
+  /// create order from basket and user info. this will be used in the order confirmaiton page
+  static OrderModel fromBasket(UserModel user, double deliveryFee) {
     return OrderModel(
       uid: null,
       orderNumber: null,
@@ -147,10 +145,10 @@ class OrderModel {
       address: user.address,
       email: user.email,
       phone: user.phone,
-      totalItems: basket.quantity,
-      itemList: basket.itemList,
-      itemsTotalPrice: basket.totalPrice,
-      orderTotalPrice: basket.totalPrice + deliveryFee,
+      totalItems: user.basket.quantity,
+      itemList: user.basket.itemList,
+      itemsTotalPrice: user.basket.totalPrice,
+      orderTotalPrice: user.basket.totalPrice + deliveryFee,
       status: OrderStatus.pending,
       voucherList: [],
       voucherAmount: 0,
@@ -194,29 +192,29 @@ class OrderModel {
   }
 
   /// must check if the voucher could be added before calling this
-  Map<String, dynamic> addVoucherReturnMap(VoucherModel addedVoucher) {
+  OrderModel addVoucher(VoucherModel addedVoucher) {
     final _voucherList =
         voucherList.any((voucher) => voucher.uid == addedVoucher.uid)
             ? [...voucherList]
             : [...voucherList, addedVoucher];
     final voucherMapList =
         _voucherList.map((voucher) => voucher.toMap()).toList();
-    return {
+    return OrderModel.fromMap({
       ...toMap(),
       'voucherList': voucherMapList,
-    };
+    });
   }
 
-  Map<String, dynamic> removeVoucherReturnMap(VoucherModel removedVoucher) {
+  OrderModel removeVoucher(VoucherModel removedVoucher) {
     final _voucherList = voucherList
         .where((voucher) => voucher.uid != removedVoucher.uid)
         .toList();
     final voucherMapList =
         _voucherList.map((voucher) => voucher.toMap()).toList();
-    return {
+    return OrderModel.fromMap({
       ...toMap(),
       'voucherList': voucherMapList,
-    };
+    });
   }
 
   String toString() {
