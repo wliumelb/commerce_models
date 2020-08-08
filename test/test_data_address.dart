@@ -1,3 +1,5 @@
+import 'package:commerce_models/address.dart';
+
 final addressTestData = [
   {
     'input': {
@@ -20,3 +22,8 @@ final addressTestData = [
     'value': '604 / 640 Swanston St, Carlton, VIC 3053'
   },
 ];
+
+final List<AddressModel> addressList = addressTestData.map((map) {
+  final inputMap = Map<String, dynamic>.from(map['input']);
+  return AddressModel.fromMap(inputMap);
+}).toList();

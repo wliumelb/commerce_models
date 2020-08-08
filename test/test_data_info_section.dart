@@ -1,3 +1,5 @@
+import 'package:commerce_models/info_section.dart';
+
 final infoSectionTestData = [
   {
     'input': {
@@ -19,3 +21,8 @@ final infoSectionTestData = [
         'title: none, photoUrl: none, text: Paragraph One\nParagraph Two\nParagraph Three',
   },
 ];
+
+final List<InfoSectionModel> infoSectionList = infoSectionTestData.map((map) {
+  final inputMap = Map<String, dynamic>.from(map['input']);
+  return InfoSectionModel.fromMap(inputMap);
+}).toList();

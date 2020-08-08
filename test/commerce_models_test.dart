@@ -3,6 +3,7 @@ import 'package:commerce_models/bank_card.dart';
 import 'package:commerce_models/basket.dart';
 import 'package:commerce_models/info_section.dart';
 import 'package:commerce_models/item.dart';
+import 'package:commerce_models/merchant.dart';
 import 'package:commerce_models/notification.dart';
 import 'package:commerce_models/order.dart';
 import 'package:commerce_models/product.dart';
@@ -17,6 +18,7 @@ import 'test_data_bank_card.dart';
 import 'test_data_basket.dart';
 import 'test_data_info_section.dart';
 import 'test_data_item.dart';
+import 'test_data_merchant.dart';
 import 'test_data_notification.dart';
 import 'test_data_order.dart';
 import 'test_data_product.dart';
@@ -359,6 +361,62 @@ void main() {
         expect(notification.type, notification3.type);
       }
       print('done notification section test case $i\n');
+    }
+  });
+
+  test('merchant', () {
+    final n = merchantTestData.length;
+    for (int i = 0; i < n; i++) {
+      print('test merchant test case $i');
+      final input = Map<String, dynamic>.from(merchantTestData[i]['input']);
+      final String stringValue = merchantTestData[i]['value'];
+      final merchant = MerchantModel.fromMap(input);
+      final map = merchant.toMap();
+      final merchant2 = MerchantModel.fromMap(map);
+      expect(merchant, merchant2);
+      expect(merchant2.toString(), stringValue);
+
+      print('test change email, name and phone');
+      final newName = 'New Name';
+      final newEmail = 'email@changed.com';
+      final newPhone = '12345';
+      final merchant3 =
+          MerchantModel.fromMap(merchant.changeNameReturnMap(newName));
+      expect(merchant3.name, newName);
+      final merchant4 =
+          MerchantModel.fromMap(merchant3.changeEmailReturnMap(newEmail));
+      expect(merchant4.email, newEmail);
+      final merchant5 =
+          MerchantModel.fromMap(merchant4.changePhoneReturnMap(newPhone));
+      expect(merchant5.phone, newPhone);
+      // change back to original. this looks ridiculous but it's fine.
+      final merchant6 = MerchantModel.fromMap(
+        MerchantModel.fromMap(
+          MerchantModel.fromMap(
+            merchant5.changeEmailReturnMap(merchant.email),
+          ).changeNameReturnMap(merchant.name),
+        ).changePhoneReturnMap(merchant.phone),
+      );
+      expect(merchant6, merchant);
+
+      print('test change address');
+      final newAddress = AddressModel(
+        position: null,
+        postcode: '2000',
+        state: 'NSW',
+        streetAddress: '123 Some Road',
+        suburb: 'Sydney',
+        unitNumber: '',
+      );
+      final merchant7 =
+          MerchantModel.fromMap(merchant.changeAddressReturnMap(newAddress));
+      expect(merchant7.address, newAddress);
+
+      final merchant8 = MerchantModel.fromMap(
+          merchant.changeAddressReturnMap(merchant.address));
+      expect(merchant8, merchant);
+
+      print('done merchant test case $i\n');
     }
   });
 
