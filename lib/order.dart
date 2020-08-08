@@ -9,6 +9,7 @@ import 'voucher.dart';
 class OrderModel {
   final OrderStatus status;
   final String uid;
+  final String merchantUid;
 
   /// order number displayed to user and merchant
   final int orderNumber;
@@ -29,6 +30,7 @@ class OrderModel {
   final ReviewModel review;
   OrderModel({
     @required this.uid,
+    @required this.merchantUid,
     @required this.orderNumber,
     @required this.itemList,
     @required this.status,
@@ -113,6 +115,7 @@ class OrderModel {
 
     return OrderModel(
       uid: map['uid'],
+      merchantUid: map['merchantUid'],
       orderNumber: map['orderNumber'],
       status: status,
       name: map['name'],
@@ -136,6 +139,7 @@ class OrderModel {
   static OrderModel fromBasket(UserModel user, double deliveryFee) {
     return OrderModel(
       uid: null,
+      merchantUid: user.basket.merchantUid,
       orderNumber: null,
       createTime: null,
       deliveryTime: null,
@@ -176,6 +180,7 @@ class OrderModel {
         : DateFormat('yyyy-MM-dd HH:mm').format(this.deliveryTime);
     return {
       'uid': this.uid,
+      'merchantUid': this.merchantUid,
       'orderNumber': this.orderNumber,
       'status': this.status.toString().split('.')[1],
       'name': this.name,
@@ -225,7 +230,7 @@ class OrderModel {
     final deliveryTimeString = this.createTime == null
         ? null
         : DateFormat('yyyy-MM-dd HH:mm').format(this.deliveryTime);
-    return 'uid: $uid, orderNumber: $orderNumber, status: $statusString, name: $name, email: $email, phone: $phone, address: $address, itemList: $itemList, voucherList: $voucherList, deliveryFee: $deliveryFee, createTime: $createTimeString, deliveryTime: $deliveryTimeString';
+    return 'uid: $uid, merchantUid: $merchantUid, orderNumber: $orderNumber, status: $statusString, name: $name, email: $email, phone: $phone, address: $address, itemList: $itemList, voucherList: $voucherList, deliveryFee: $deliveryFee, createTime: $createTimeString, deliveryTime: $deliveryTimeString';
   }
 
   @override

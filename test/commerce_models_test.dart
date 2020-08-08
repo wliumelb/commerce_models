@@ -131,26 +131,33 @@ void main() {
 
       print('test adding item');
 
-      final addedItemMap =
-          Map<String, dynamic>.from(basketTestData[i]['addedItemInput']);
-      final addedItem = ItemModel.fromMap(addedItemMap);
+      final addedItem = ItemModel.fromMap(
+          Map<String, dynamic>.from(basketTestData[i]['addedItemInput']));
 
-      final item = basket.getItem(addedItem.uid);
-      expect(item, null);
+      final basket3 =
+          BasketModel.fromMapList(basket.addOneItemReturnMapList(addedItem));
 
-      List<Map<String, dynamic>> addedOneItemBasketMapList =
-          basket2.addOneItemReturnMapList(addedItem);
+      if (addedItem.merchantUid == basket.merchantUid) {
+        if (basket.getItem(addedItem.uid) == null) {
+          expect(basket3.getItem(addedItem.uid), addedItem);
+        } else {
+          expect(
+            basket3.getItem(addedItem.uid).quantity,
+            basket.getItem(addedItem.uid).quantity + 1,
+          );
+        }
+        expect(basket3.quantity, basket.quantity + 1);
+        expect(basket3.totalPrice, basket.totalPrice + addedItem.price);
 
-      final basket3 = BasketModel.fromMapList(addedOneItemBasketMapList);
-      expect(basket3.getItem(addedItem.uid), addedItem);
-      expect(basket3.quantity, basket.quantity + 1);
-      expect(basket3.totalPrice, basket.totalPrice + addedItem.price);
+        List<Map<String, dynamic>> thenMinusOneItemBasketMapList =
+            basket3.removeOneItemReturnMapList(addedItem);
 
-      List<Map<String, dynamic>> thenMinusOneItemBasketMapList =
-          basket3.removeOneItemReturnMapList(addedItem);
-
-      final basket4 = BasketModel.fromMapList(thenMinusOneItemBasketMapList);
-      expect(basket, basket4);
+        final basket4 = BasketModel.fromMapList(thenMinusOneItemBasketMapList);
+        expect(basket, basket4);
+      } else {
+        expect(basket3.getItem(addedItem.uid), addedItem);
+        expect(basket3.itemList.length, 1);
+      }
 
       print('done basket section test case $i\n');
     }
@@ -238,6 +245,7 @@ void main() {
       final existingItem = user.basket.itemList.first;
       final newItem = ItemModel(
         category: ProductCategory.fresh,
+        merchantUid: 'merchant1',
         name: 'New Fruit',
         description: 'This is a new item',
         photoUrl: 'photoUrl111',

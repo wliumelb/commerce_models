@@ -7,6 +7,7 @@ class ItemModel {
   final String uid;
   final String name;
   final ProductCategory category;
+  final String merchantUid;
 
   /// the brief description for the product to be displayed next to the photos
   final String description;
@@ -22,6 +23,7 @@ class ItemModel {
 
   ItemModel({
     @required this.uid,
+    @required this.merchantUid,
     @required this.category,
     @required this.description,
     @required this.name,
@@ -33,6 +35,7 @@ class ItemModel {
   static ItemModel fromProduct(ProductModel product) {
     return ItemModel(
       uid: product.uid,
+      merchantUid: product.merchantUid,
       name: product.name,
       category: product.category,
       description: product.description,
@@ -57,6 +60,7 @@ class ItemModel {
 
     return ItemModel(
       uid: map['uid'],
+      merchantUid: map['merchantUid'],
       category: category,
       name: map['name'],
       photoUrl: map['photoUrl'],
@@ -69,6 +73,7 @@ class ItemModel {
   Map<String, dynamic> toMap() {
     return {
       'uid': uid,
+      'merchantUid': merchantUid,
       'category': category.toString().split('.')[1],
       'name': name,
       'description': description,
@@ -80,12 +85,7 @@ class ItemModel {
 
   Map<String, dynamic> addOneReturnMap() {
     return {
-      'uid': uid,
-      'category': category.toString().split('.')[1],
-      'name': name,
-      'description': description,
-      'photoUrl': photoUrl,
-      'price': price,
+      ...toMap(),
       'quantity': quantity + 1,
     };
   }
@@ -93,12 +93,7 @@ class ItemModel {
   Map<String, dynamic> minusOneReturnMap() {
     if (quantity > 1) {
       return {
-        'uid': uid,
-        'category': category.toString().split('.')[1],
-        'name': name,
-        'description': description,
-        'photoUrl': photoUrl,
-        'price': price,
+        ...toMap(),
         'quantity': quantity - 1,
       };
     }
@@ -107,7 +102,7 @@ class ItemModel {
 
   String toString() {
     String categoryString = category.toString().split('.')[1];
-    return 'uid: $uid, name: $name, category: $categoryString, description: $description, photoUrl: $photoUrl, price: $price, quantity: $quantity';
+    return 'uid: $uid, merchantUid: $merchantUid, name: $name, category: $categoryString, description: $description, photoUrl: $photoUrl, price: $price, quantity: $quantity';
   }
 
   @override

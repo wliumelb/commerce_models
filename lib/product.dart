@@ -6,6 +6,7 @@ import 'product_category.dart';
 /// ProductModel is used in the display page of the product
 class ProductModel {
   final String uid;
+  final String merchantUid;
   final String name;
   final ProductCategory category;
 
@@ -25,6 +26,7 @@ class ProductModel {
   final int stock;
   ProductModel({
     @required this.uid,
+    @required this.merchantUid,
     @required this.category,
     @required this.description,
     @required this.name,
@@ -52,6 +54,7 @@ class ProductModel {
 
     return ProductModel(
       uid: map['uid'],
+      merchantUid: map['merchantUid'],
       category: category,
       name: map['name'],
       description: map['description'],
@@ -65,6 +68,7 @@ class ProductModel {
   Map<String, dynamic> toMap() {
     return {
       'uid': uid,
+      'merchantUid': merchantUid,
       'category': category.toString().split('.')[1],
       'name': name,
       'description': description,
@@ -78,7 +82,7 @@ class ProductModel {
   String toString() {
     String categoryString = category.toString().split('.')[1];
     List infoStringList = infoList.map((info) => info.toString()).toList();
-    return 'uid: $uid, name: $name, category: $categoryString, description: $description, photoUrlList: $photoUrlList, infoList: $infoStringList, price: $price, stock: $stock';
+    return 'uid: $uid, merchantUid: $merchantUid, name: $name, category: $categoryString, description: $description, photoUrlList: $photoUrlList, infoList: $infoStringList, price: $price, stock: $stock';
   }
 
   @override
