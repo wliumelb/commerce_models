@@ -10,6 +10,8 @@ class ProductModel {
   final String name;
   final ProductCategory category;
 
+  final bool isAvailable;
+
   /// the brief description for the product to be displayed next to the photos
   final String description;
 
@@ -28,6 +30,7 @@ class ProductModel {
     @required this.uid,
     @required this.merchantUid,
     @required this.category,
+    @required this.isAvailable,
     @required this.description,
     @required this.name,
     @required this.photoUrlList,
@@ -56,6 +59,7 @@ class ProductModel {
       uid: map['uid'],
       merchantUid: map['merchantUid'],
       category: category,
+      isAvailable: map['isAvailable'],
       name: map['name'],
       description: map['description'],
       photoUrlList: map['photoUrlList'],
@@ -70,6 +74,7 @@ class ProductModel {
       'uid': uid,
       'merchantUid': merchantUid,
       'category': category.toString().split('.')[1],
+      'isAvailable': isAvailable,
       'name': name,
       'description': description,
       'photoUrlList': photoUrlList,
@@ -82,7 +87,7 @@ class ProductModel {
   String toString() {
     String categoryString = category.toString().split('.')[1];
     List infoStringList = infoList.map((info) => info.toString()).toList();
-    return 'uid: $uid, merchantUid: $merchantUid, name: $name, category: $categoryString, description: $description, photoUrlList: $photoUrlList, infoList: $infoStringList, price: $price, stock: $stock';
+    return 'uid: $uid, merchantUid: $merchantUid, name: $name, category: $categoryString, isAvailable: $isAvailable, description: $description, photoUrlList: $photoUrlList, infoList: $infoStringList, price: $price, stock: $stock';
   }
 
   @override
