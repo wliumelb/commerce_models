@@ -54,6 +54,7 @@ class ProductModel {
     final infoList = List.from(map['infoList'])
         .map((map) => InfoSectionModel.fromMap(Map.from(map)))
         .toList();
+    final photoUrlList = List<String>.from(map['photoUrlList']);
 
     return ProductModel(
       uid: map['uid'],
@@ -62,7 +63,7 @@ class ProductModel {
       isAvailable: map['isAvailable'],
       name: map['name'],
       description: map['description'],
-      photoUrlList: map['photoUrlList'],
+      photoUrlList: photoUrlList,
       infoList: infoList,
       price: map['price'],
       stock: map['stock'] ?? 0,
