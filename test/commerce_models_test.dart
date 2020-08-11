@@ -411,9 +411,11 @@ void main() {
           MerchantModel.fromMap(merchant.changeAddressReturnMap(newAddress));
       expect(merchant7.address, newAddress);
 
-      final merchant8 = MerchantModel.fromMap(
-          merchant.changeAddressReturnMap(merchant.address));
-      expect(merchant8, merchant);
+      if (merchant.address != null) {
+        final merchant8 = MerchantModel.fromMap(
+            merchant.changeAddressReturnMap(merchant.address));
+        expect(merchant8, merchant);
+      }
 
       print('test change categories');
       final merchant9 = MerchantModel.fromMap(
