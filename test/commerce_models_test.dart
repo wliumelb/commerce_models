@@ -7,7 +7,6 @@ import 'package:commerce_models/merchant.dart';
 import 'package:commerce_models/notification.dart';
 import 'package:commerce_models/order.dart';
 import 'package:commerce_models/product.dart';
-import 'package:commerce_models/product_category.dart';
 import 'package:commerce_models/review.dart';
 import 'package:commerce_models/user.dart';
 import 'package:commerce_models/voucher.dart';
@@ -246,7 +245,7 @@ void main() {
       print('test add and remove item');
       final existingItem = user.basket.itemList.first;
       final newItem = ItemModel(
-        category: ProductCategory.fresh,
+        category: 'fresh',
         merchantUid: 'merchant1',
         name: 'New Fruit',
         description: 'This is a new item',
@@ -415,6 +414,18 @@ void main() {
       final merchant8 = MerchantModel.fromMap(
           merchant.changeAddressReturnMap(merchant.address));
       expect(merchant8, merchant);
+
+      print('test change categories');
+      final merchant9 = MerchantModel.fromMap(
+          merchant.addCategoryReturnMap('added new category'));
+      expect(merchant9.productCategoryList.last, 'added new category');
+      final merchant10 = MerchantModel.fromMap(
+          merchant9.removeCategoryReturnMap('added new category'));
+      // should have not change anything if input category is not in the list
+      final merchant11 = MerchantModel.fromMap(
+          merchant10.removeCategoryReturnMap('added new category'));
+      expect(merchant, merchant10);
+      expect(merchant, merchant11);
 
       print('done merchant test case $i\n');
     }

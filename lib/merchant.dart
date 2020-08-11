@@ -11,6 +11,7 @@ class MerchantModel {
   final AddressModel address;
   final List<String> photoUrlList;
   final List<InfoSectionModel> info;
+  final List<String> productCategoryList;
 
   MerchantModel({
     @required this.uid,
@@ -20,6 +21,7 @@ class MerchantModel {
     @required this.address,
     @required this.photoUrlList,
     @required this.info,
+    @required this.productCategoryList,
   });
 
   static MerchantModel fromMap(Map<String, dynamic> map) {
@@ -28,6 +30,8 @@ class MerchantModel {
         : AddressModel.fromMap(Map<String, dynamic>.from(map['address']));
 
     final photoUrlList = List<String>.from(map['photoUrlList'] ?? []);
+    final productCategoryList =
+        List<String>.from(map['productCategoryList'] ?? []);
 
     final info = List<Map>.from(map['info'] ?? [])
         .map((e) => InfoSectionModel.fromMap(e))
@@ -41,6 +45,7 @@ class MerchantModel {
       address: address,
       photoUrlList: photoUrlList,
       info: info,
+      productCategoryList: productCategoryList,
     );
   }
 
@@ -53,11 +58,12 @@ class MerchantModel {
       'address': address?.toMap(),
       'photoUrlList': photoUrlList,
       'info': info.map((info) => info.toMap()).toList(),
+      'productCategoryList': productCategoryList,
     };
   }
 
   String toString() =>
-      'uid: $uid, name: $name, phone: $phone, email: $email, address: ${address.toString()}, photoUrlList: $photoUrlList, info: $info';
+      'uid: $uid, name: $name, phone: $phone, email: $email, address: ${address.toString()}, photoUrlList: $photoUrlList, info: $info, productCategoryList: $productCategoryList';
 
   Map<String, dynamic> changeAddressReturnMap(AddressModel newAddress) => {
         ...toMap(),
@@ -77,6 +83,20 @@ class MerchantModel {
   Map<String, dynamic> changeEmailReturnMap(String newEmail) => {
         ...toMap(),
         'email': newEmail,
+      };
+
+  Map<String, dynamic> addCategoryReturnMap(String newCategory) => {
+        ...toMap(),
+        'productCategoryList': productCategoryList == null
+            ? [newCategory]
+            : [...productCategoryList, newCategory],
+      };
+
+  Map<String, dynamic> removeCategoryReturnMap(String newCategory) => {
+        ...toMap(),
+        'productCategoryList': productCategoryList == null
+            ? []
+            : productCategoryList.where((category) => category != newCategory),
       };
 
   @override

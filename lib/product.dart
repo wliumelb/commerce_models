@@ -1,14 +1,12 @@
 import 'package:commerce_models/info_section.dart';
 import 'package:flutter/foundation.dart';
 
-import 'product_category.dart';
-
 /// ProductModel is used in the display page of the product
 class ProductModel {
   final String uid;
   final String merchantUid;
   final String name;
-  final ProductCategory category;
+  final String category;
 
   final bool isAvailable;
 
@@ -40,17 +38,6 @@ class ProductModel {
   });
 
   static ProductModel fromMap(Map<String, dynamic> map, {int stock}) {
-    ProductCategory category;
-    switch (map['category']) {
-      case 'fresh':
-        category = ProductCategory.fresh;
-        break;
-      case 'meat':
-        category = ProductCategory.meat;
-        break;
-      default:
-    }
-
     final infoList = List.from(map['infoList'])
         .map((map) => InfoSectionModel.fromMap(Map.from(map)))
         .toList();
@@ -59,7 +46,7 @@ class ProductModel {
     return ProductModel(
       uid: map['uid'],
       merchantUid: map['merchantUid'],
-      category: category,
+      category: map['category'],
       isAvailable: map['isAvailable'],
       name: map['name'],
       description: map['description'],
@@ -74,7 +61,7 @@ class ProductModel {
     return {
       'uid': uid,
       'merchantUid': merchantUid,
-      'category': category.toString().split('.')[1],
+      'category': category,
       'isAvailable': isAvailable,
       'name': name,
       'description': description,
@@ -86,7 +73,7 @@ class ProductModel {
   }
 
   String toString() {
-    String categoryString = category.toString().split('.')[1];
+    String categoryString = category;
     List infoStringList = infoList.map((info) => info.toString()).toList();
     return 'uid: $uid, merchantUid: $merchantUid, name: $name, category: $categoryString, isAvailable: $isAvailable, description: $description, photoUrlList: $photoUrlList, infoList: $infoStringList, price: $price, stock: $stock';
   }

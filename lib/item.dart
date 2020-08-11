@@ -1,12 +1,11 @@
 import 'package:commerce_models/product.dart';
-import 'package:commerce_models/product_category.dart';
 import 'package:flutter/foundation.dart';
 
 /// ItemModel is used in the basket or order display
 class ItemModel {
   final String uid;
   final String name;
-  final ProductCategory category;
+  final String category;
   final String merchantUid;
 
   /// the brief description for the product to be displayed next to the photos
@@ -47,21 +46,10 @@ class ItemModel {
   }
 
   static ItemModel fromMap(Map<String, dynamic> map) {
-    ProductCategory category;
-    switch (map['category']) {
-      case 'fresh':
-        category = ProductCategory.fresh;
-        break;
-      case 'meat':
-        category = ProductCategory.meat;
-        break;
-      default:
-    }
-
     return ItemModel(
       uid: map['uid'],
       merchantUid: map['merchantUid'],
-      category: category,
+      category: map['category'],
       name: map['name'],
       photoUrl: map['photoUrl'],
       description: map['description'],
@@ -74,7 +62,7 @@ class ItemModel {
     return {
       'uid': uid,
       'merchantUid': merchantUid,
-      'category': category.toString().split('.')[1],
+      'category': category,
       'name': name,
       'description': description,
       'photoUrl': photoUrl,
@@ -101,7 +89,7 @@ class ItemModel {
   }
 
   String toString() {
-    String categoryString = category.toString().split('.')[1];
+    String categoryString = category;
     return 'uid: $uid, merchantUid: $merchantUid, name: $name, category: $categoryString, description: $description, photoUrl: $photoUrl, price: $price, quantity: $quantity';
   }
 
