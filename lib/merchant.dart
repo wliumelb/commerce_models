@@ -6,21 +6,23 @@ import 'address.dart';
 class MerchantModel {
   final String uid;
   final String name;
+  final String description;
   final String phone;
   final String email;
   final AddressModel address;
   final List<String> photoUrlList;
-  final List<InfoSectionModel> info;
+  final List<InfoSectionModel> infoList;
   final List<String> productCategoryList;
 
   MerchantModel({
     @required this.uid,
     @required this.name,
+    @required this.description,
     @required this.phone,
     @required this.email,
     @required this.address,
     @required this.photoUrlList,
-    @required this.info,
+    @required this.infoList,
     @required this.productCategoryList,
   });
 
@@ -33,18 +35,19 @@ class MerchantModel {
     final productCategoryList =
         List<String>.from(map['productCategoryList'] ?? []);
 
-    final info = List<Map>.from(map['info'] ?? [])
+    final infoList = List<Map>.from(map['infoList'] ?? [])
         .map((e) => InfoSectionModel.fromMap(e))
         .toList();
 
     return MerchantModel(
       uid: map['uid'],
       name: map['name'],
+      description: map['description'],
       phone: map['phone'],
       email: map['email'],
       address: address,
       photoUrlList: photoUrlList,
-      info: info,
+      infoList: infoList,
       productCategoryList: productCategoryList,
     );
   }
@@ -53,17 +56,18 @@ class MerchantModel {
     return {
       'uid': uid,
       'name': name,
+      'description': description,
       'phone': phone,
       'email': email,
       'address': address?.toMap(),
       'photoUrlList': photoUrlList,
-      'info': info.map((info) => info.toMap()).toList(),
+      'infoList': infoList.map((info) => info.toMap()).toList(),
       'productCategoryList': productCategoryList,
     };
   }
 
   String toString() =>
-      'uid: $uid, name: $name, phone: $phone, email: $email, address: ${address.toString()}, photoUrlList: $photoUrlList, info: $info, productCategoryList: $productCategoryList';
+      'uid: $uid, name: $name, description: $description, phone: $phone, email: $email, address: ${address.toString()}, photoUrlList: $photoUrlList, infoList: $infoList, productCategoryList: $productCategoryList';
 
   Map<String, dynamic> changeAddressReturnMap(AddressModel newAddress) => {
         ...toMap(),
