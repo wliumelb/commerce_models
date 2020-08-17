@@ -11,6 +11,9 @@ class OrderModel {
   final String uid;
   final String merchantUid;
 
+  /// a brief note from the user to merchant
+  final String note;
+
   /// order number displayed to user and merchant
   final int orderNumber;
   final List<ItemModel> itemList;
@@ -31,6 +34,7 @@ class OrderModel {
   OrderModel({
     @required this.uid,
     @required this.merchantUid,
+    @required this.note,
     @required this.orderNumber,
     @required this.itemList,
     @required this.status,
@@ -116,6 +120,7 @@ class OrderModel {
     return OrderModel(
       uid: map['uid'],
       merchantUid: map['merchantUid'],
+      note: map['note'],
       orderNumber: map['orderNumber'],
       status: status,
       name: map['name'],
@@ -140,6 +145,7 @@ class OrderModel {
     return OrderModel(
       uid: null,
       merchantUid: user.basket.merchantUid,
+      note: '',
       orderNumber: null,
       createTime: null,
       deliveryTime: null,
@@ -164,6 +170,7 @@ class OrderModel {
     return {
       'name': this.name,
       'address': this.address.toMap(),
+      'note': this.note,
       'email': this.email,
       'phone': this.phone,
       'itemList': itemList.map((e) => e.toMap()).toList(),
@@ -181,6 +188,7 @@ class OrderModel {
     return {
       'uid': this.uid,
       'merchantUid': this.merchantUid,
+      'note': this.note,
       'orderNumber': this.orderNumber,
       'status': this.status.toString().split('.')[1],
       'name': this.name,
@@ -230,7 +238,7 @@ class OrderModel {
     final deliveryTimeString = this.deliveryTime == null
         ? null
         : DateFormat('yyyy-MM-dd HH:mm').format(this.deliveryTime);
-    return 'uid: $uid, merchantUid: $merchantUid, orderNumber: $orderNumber, status: $statusString, name: $name, email: $email, phone: $phone, address: $address, itemList: $itemList, voucherList: $voucherList, deliveryFee: $deliveryFee, createTime: $createTimeString, deliveryTime: $deliveryTimeString';
+    return 'uid: $uid, merchantUid: $merchantUid, note: $note, orderNumber: $orderNumber, status: $statusString, name: $name, email: $email, phone: $phone, address: $address, itemList: $itemList, voucherList: $voucherList, deliveryFee: $deliveryFee, createTime: $createTimeString, deliveryTime: $deliveryTimeString';
   }
 
   @override
