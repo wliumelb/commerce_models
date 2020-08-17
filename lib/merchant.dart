@@ -9,6 +9,14 @@ class MerchantModel {
   final String description;
   final String phone;
   final String email;
+
+  /// if the merchant allow user to make online payment (through Stripe SDK)
+  /// false means merchant only accept other payment methods such as bank transfer, cash on delivery
+  final bool onlinePaymentAllowed;
+
+  /// if the merchant require payemnt to be made when order is submitted
+  /// if false user could submit order and then make payment
+  final bool onlinePaymentRequired;
   final AddressModel address;
   final List<String> photoUrlList;
   final List<InfoSectionModel> infoList;
@@ -20,6 +28,8 @@ class MerchantModel {
     @required this.description,
     @required this.phone,
     @required this.email,
+    @required this.onlinePaymentAllowed,
+    @required this.onlinePaymentRequired,
     @required this.address,
     @required this.photoUrlList,
     @required this.infoList,
@@ -45,6 +55,8 @@ class MerchantModel {
       description: map['description'],
       phone: map['phone'],
       email: map['email'],
+      onlinePaymentAllowed: map['onlinePaymentAllowed'] ?? false,
+      onlinePaymentRequired: map['onlinePaymentRequired'] ?? false,
       address: address,
       photoUrlList: photoUrlList,
       infoList: infoList,
@@ -59,6 +71,8 @@ class MerchantModel {
       'description': description,
       'phone': phone,
       'email': email,
+      'onlinePaymentAllowed': onlinePaymentAllowed,
+      'onlinePaymentRequired': onlinePaymentRequired,
       'address': address?.toMap(),
       'photoUrlList': photoUrlList,
       'infoList': infoList.map((info) => info.toMap()).toList(),
@@ -67,7 +81,7 @@ class MerchantModel {
   }
 
   String toString() =>
-      'uid: $uid, name: $name, description: $description, phone: $phone, email: $email, address: ${address.toString()}, photoUrlList: $photoUrlList, infoList: $infoList, productCategoryList: $productCategoryList';
+      'uid: $uid, name: $name, description: $description, phone: $phone, email: $email, onlinePaymentAllowed: $onlinePaymentAllowed, onlinePaymentRequired: $onlinePaymentRequired, address: ${address.toString()}, photoUrlList: $photoUrlList, infoList: $infoList, productCategoryList: $productCategoryList';
 
   Map<String, dynamic> changeAddressReturnMap(AddressModel newAddress) => {
         ...toMap(),

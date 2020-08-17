@@ -9,13 +9,15 @@ final merchantTestData = [
       'description': "This is Edwin's shop",
       'phone': '0444444444',
       'email': 'email@email.com',
+      'onlinePaymentAllowed': true,
+      'onlinePaymentRequired': false,
       'address': addressList[0].toMap(),
       'photoUrlList': ['photoUrl1, photoUrl2'],
       'infoList': infoSectionList.map((info) => info.toMap()),
       'productCategoryList': ['fresh', 'meat'],
     },
     'value':
-        "uid: userUid1, name: Edwin, description: This is Edwin's shop, phone: 0444444444, email: email@email.com, address: ${addressTestData[0]['value']}, photoUrlList: [photoUrl1, photoUrl2], infoList: $infoSectionList, productCategoryList: [fresh, meat]",
+        "uid: userUid1, name: Edwin, description: This is Edwin's shop, phone: 0444444444, email: email@email.com, onlinePaymentAllowed: true, onlinePaymentRequired: false, address: ${addressTestData[0]['value']}, photoUrlList: [photoUrl1, photoUrl2], infoList: $infoSectionList, productCategoryList: [fresh, meat]",
   },
   {
     'input': {
@@ -29,6 +31,6 @@ final merchantTestData = [
       'productCategoryList': [],
     },
     'value':
-        'uid: uid111, name: Edwin Shop, description: null, phone: null, email: email@email.com, address: null, photoUrlList: [], infoList: [], productCategoryList: []',
+        'uid: uid111, name: Edwin Shop, description: null, phone: null, email: email@email.com, onlinePaymentAllowed: false, onlinePaymentRequired: false, address: null, photoUrlList: [], infoList: [], productCategoryList: []',
   }
 ];
