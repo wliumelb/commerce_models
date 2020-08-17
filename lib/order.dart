@@ -82,17 +82,17 @@ class OrderModel {
             VoucherModel.fromMap(Map<String, dynamic>.from(voucherMap)))
         .toList();
     // uid is not assigned before the order is finalised and submitted
-    final notSubmittedYet = map['uid'] == null;
 
     final _review = map['review'] == null
         ? null
         : ReviewModel.fromMap(Map<String, dynamic>.from(map['review']));
 
     final _createTime =
-        notSubmittedYet ? null : DateTime.parse(map['createTime']);
+        map['createTime'] == null ? null : DateTime.parse(map['createTime']);
 
-    final _deliveryTime =
-        notSubmittedYet ? null : DateTime.parse(map['deliveryTime']);
+    final _deliveryTime = map['deliveryTime'] == null
+        ? null
+        : DateTime.parse(map['deliveryTime']);
 
     final _address =
         AddressModel.fromMap(Map<String, dynamic>.from(map['address']));
@@ -227,7 +227,7 @@ class OrderModel {
     final createTimeString = this.createTime == null
         ? null
         : DateFormat('yyyy-MM-dd HH:mm').format(this.createTime);
-    final deliveryTimeString = this.createTime == null
+    final deliveryTimeString = this.deliveryTime == null
         ? null
         : DateFormat('yyyy-MM-dd HH:mm').format(this.deliveryTime);
     return 'uid: $uid, merchantUid: $merchantUid, orderNumber: $orderNumber, status: $statusString, name: $name, email: $email, phone: $phone, address: $address, itemList: $itemList, voucherList: $voucherList, deliveryFee: $deliveryFee, createTime: $createTimeString, deliveryTime: $deliveryTimeString';
