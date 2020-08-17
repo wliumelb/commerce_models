@@ -24,6 +24,10 @@ class ProductModel {
 
   /// stock quantity
   final int stock;
+
+  /// number of items sold in total
+  final int sold;
+
   ProductModel({
     @required this.uid,
     @required this.merchantUid,
@@ -35,6 +39,7 @@ class ProductModel {
     @required this.infoList,
     @required this.price,
     @required this.stock,
+    @required this.sold,
   });
 
   static ProductModel fromMap(Map<String, dynamic> map, {int stock}) {
@@ -54,6 +59,7 @@ class ProductModel {
       infoList: infoList,
       price: map['price'],
       stock: map['stock'] ?? 0,
+      sold: map['sold'] ?? 0,
     );
   }
 
@@ -69,13 +75,14 @@ class ProductModel {
       'infoList': infoList.map((info) => info.toMap()).toList(),
       'price': price,
       'stock': stock,
+      'sold': sold,
     };
   }
 
   String toString() {
     String categoryString = category;
     List infoStringList = infoList.map((info) => info.toString()).toList();
-    return 'uid: $uid, merchantUid: $merchantUid, name: $name, category: $categoryString, isAvailable: $isAvailable, description: $description, photoUrlList: $photoUrlList, infoList: $infoStringList, price: $price, stock: $stock';
+    return 'uid: $uid, merchantUid: $merchantUid, name: $name, category: $categoryString, isAvailable: $isAvailable, description: $description, photoUrlList: $photoUrlList, infoList: $infoStringList, price: $price, stock: $stock, sold: $sold';
   }
 
   @override
