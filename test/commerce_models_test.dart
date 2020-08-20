@@ -238,12 +238,13 @@ void main() {
       final user7 = UserModel.fromMap(user.changeAddressReturnMap(newAddress));
       expect(user7.address, newAddress);
 
-      final user8 =
-          UserModel.fromMap(user.changeAddressReturnMap(user.address));
-      expect(user8, user);
+      if (user.address != null) {
+        final user8 =
+            UserModel.fromMap(user.changeAddressReturnMap(user.address));
+        expect(user8, user);
+      }
 
       print('test add and remove item');
-      final existingItem = user.basket.itemList.first;
       final newItem = ItemModel(
         category: 'fresh',
         merchantUid: 'merchant1',
@@ -254,24 +255,42 @@ void main() {
         quantity: 1,
         uid: 'someUid',
       );
-      final user9 =
-          UserModel.fromMap(user.addItemToBasketReturnMap(existingItem));
-      expect(user9.basket.itemList.first.quantity,
-          user.basket.itemList.first.quantity + 1);
 
-      final user10 = UserModel.fromMap(user9.addItemToBasketReturnMap(newItem));
-      expect(user10.basket.itemList.last, newItem);
-      expect(user10.basket.quantity, user.basket.quantity + 2);
-      expect(user10.basket.totalPrice,
-          user.basket.totalPrice + existingItem.price + newItem.price);
+      if (user.basket.itemList.length > 0) {
+        final existingItem = user.basket.itemList.first;
+        final user9 =
+            UserModel.fromMap(user.addItemToBasketReturnMap(existingItem));
+        expect(user9.basket.itemList.first.quantity,
+            user.basket.itemList.first.quantity + 1);
 
-      final user11 = UserModel.fromMap(
-        UserModel.fromMap(
-          user10.removeItemFromBasketReturnMap(existingItem),
-        ).removeItemFromBasketReturnMap(newItem),
-      );
+        final user10 =
+            UserModel.fromMap(user9.addItemToBasketReturnMap(newItem));
+        expect(user10.basket.itemList.last, newItem);
+        expect(user10.basket.quantity, user.basket.quantity + 2);
+        expect(user10.basket.totalPrice,
+            user.basket.totalPrice + existingItem.price + newItem.price);
 
-      expect(user11, user);
+        final user11 = UserModel.fromMap(
+          UserModel.fromMap(
+            user10.removeItemFromBasketReturnMap(existingItem),
+          ).removeItemFromBasketReturnMap(newItem),
+        );
+
+        expect(user11, user);
+      } else {
+        final user12 =
+            UserModel.fromMap(user.addItemToBasketReturnMap(newItem));
+        expect(user12.basket.itemList.last, newItem);
+        expect(user12.basket.quantity, user.basket.quantity + 1);
+        expect(
+            user12.basket.totalPrice, user.basket.totalPrice + newItem.price);
+
+        final user13 = UserModel.fromMap(
+          user12.removeItemFromBasketReturnMap(newItem),
+        );
+
+        expect(user13, user);
+      }
 
       print('done user section test case $i\n');
     }
@@ -442,6 +461,7 @@ void main() {
       name: 'Google Name',
       uid: '12345',
       isAnonymous: true,
+      createTime: DateTime.now(),
     );
     final user2 =
         UserModel.fromMap(user.changeEmailReturnMap('newEmail@gne.com'));

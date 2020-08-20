@@ -1,5 +1,6 @@
 import 'package:commerce_models/item.dart';
 import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
 import 'basket.dart';
 
 import 'address.dart';
@@ -12,6 +13,7 @@ class UserModel {
   final String email;
   final AddressModel address;
   final BasketModel basket;
+  final DateTime createTime;
 
   UserModel({
     @required this.uid,
@@ -21,6 +23,7 @@ class UserModel {
     @required this.email,
     @required this.address,
     @required this.basket,
+    @required this.createTime,
   });
 
   static UserModel fromMap(Map<String, dynamic> map) {
@@ -30,6 +33,8 @@ class UserModel {
 
     final itemMapList = List<Map<String, dynamic>>.from(map['basket']);
     final basket = BasketModel.fromMapList(itemMapList);
+    final int timeStamp = map['createTime'] ?? 1597884720000;
+    final createTime = DateTime.fromMillisecondsSinceEpoch(timeStamp);
 
     return UserModel(
       uid: map['uid'],
@@ -39,6 +44,7 @@ class UserModel {
       email: map['email'],
       address: address,
       basket: basket,
+      createTime: createTime,
     );
   }
 
@@ -51,11 +57,12 @@ class UserModel {
       'email': email,
       'address': address?.toMap(),
       'basket': basket.toMapList(),
+      'createTime': createTime.millisecondsSinceEpoch,
     };
   }
 
   String toString() =>
-      'uid: $uid, name: $name, isAnonymous: $isAnonymous, phone: $phone, email: $email, address: ${address.toString()}, basket: ${basket.toString()}';
+      'UserModel(uid: $uid, name: $name, isAnonymous: $isAnonymous, phone: $phone, email: $email, address: ${address.toString()}, basket: ${basket.toString()}, createTime: ${DateFormat('yyyy-MM-dd HH:mm').format(createTime)})';
 
   Map<String, dynamic> changeAddressReturnMap(AddressModel newAddress) => {
         ...toMap(),

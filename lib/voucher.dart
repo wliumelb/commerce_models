@@ -58,7 +58,7 @@ class VoucherModel {
   }
 
   String toString() =>
-      'uid: $uid, userUid: $userUid, sharerUid: $sharerUid, value: $value, threshold: $threshold, expireDate: ${DateFormat('yyyy-MM-dd HH:mm').format(expireDate)}, isValid: $isValid';
+      'VoucherModel(uid: $uid, userUid: $userUid, sharerUid: $sharerUid, value: $value, threshold: $threshold, expireDate: ${DateFormat('yyyy-MM-dd HH:mm').format(expireDate)}, isValid: $isValid)';
 
   @override
   bool operator ==(dynamic o) {

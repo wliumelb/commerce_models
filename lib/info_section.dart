@@ -28,7 +28,7 @@ class InfoSectionModel {
   }
 
   String toString() =>
-      'title: ${title ?? 'none'}, photoUrl: ${photoUrl ?? 'none'}, text: ${text ?? 'none'}';
+      'InfoSectionModel(title: ${title ?? 'none'}, photoUrl: ${photoUrl ?? 'none'}, text: ${text ?? 'none'})';
 
   @override
   bool operator ==(dynamic o) {

@@ -92,7 +92,7 @@ class NotificationModel {
     final viewedTimeString = viewedTime == null
         ? null
         : DateFormat('yyyy-MM-dd HH:mm').format(viewedTime);
-    return 'uid: $uid, title: $title, body: $body, sendTime: $sendTimeString, viewedTime: $viewedTimeString, type: ${type.toString().split('.')[1]}, targetUid: $targetUid, photoUrl: $photoUrl, isViewed: $isViewed';
+    return 'NotificationModel(uid: $uid, title: $title, body: $body, sendTime: $sendTimeString, viewedTime: $viewedTimeString, type: ${type.toString().split('.')[1]}, targetUid: $targetUid, photoUrl: $photoUrl, isViewed: $isViewed)';
   }
 
   @override

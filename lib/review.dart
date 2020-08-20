@@ -43,7 +43,7 @@ class ReviewModel {
   }
 
   String toString() =>
-      'orderUid: $orderUid, shopping: $shopping, delivery: $delivery, products: $products, comment: $comment';
+      'ReviewModel(orderUid: $orderUid, shopping: $shopping, delivery: $delivery, products: $products, comment: $comment)';
 
   @override
   bool operator ==(dynamic o) {

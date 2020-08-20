@@ -65,7 +65,7 @@ class BankCardModel {
   }
 
   String toString() =>
-      'uid: $uid, brand: $brand, isDefault: $isDefault, expirationMonth: $expirationMonth, expirationYear: $expirationYear, lastFourDigits: $lastFourDigits';
+      'BankCardModel(uid: $uid, brand: $brand, isDefault: $isDefault, expirationMonth: $expirationMonth, expirationYear: $expirationYear, lastFourDigits: $lastFourDigits)';
 
   @override
   bool operator ==(dynamic o) {

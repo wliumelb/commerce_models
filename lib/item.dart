@@ -90,7 +90,7 @@ class ItemModel {
 
   String toString() {
     String categoryString = category;
-    return 'uid: $uid, merchantUid: $merchantUid, name: $name, category: $categoryString, description: $description, photoUrl: $photoUrl, price: $price, quantity: $quantity';
+    return 'ItemModel(uid: $uid, merchantUid: $merchantUid, name: $name, category: $categoryString, description: $description, photoUrl: $photoUrl, price: $price, quantity: $quantity)';
   }
 
   @override

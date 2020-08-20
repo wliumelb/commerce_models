@@ -82,7 +82,7 @@ class ProductModel {
   String toString() {
     String categoryString = category;
     List infoStringList = infoList.map((info) => info.toString()).toList();
-    return 'uid: $uid, merchantUid: $merchantUid, name: $name, category: $categoryString, isAvailable: $isAvailable, description: $description, photoUrlList: $photoUrlList, infoList: $infoStringList, price: $price, stock: $stock, sold: $sold';
+    return 'ProductModel(uid: $uid, merchantUid: $merchantUid, name: $name, category: $categoryString, isAvailable: $isAvailable, description: $description, photoUrlList: $photoUrlList, infoList: $infoStringList, price: $price, stock: $stock, sold: $sold)';
   }
 
   @override

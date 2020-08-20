@@ -33,6 +33,6 @@ final itemTestData = [
       'stock': 10,
     },
     'value':
-        "uid: uid123, merchantUid: merchant1, name: Kiwi Fruit, category: fresh, description: Big Kiwi Fruit from NZ, photoUrl: photoUrl1, price: 7.2, quantity: 1",
+        "ItemModel(uid: uid123, merchantUid: merchant1, name: Kiwi Fruit, category: fresh, description: Big Kiwi Fruit from NZ, photoUrl: photoUrl1, price: 7.2, quantity: 1)",
   }
 ];

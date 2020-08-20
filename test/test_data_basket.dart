@@ -37,7 +37,7 @@ final basketTestData = [
       'quantity': 1,
     },
     'value':
-        "itemList: [uid: basketItem1, merchantUid: merchant1, name: Kiwi Fruit, category: fresh, description: Big Kiwi Fruit from NZ, photoUrl: photoUrl1, price: 8.5, quantity: 4, uid: basketItem2, merchantUid: merchant1, name: Wagu Beaf, category: meat, description: Best beaf, photoUrl: photoUrl2, price: 38, quantity: 1], quantity: 5, totalPrice: 72.0",
+        "BasketModel(itemList: [ItemModel(uid: basketItem1, merchantUid: merchant1, name: Kiwi Fruit, category: fresh, description: Big Kiwi Fruit from NZ, photoUrl: photoUrl1, price: 8.5, quantity: 4), ItemModel(uid: basketItem2, merchantUid: merchant1, name: Wagu Beaf, category: meat, description: Best beaf, photoUrl: photoUrl2, price: 38, quantity: 1)], quantity: 5, totalPrice: 72.0)",
   },
   {
     'input': [
@@ -74,7 +74,7 @@ final basketTestData = [
       'quantity': 1,
     },
     'value':
-        "itemList: [uid: itemUid1, merchantUid: merchant1, name: Kiwi Fruit, category: fresh, description: Big Kiwi Fruit from NZ, photoUrl: photoUrl1, price: 8.5, quantity: 4, uid: itemUid2, merchantUid: merchant1, name: Wagu Beaf, category: meat, description: Best beaf, photoUrl: photoUrl2, price: 38, quantity: 1], quantity: 5, totalPrice: 72.0",
+        "BasketModel(itemList: [ItemModel(uid: itemUid1, merchantUid: merchant1, name: Kiwi Fruit, category: fresh, description: Big Kiwi Fruit from NZ, photoUrl: photoUrl1, price: 8.5, quantity: 4), ItemModel(uid: itemUid2, merchantUid: merchant1, name: Wagu Beaf, category: meat, description: Best beaf, photoUrl: photoUrl2, price: 38, quantity: 1)], quantity: 5, totalPrice: 72.0)",
   },
   {
     'input': [
@@ -111,7 +111,7 @@ final basketTestData = [
       'quantity': 1,
     },
     'value':
-        "itemList: [uid: itemUid1, merchantUid: merchant1, name: Kiwi Fruit, category: fresh, description: Big Kiwi Fruit from NZ, photoUrl: photoUrl1, price: 8.5, quantity: 4, uid: itemUid2, merchantUid: merchant1, name: Wagu Beaf, category: meat, description: Best beaf, photoUrl: photoUrl2, price: 38, quantity: 1], quantity: 5, totalPrice: 72.0",
+        "BasketModel(itemList: [ItemModel(uid: itemUid1, merchantUid: merchant1, name: Kiwi Fruit, category: fresh, description: Big Kiwi Fruit from NZ, photoUrl: photoUrl1, price: 8.5, quantity: 4), ItemModel(uid: itemUid2, merchantUid: merchant1, name: Wagu Beaf, category: meat, description: Best beaf, photoUrl: photoUrl2, price: 38, quantity: 1)], quantity: 5, totalPrice: 72.0)",
   },
 ];
 

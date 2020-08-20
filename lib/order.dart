@@ -238,7 +238,7 @@ class OrderModel {
     final deliveryTimeString = this.deliveryTime == null
         ? null
         : DateFormat('yyyy-MM-dd HH:mm').format(this.deliveryTime);
-    return 'uid: $uid, merchantUid: $merchantUid, note: $note, orderNumber: $orderNumber, status: $statusString, name: $name, email: $email, phone: $phone, address: $address, itemList: $itemList, voucherList: $voucherList, deliveryFee: $deliveryFee, createTime: $createTimeString, deliveryTime: $deliveryTimeString';
+    return 'OrderModel(uid: $uid, merchantUid: $merchantUid, note: $note, orderNumber: $orderNumber, status: $statusString, name: $name, email: $email, phone: $phone, address: $address, itemList: $itemList, voucherList: $voucherList, deliveryFee: $deliveryFee, createTime: $createTimeString, deliveryTime: $deliveryTimeString)';
   }
 
   @override

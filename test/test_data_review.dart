@@ -8,7 +8,7 @@ final reviewTestData = [
       'comment': 'Very Good',
     },
     'value':
-        'orderUid: order1, shopping: true, delivery: true, products: true, comment: Very Good',
+        'ReviewModel(orderUid: order1, shopping: true, delivery: true, products: true, comment: Very Good)',
   },
   {
     'input': {
@@ -19,6 +19,6 @@ final reviewTestData = [
       'comment': 'Delivery is slow',
     },
     'value':
-        'orderUid: order2, shopping: true, delivery: false, products: true, comment: Delivery is slow',
+        'ReviewModel(orderUid: order2, shopping: true, delivery: false, products: true, comment: Delivery is slow)',
   }
 ];

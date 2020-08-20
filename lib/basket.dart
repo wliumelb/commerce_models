@@ -97,7 +97,7 @@ class BasketModel {
   }
 
   String toString() {
-    return 'itemList: ${itemList.map((item) => item.toString()).toList()}, quantity: $quantity, totalPrice: $totalPrice';
+    return 'BasketModel(itemList: ${itemList.map((item) => item.toString()).toList()}, quantity: $quantity, totalPrice: $totalPrice)';
   }
 
   @override

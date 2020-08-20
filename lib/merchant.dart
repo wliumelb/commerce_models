@@ -1,5 +1,6 @@
 import 'package:commerce_models/info_section.dart';
 import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
 
 import 'address.dart';
 
@@ -21,6 +22,7 @@ class MerchantModel {
   final List<String> photoUrlList;
   final List<InfoSectionModel> infoList;
   final List<String> productCategoryList;
+  final DateTime createTime;
 
   MerchantModel({
     @required this.uid,
@@ -34,6 +36,7 @@ class MerchantModel {
     @required this.photoUrlList,
     @required this.infoList,
     @required this.productCategoryList,
+    @required this.createTime,
   });
 
   static MerchantModel fromMap(Map<String, dynamic> map) {
@@ -49,6 +52,9 @@ class MerchantModel {
         .map((e) => InfoSectionModel.fromMap(e))
         .toList();
 
+    final int timeStamp = map['createTime'] ?? 1597884720000;
+    final createTime = DateTime.fromMillisecondsSinceEpoch(timeStamp);
+
     return MerchantModel(
       uid: map['uid'],
       name: map['name'],
@@ -61,6 +67,7 @@ class MerchantModel {
       photoUrlList: photoUrlList,
       infoList: infoList,
       productCategoryList: productCategoryList,
+      createTime: createTime,
     );
   }
 
@@ -77,11 +84,12 @@ class MerchantModel {
       'photoUrlList': photoUrlList,
       'infoList': infoList.map((info) => info.toMap()).toList(),
       'productCategoryList': productCategoryList,
+      'createTime': createTime.millisecondsSinceEpoch,
     };
   }
 
   String toString() =>
-      'uid: $uid, name: $name, description: $description, phone: $phone, email: $email, onlinePaymentAllowed: $onlinePaymentAllowed, onlinePaymentRequired: $onlinePaymentRequired, address: ${address.toString()}, photoUrlList: $photoUrlList, infoList: $infoList, productCategoryList: $productCategoryList';
+      'MerchantModel(uid: $uid, name: $name, description: $description, phone: $phone, email: $email, onlinePaymentAllowed: $onlinePaymentAllowed, onlinePaymentRequired: $onlinePaymentRequired, address: ${address.toString()}, photoUrlList: $photoUrlList, infoList: $infoList, productCategoryList: $productCategoryList, createTime: ${DateFormat('yyyy-MM-dd HH:mm').format(createTime)})';
 
   Map<String, dynamic> changeAddressReturnMap(AddressModel newAddress) => {
         ...toMap(),
