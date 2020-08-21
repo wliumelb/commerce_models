@@ -31,6 +31,11 @@ class OrderModel {
   final DateTime createTime;
   final DateTime deliveryTime;
   final ReviewModel review;
+
+  /// whether or not merchant has received payment; shall be set to yes if paid online
+  /// merchant could manually set to true after receiving payment through other means
+  final bool isPaid;
+
   OrderModel({
     @required this.uid,
     @required this.merchantUid,
@@ -51,6 +56,7 @@ class OrderModel {
     @required this.createTime,
     @required this.deliveryTime,
     @required this.review,
+    @required this.isPaid,
   });
 
   static OrderModel fromMap(Map<String, dynamic> map) {
@@ -138,6 +144,7 @@ class OrderModel {
       deliveryFee: _deliveryFee,
       voucherAmount: _voucherAmount,
       orderTotalPrice: _orderTotalPrice,
+      isPaid: map['isPaid'] ?? false,
     );
   }
 
@@ -163,6 +170,7 @@ class OrderModel {
       status: OrderStatus.pending,
       voucherList: [],
       voucherAmount: 0,
+      isPaid: false,
     );
   }
 
@@ -196,6 +204,7 @@ class OrderModel {
       'deliveryFee': this.deliveryFee,
       'createTime': this.createTime?.millisecondsSinceEpoch,
       'deliveryTime': this.deliveryTime?.millisecondsSinceEpoch,
+      'isPaid': this.isPaid ?? false,
     };
   }
 
@@ -233,7 +242,7 @@ class OrderModel {
     final deliveryTimeString = this.deliveryTime == null
         ? null
         : DateFormat('yyyy-MM-dd HH:mm').format(this.deliveryTime);
-    return 'OrderModel(uid: $uid, merchantUid: $merchantUid, note: $note, orderNumber: $orderNumber, status: $statusString, name: $name, email: $email, phone: $phone, address: $address, itemList: $itemList, voucherList: $voucherList, deliveryFee: $deliveryFee, createTime: $createTimeString, deliveryTime: $deliveryTimeString)';
+    return 'OrderModel(uid: $uid, merchantUid: $merchantUid, note: $note, orderNumber: $orderNumber, status: $statusString, name: $name, email: $email, phone: $phone, address: $address, itemList: $itemList, voucherList: $voucherList, deliveryFee: $deliveryFee, createTime: $createTimeString, deliveryTime: $deliveryTimeString, isPaid: ${isPaid ?? false})';
   }
 
   @override
