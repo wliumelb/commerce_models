@@ -91,12 +91,13 @@ class OrderModel {
         ? null
         : ReviewModel.fromMap(Map<String, dynamic>.from(map['review']));
 
-    final _createTime =
-        map['createTime'] == null ? null : DateTime.parse(map['createTime']);
+    final _createTime = map['createTime'] == null
+        ? null
+        : DateTime.fromMillisecondsSinceEpoch(map['createTime']);
 
     final _deliveryTime = map['deliveryTime'] == null
         ? null
-        : DateTime.parse(map['deliveryTime']);
+        : DateTime.fromMillisecondsSinceEpoch(map['deliveryTime']);
 
     final _address =
         AddressModel.fromMap(Map<String, dynamic>.from(map['address']));
@@ -179,12 +180,6 @@ class OrderModel {
   }
 
   Map<String, dynamic> toMap() {
-    final createTimeString = this.createTime == null
-        ? null
-        : DateFormat('yyyy-MM-dd HH:mm').format(this.createTime);
-    final deliveryTimeString = this.deliveryTime == null
-        ? null
-        : DateFormat('yyyy-MM-dd HH:mm').format(this.deliveryTime);
     return {
       'uid': this.uid,
       'merchantUid': this.merchantUid,
@@ -199,8 +194,8 @@ class OrderModel {
       'voucherList':
           this.voucherList.map((voucher) => voucher.toMap()).toList(),
       'deliveryFee': this.deliveryFee,
-      'createTime': createTimeString,
-      'deliveryTime': deliveryTimeString,
+      'createTime': this.createTime?.millisecondsSinceEpoch,
+      'deliveryTime': this.deliveryTime?.millisecondsSinceEpoch,
     };
   }
 

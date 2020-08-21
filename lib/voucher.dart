@@ -31,8 +31,9 @@ class VoucherModel {
   });
 
   static VoucherModel fromMap(Map<String, dynamic> map) {
-    final expireDateString = map['expireDate']; // 'yyyy-MM-dd HH:mm'
-    final expireDate = DateTime.parse(expireDateString);
+    final expireDate = map['expireDate'] == null
+        ? null
+        : DateTime.fromMillisecondsSinceEpoch(map['expireDate']);
 
     return VoucherModel(
       uid: map['uid'],
@@ -52,7 +53,7 @@ class VoucherModel {
       'sharerUid': this.sharerUid,
       'value': this.value,
       'threshold': this.threshold,
-      'expireDate': DateFormat('yyyy-MM-dd HH:mm').format(expireDate),
+      'expireDate': expireDate?.millisecondsSinceEpoch,
       'isValid': isValid,
     };
   }

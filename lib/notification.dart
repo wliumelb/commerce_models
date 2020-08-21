@@ -39,13 +39,14 @@ class NotificationModel {
         break;
     }
 
-    final viewedTime =
-        map['viewedTime'] == null ? null : DateTime.parse(map['viewedTime']);
+    final viewedTime = map['viewedTime'] == null
+        ? null
+        : DateTime.fromMillisecondsSinceEpoch(map['viewedTime']);
     return NotificationModel(
       uid: map['uid'],
       title: map['title'],
       body: map['body'],
-      sendTime: DateTime.parse(map['sendTime']),
+      sendTime: DateTime.fromMillisecondsSinceEpoch(map['sendTime']),
       viewedTime: viewedTime,
       type: type,
       targetUid: map['targetUid'],
@@ -55,17 +56,13 @@ class NotificationModel {
   }
 
   Map<String, dynamic> toMap() {
-    final sendTimeString = DateFormat('yyyy-MM-dd HH:mm').format(sendTime);
-    final viewedTimeString = viewedTime == null
-        ? null
-        : DateFormat('yyyy-MM-dd HH:mm').format(viewedTime);
     final typeString = type.toString().split('.')[1];
     return {
       'uid': this.uid,
       'title': this.title,
       'body': this.body,
-      'sendTime': sendTimeString,
-      'viewedTime': viewedTimeString,
+      'sendTime': this.sendTime?.millisecondsSinceEpoch,
+      'viewedTime': this.viewedTime?.millisecondsSinceEpoch,
       'type': typeString,
       'targetUid': this.targetUid,
       'photoUrl': this.photoUrl,
@@ -77,12 +74,10 @@ class NotificationModel {
     if (isViewed) {
       return this.toMap();
     } else {
-      final viewedTimeString =
-          DateFormat('yyyy-MM-dd HH:mm').format(DateTime.now());
       return {
         ...toMap(),
         'isViewed': true,
-        'viewedTime': viewedTimeString,
+        'viewedTime': DateTime.now().millisecondsSinceEpoch,
       };
     }
   }

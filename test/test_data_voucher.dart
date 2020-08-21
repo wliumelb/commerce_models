@@ -6,7 +6,7 @@ final voucherTestData = [
       'sharerUid': 'user2',
       'value': 5,
       'threshold': 20,
-      'expireDate': '2020-08-10 14:00',
+      'expireDate': 1597032000000,
       'isValid': true,
     },
     'value':
@@ -19,7 +19,7 @@ final voucherTestData = [
       'sharerUid': 'user2222',
       'value': 15,
       'threshold': 50,
-      'expireDate': '2020-09-01 00:00',
+      'expireDate': 1598882400000,
       'isValid': false,
     },
     'value':
