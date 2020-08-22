@@ -193,7 +193,7 @@ class OrderModel {
       'merchantUid': this.merchantUid,
       'note': this.note,
       'orderNumber': this.orderNumber,
-      'status': this.status.toString().split('.')[1],
+      'status': this.status.string,
       'name': this.name,
       'email': this.email,
       'phone': this.phone,
@@ -235,7 +235,7 @@ class OrderModel {
   }
 
   String toString() {
-    final String statusString = status.toString().split('.')[1];
+    final String statusString = status.string;
     final createTimeString = this.createTime == null
         ? null
         : DateFormat('yyyy-MM-dd HH:mm').format(this.createTime);
@@ -261,4 +261,8 @@ enum OrderStatus {
   completed, // order is delivered to the address
   reviewed, // customer has confirmed delivery and given review
   cancelled, // cancelled
+}
+
+extension OrderStatusExt on OrderStatus {
+  String get string => describeEnum(this);
 }

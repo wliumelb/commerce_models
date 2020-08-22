@@ -56,14 +56,13 @@ class NotificationModel {
   }
 
   Map<String, dynamic> toMap() {
-    final typeString = type.toString().split('.')[1];
     return {
       'uid': this.uid,
       'title': this.title,
       'body': this.body,
       'sendTime': this.sendTime?.millisecondsSinceEpoch,
       'viewedTime': this.viewedTime?.millisecondsSinceEpoch,
-      'type': typeString,
+      'type': this.type.string,
       'targetUid': this.targetUid,
       'photoUrl': this.photoUrl,
       'isViewed': this.isViewed,
@@ -87,7 +86,7 @@ class NotificationModel {
     final viewedTimeString = viewedTime == null
         ? null
         : DateFormat('yyyy-MM-dd HH:mm').format(viewedTime);
-    return 'NotificationModel(uid: $uid, title: $title, body: $body, sendTime: $sendTimeString, viewedTime: $viewedTimeString, type: ${type.toString().split('.')[1]}, targetUid: $targetUid, photoUrl: $photoUrl, isViewed: $isViewed)';
+    return 'NotificationModel(uid: $uid, title: $title, body: $body, sendTime: $sendTimeString, viewedTime: $viewedTimeString, type: ${type.string}, targetUid: $targetUid, photoUrl: $photoUrl, isViewed: $isViewed)';
   }
 
   @override
@@ -104,4 +103,8 @@ enum NotificationType {
   item,
   order,
   voucher,
+}
+
+extension NotificationTypeExt on NotificationType {
+  String get string => describeEnum(this);
 }
