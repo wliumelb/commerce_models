@@ -225,7 +225,7 @@ class OrderModel {
     final deliveryTimeString = this.deliveryTime == null
         ? null
         : DateFormat('yyyy-MM-dd HH:mm').format(this.deliveryTime);
-    return 'OrderModel(uid: $uid, merchantUid: $merchantUid, note: $note, orderNumber: $orderNumber, status: ${status?.string}, type: ${type?.string}, name: $name, email: $email, phone: $phone, address: $address, itemList: $itemList, voucherList: $voucherList, deliveryFee: $deliveryFee, createTime: $createTimeString, deliveryTime: $deliveryTimeString, isPaid: ${isPaid ?? false})';
+    return 'OrderModel(uid: $uid, merchantUid: $merchantUid, note: $note, orderNumber: $orderNumber, status: $status, type: $type, name: $name, email: $email, phone: $phone, address: $address, itemList: $itemList, voucherList: $voucherList, deliveryFee: $deliveryFee, createTime: $createTimeString, deliveryTime: $deliveryTimeString, isPaid: ${isPaid ?? false})';
   }
 
   @override
@@ -260,7 +260,12 @@ class OrderType {
     }
   }
 
-  get string => _type;
+  @override
+  String toString() {
+    return _type;
+  }
+
+  String get string => _type;
   @override
   bool operator ==(dynamic o) {
     return o is OrderType && o._type == this._type;
@@ -321,7 +326,12 @@ class OrderStatus {
     }
   }
 
-  get string => _status;
+  @override
+  String toString() {
+    return _status;
+  }
+
+  String get string => _status;
   @override
   bool operator ==(dynamic o) {
     return o is OrderStatus && o._status == this._status;

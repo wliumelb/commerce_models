@@ -14,6 +14,7 @@ final merchantTestData = [
       'email': 'email@email.com',
       'onlinePaymentAllowed': true,
       'onlinePaymentRequired': false,
+      'orderTypeList': ['delivery', 'pickup'],
       'address': addressList[0].toMap(),
       'photoUrlList': ['photoUrl1, photoUrl2'],
       'infoList': infoSectionList.map((info) => info.toMap()),
@@ -21,7 +22,7 @@ final merchantTestData = [
       'createTime': timeStamp,
     },
     'value':
-        "MerchantModel(uid: userUid1, name: Edwin, description: This is Edwin's shop, phone: 0444444444, email: email@email.com, onlinePaymentAllowed: true, onlinePaymentRequired: false, address: ${addressTestData[0]['value']}, photoUrlList: [photoUrl1, photoUrl2], infoList: $infoSectionList, productCategoryList: [fresh, meat], createTime: $dateTimeString)",
+        "MerchantModel(uid: userUid1, name: Edwin, description: This is Edwin's shop, phone: 0444444444, email: email@email.com, onlinePaymentAllowed: true, onlinePaymentRequired: false, orderTypeList: [delivery, pickup], address: ${addressTestData[0]['value']}, photoUrlList: [photoUrl1, photoUrl2], infoList: $infoSectionList, productCategoryList: [fresh, meat], createTime: $dateTimeString)",
   },
   {
     'input': {
@@ -33,8 +34,9 @@ final merchantTestData = [
       'photoUrlList': [],
       'infoList': [],
       'productCategoryList': [],
+      'orderTypeList': ['delivery'],
     },
     'value':
-        'MerchantModel(uid: uid111, name: Edwin Shop, description: null, phone: null, email: email@email.com, onlinePaymentAllowed: false, onlinePaymentRequired: false, address: null, photoUrlList: [], infoList: [], productCategoryList: [], createTime: 2020-08-20 10:52)',
+        'MerchantModel(uid: uid111, name: Edwin Shop, description: null, phone: null, email: email@email.com, onlinePaymentAllowed: false, onlinePaymentRequired: false, orderTypeList: [delivery], address: null, photoUrlList: [], infoList: [], productCategoryList: [], createTime: 2020-08-20 10:52)',
   }
 ];

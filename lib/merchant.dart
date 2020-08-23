@@ -1,4 +1,5 @@
 import 'package:commerce_models/info_section.dart';
+import 'package:commerce_models/order.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 
@@ -18,6 +19,9 @@ class MerchantModel {
   /// if the merchant require payemnt to be made when order is submitted
   /// if false user could submit order and then make payment
   final bool onlinePaymentRequired;
+
+  /// order types allowed for this merchant
+  final List<OrderType> orderTypeList;
   final AddressModel address;
   final List<String> photoUrlList;
   final List<InfoSectionModel> infoList;
@@ -32,6 +36,7 @@ class MerchantModel {
     @required this.email,
     @required this.onlinePaymentAllowed,
     @required this.onlinePaymentRequired,
+    @required this.orderTypeList,
     @required this.address,
     @required this.photoUrlList,
     @required this.infoList,
@@ -51,6 +56,14 @@ class MerchantModel {
     final infoList = List<Map>.from(map['infoList'] ?? [])
         .map((e) => InfoSectionModel.fromMap(e))
         .toList();
+    final orderTypeList = List<String>.from(map['orderTypeList'])
+        .map((str) => OrderType.parse(str))
+        .toList();
+
+    if (orderTypeList.length == 0) {
+      print('error, order type list should contain at least one type');
+      throw ('orderTypeList is empty');
+    }
 
     final int timeStamp = map['createTime'] ?? 1597884720000;
     final createTime = DateTime.fromMillisecondsSinceEpoch(timeStamp);
@@ -68,6 +81,7 @@ class MerchantModel {
       infoList: infoList,
       productCategoryList: productCategoryList,
       createTime: createTime,
+      orderTypeList: orderTypeList,
     );
   }
 
@@ -80,6 +94,7 @@ class MerchantModel {
       'email': email,
       'onlinePaymentAllowed': onlinePaymentAllowed,
       'onlinePaymentRequired': onlinePaymentRequired,
+      'orderTypeList': orderTypeList.map((type) => type.string).toList(),
       'address': address?.toMap(),
       'photoUrlList': photoUrlList,
       'infoList': infoList.map((info) => info.toMap()).toList(),
@@ -89,7 +104,7 @@ class MerchantModel {
   }
 
   String toString() =>
-      'MerchantModel(uid: $uid, name: $name, description: $description, phone: $phone, email: $email, onlinePaymentAllowed: $onlinePaymentAllowed, onlinePaymentRequired: $onlinePaymentRequired, address: ${address.toString()}, photoUrlList: $photoUrlList, infoList: $infoList, productCategoryList: $productCategoryList, createTime: ${DateFormat('yyyy-MM-dd HH:mm').format(createTime)})';
+      'MerchantModel(uid: $uid, name: $name, description: $description, phone: $phone, email: $email, onlinePaymentAllowed: $onlinePaymentAllowed, onlinePaymentRequired: $onlinePaymentRequired, orderTypeList: $orderTypeList, address: ${address.toString()}, photoUrlList: $photoUrlList, infoList: $infoList, productCategoryList: $productCategoryList, createTime: ${DateFormat('yyyy-MM-dd HH:mm').format(createTime)})';
 
   Map<String, dynamic> changeAddressReturnMap(AddressModel newAddress) => {
         ...toMap(),
