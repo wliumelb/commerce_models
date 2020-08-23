@@ -7,9 +7,10 @@ final orderTestData = [
     'input': {
       'uid': 'orderUid1',
       'merchantUid': 'merchant1',
-      'note': 'extra hot, please',
+      'note': 'leave at the door',
       'orderNumber': 1234,
       'status': 'processing',
+      'type': 'delivery',
       'name': 'Edwin',
       'email': 'edl@gmail.com',
       'phone': '0412345678',
@@ -21,19 +22,20 @@ final orderTestData = [
       'deliveryTime': 1596492000000,
     },
     'value':
-        "OrderModel(uid: orderUid1, merchantUid: merchant1, note: extra hot, please, orderNumber: 1234, status: processing, name: Edwin, email: edl@gmail.com, phone: 0412345678, address: ${addressTestData[0]['value']}, itemList: ${basketModelList[0].itemList}, voucherList: [${voucherTestData[0]['value']}], deliveryFee: 6, createTime: 2020-08-02 22:10, deliveryTime: 2020-08-04 08:00, isPaid: false)",
+        "OrderModel(uid: orderUid1, merchantUid: merchant1, note: leave at the door, orderNumber: 1234, status: processing, type: delivery, name: Edwin, email: edl@gmail.com, phone: 0412345678, address: ${addressTestData[0]['value']}, itemList: ${basketModelList[0].itemList}, voucherList: [${voucherTestData[0]['value']}], deliveryFee: 6, createTime: 2020-08-02 22:10, deliveryTime: 2020-08-04 08:00, isPaid: false)",
   },
   {
     'input': {
       'uid': 'orderUid1',
       'merchantUid': 'merchant1',
-      'note': 'leave at the door',
+      'note': 'extra hot please',
       'orderNumber': 1234,
       'status': 'pending',
+      'type': 'pickup',
       'name': 'Edwin',
       'email': null,
       'phone': '0412345678',
-      'address': addressTestData[0]['input'],
+      'address': null,
       'itemList': basketTestData[0]['input'],
       'voucherList': [voucherTestData[0]['input']],
       'deliveryFee': 6,
@@ -41,6 +43,6 @@ final orderTestData = [
       'deliveryTime': null,
     },
     'value':
-        "OrderModel(uid: orderUid1, merchantUid: merchant1, note: leave at the door, orderNumber: 1234, status: pending, name: Edwin, email: null, phone: 0412345678, address: ${addressTestData[0]['value']}, itemList: ${basketModelList[0].itemList}, voucherList: [${voucherTestData[0]['value']}], deliveryFee: 6, createTime: 2020-08-02 22:10, deliveryTime: null, isPaid: false)",
+        "OrderModel(uid: orderUid1, merchantUid: merchant1, note: extra hot please, orderNumber: 1234, status: pending, type: pickup, name: Edwin, email: null, phone: 0412345678, address: null, itemList: ${basketModelList[0].itemList}, voucherList: [${voucherTestData[0]['value']}], deliveryFee: 6, createTime: 2020-08-02 22:10, deliveryTime: null, isPaid: false)",
   }
 ];

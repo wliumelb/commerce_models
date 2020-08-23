@@ -8,6 +8,7 @@ import 'voucher.dart';
 
 class OrderModel {
   final OrderStatus status;
+  final OrderType type;
   final String uid;
   final String merchantUid;
 
@@ -43,6 +44,7 @@ class OrderModel {
     @required this.orderNumber,
     @required this.itemList,
     @required this.status,
+    @required this.type,
     @required this.voucherList,
     @required this.name,
     @required this.address,
@@ -60,30 +62,8 @@ class OrderModel {
   });
 
   static OrderModel fromMap(Map<String, dynamic> map) {
-    OrderStatus status;
-    switch (map['status']) {
-      case 'pending':
-        status = OrderStatus.pending;
-        break;
-      case 'processing':
-        status = OrderStatus.processing;
-        break;
-      case 'delivering':
-        status = OrderStatus.delivering;
-        break;
-      case 'completed':
-        status = OrderStatus.completed;
-        break;
-      case 'reviewed':
-        status = OrderStatus.reviewed;
-        break;
-      case 'cancelled':
-        status = OrderStatus.cancelled;
-        break;
-      default:
-        print('error, booking status');
-    }
-
+    OrderStatus status = OrderStatus.parse(map['status']);
+    OrderType type = OrderType.parse(map['type']);
     final List<ItemModel> _itemList = List.from(map['itemList'])
         .map((itemMap) => ItemModel.fromMap(Map<String, dynamic>.from(itemMap)))
         .toList();
@@ -105,8 +85,9 @@ class OrderModel {
         ? null
         : DateTime.fromMillisecondsSinceEpoch(map['deliveryTime']);
 
-    final _address =
-        AddressModel.fromMap(Map<String, dynamic>.from(map['address']));
+    final _address = map['address'] == null
+        ? null
+        : AddressModel.fromMap(Map<String, dynamic>.from(map['address']));
 
     int _totalItems = 0;
     num _itemsTotalPrice = 0;
@@ -130,6 +111,7 @@ class OrderModel {
       note: map['note'],
       orderNumber: map['orderNumber'],
       status: status,
+      type: type,
       name: map['name'],
       email: map['email'],
       phone: map['phone'],
@@ -168,6 +150,7 @@ class OrderModel {
       itemsTotalPrice: user.basket.totalPrice,
       orderTotalPrice: user.basket.totalPrice + deliveryFee,
       status: OrderStatus.pending,
+      type: null,
       voucherList: [],
       voucherAmount: 0,
       isPaid: false,
@@ -193,11 +176,12 @@ class OrderModel {
       'merchantUid': this.merchantUid,
       'note': this.note,
       'orderNumber': this.orderNumber,
-      'status': this.status.string,
+      'status': this.status?.string,
+      'type': this.type?.string,
       'name': this.name,
       'email': this.email,
       'phone': this.phone,
-      'address': this.address.toMap(),
+      'address': this.address?.toMap(),
       'itemList': this.itemList.map((item) => item.toMap()).toList(),
       'voucherList':
           this.voucherList.map((voucher) => voucher.toMap()).toList(),
@@ -235,14 +219,13 @@ class OrderModel {
   }
 
   String toString() {
-    final String statusString = status.string;
     final createTimeString = this.createTime == null
         ? null
         : DateFormat('yyyy-MM-dd HH:mm').format(this.createTime);
     final deliveryTimeString = this.deliveryTime == null
         ? null
         : DateFormat('yyyy-MM-dd HH:mm').format(this.deliveryTime);
-    return 'OrderModel(uid: $uid, merchantUid: $merchantUid, note: $note, orderNumber: $orderNumber, status: $statusString, name: $name, email: $email, phone: $phone, address: $address, itemList: $itemList, voucherList: $voucherList, deliveryFee: $deliveryFee, createTime: $createTimeString, deliveryTime: $deliveryTimeString, isPaid: ${isPaid ?? false})';
+    return 'OrderModel(uid: $uid, merchantUid: $merchantUid, note: $note, orderNumber: $orderNumber, status: ${status?.string}, type: ${type?.string}, name: $name, email: $email, phone: $phone, address: $address, itemList: $itemList, voucherList: $voucherList, deliveryFee: $deliveryFee, createTime: $createTimeString, deliveryTime: $deliveryTimeString, isPaid: ${isPaid ?? false})';
   }
 
   @override
@@ -254,15 +237,96 @@ class OrderModel {
   int get hashCode => this.toString().hashCode;
 }
 
-enum OrderStatus {
-  pending, // order not submitted yet
-  processing, // customer has made the payment
-  delivering, // it's on the way to the customer
-  completed, // order is delivered to the address
-  reviewed, // customer has confirmed delivery and given review
-  cancelled, // cancelled
+class OrderType {
+  final String _type;
+  const OrderType._(this._type);
+
+  static const delivery = OrderType._('delivery');
+  static const pickup = OrderType._('pickup');
+
+  static const values = [delivery, pickup];
+
+  static OrderType parse(String value) {
+    switch (value) {
+      case 'delivery':
+        return OrderType.delivery;
+        break;
+      case 'pickup':
+        return OrderType.pickup;
+        break;
+      default:
+        print('got error, invalid order type $value');
+        return null;
+    }
+  }
+
+  get string => _type;
+  @override
+  bool operator ==(dynamic o) {
+    return o is OrderType && o._type == this._type;
+  }
+
+  @override
+  int get hashCode => this._type.hashCode;
 }
 
-extension OrderStatusExt on OrderStatus {
-  String get string => describeEnum(this);
+class OrderStatus {
+  final String _status;
+  const OrderStatus._(this._status);
+
+  static const pending = OrderStatus._('pending');
+  static const processing = OrderStatus._('processing');
+  static const delivering = OrderStatus._('delivering');
+  static const ready = OrderStatus._('ready');
+  static const completed = OrderStatus._('completed');
+  static const reviewed = OrderStatus._('reviewed');
+  static const cancelled = OrderStatus._('cancelled');
+
+  static const values = [
+    pending,
+    processing,
+    delivering,
+    ready,
+    completed,
+    reviewed,
+    cancelled
+  ];
+
+  static OrderStatus parse(String value) {
+    switch (value) {
+      case 'pending':
+        return OrderStatus.pending;
+        break;
+      case 'processing':
+        return OrderStatus.processing;
+        break;
+      case 'delivering':
+        return OrderStatus.delivering;
+        break;
+      case 'ready':
+        return OrderStatus.ready;
+        break;
+      case 'completed':
+        return OrderStatus.completed;
+        break;
+      case 'reviewed':
+        return OrderStatus.reviewed;
+        break;
+      case 'cancelled':
+        return OrderStatus.cancelled;
+        break;
+      default:
+        print('got error, invalid order status $value');
+        return null;
+    }
+  }
+
+  get string => _status;
+  @override
+  bool operator ==(dynamic o) {
+    return o is OrderStatus && o._status == this._status;
+  }
+
+  @override
+  int get hashCode => this._status.hashCode;
 }

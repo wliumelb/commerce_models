@@ -311,6 +311,33 @@ void main() {
     }
   });
 
+  test('order type and status', () {
+    print('test OrderType');
+    final expectedTypes = [OrderType.delivery, OrderType.pickup];
+    final types = OrderType.values;
+    types.forEach((type) {
+      expect(expectedTypes.contains(type), true);
+      expect(type, OrderType.parse(type.string));
+    });
+    print('done test OrderType');
+    print('test OrderStatus');
+    final expectedStatuses = [
+      OrderStatus.pending,
+      OrderStatus.processing,
+      OrderStatus.ready,
+      OrderStatus.delivering,
+      OrderStatus.completed,
+      OrderStatus.reviewed,
+      OrderStatus.cancelled,
+    ];
+    final statuses = OrderStatus.values;
+    statuses.forEach((type) {
+      expect(expectedStatuses.contains(type), true);
+      expect(type, OrderStatus.parse(type.string));
+    });
+    print('done test OrderStatus');
+  });
+
   test('order', () {
     final n = orderTestData.length;
     for (int i = 0; i < n; i++) {
