@@ -56,13 +56,12 @@ class MerchantModel {
     final infoList = List<Map>.from(map['infoList'] ?? [])
         .map((e) => InfoSectionModel.fromMap(e))
         .toList();
-    final orderTypeList = List<String>.from(map['orderTypeList'])
+    final orderTypeList = List<String>.from(map['orderTypeList'] ?? [])
         .map((str) => OrderType.parse(str))
         .toList();
 
     if (orderTypeList.length == 0) {
-      print('error, order type list should contain at least one type');
-      throw ('orderTypeList is empty');
+      print('warning, order type list should contain at least one type');
     }
 
     final int timeStamp = map['createTime'] ?? 1597884720000;

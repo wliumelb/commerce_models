@@ -34,9 +34,8 @@ final merchantTestData = [
       'photoUrlList': [],
       'infoList': [],
       'productCategoryList': [],
-      'orderTypeList': ['delivery'],
     },
     'value':
-        'MerchantModel(uid: uid111, name: Edwin Shop, description: null, phone: null, email: email@email.com, onlinePaymentAllowed: false, onlinePaymentRequired: false, orderTypeList: [delivery], address: null, photoUrlList: [], infoList: [], productCategoryList: [], createTime: 2020-08-20 10:52)',
+        'MerchantModel(uid: uid111, name: Edwin Shop, description: null, phone: null, email: email@email.com, onlinePaymentAllowed: false, onlinePaymentRequired: false, orderTypeList: [], address: null, photoUrlList: [], infoList: [], productCategoryList: [], createTime: 2020-08-20 10:52)',
   }
 ];
