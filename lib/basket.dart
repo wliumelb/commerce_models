@@ -96,6 +96,13 @@ class BasketModel {
       ..remove(null);
   }
 
+  List<Map<String, dynamic>> deleteItemReturnMapList(ItemModel removedItem) {
+    return itemList
+        .where((item) => item.uid != removedItem.uid)
+        .map((item) => item.toMap())
+        .toList();
+  }
+
   String toString() {
     return 'BasketModel(itemList: ${itemList.map((item) => item.toString()).toList()}, quantity: $quantity, totalPrice: $totalPrice)';
   }

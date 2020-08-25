@@ -141,6 +141,12 @@ void main() {
       if (addedItem.merchantUid == basket.merchantUid) {
         if (basket.getItem(addedItem.uid) == null) {
           expect(basket3.getItem(addedItem.uid), addedItem);
+          final basketAddedMore = BasketModel.fromMapList(
+              basket3.addOneItemReturnMapList(addedItem));
+          expect(basketAddedMore.getItem(addedItem.uid).quantity, 2);
+          final basketDeletedItem = BasketModel.fromMapList(
+              basketAddedMore.deleteItemReturnMapList(addedItem));
+          expect(basketDeletedItem, basket);
         } else {
           expect(
             basket3.getItem(addedItem.uid).quantity,
