@@ -1,6 +1,7 @@
 import 'package:commerce_models/address.dart';
 import 'package:commerce_models/bank_card.dart';
 import 'package:commerce_models/basket.dart';
+import 'package:commerce_models/delivery_fee_structure.dart';
 import 'package:commerce_models/info_section.dart';
 import 'package:commerce_models/item.dart';
 import 'package:commerce_models/merchant.dart';
@@ -12,6 +13,7 @@ import 'package:commerce_models/user.dart';
 import 'package:commerce_models/voucher.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'delivery_fee_structure.dart';
 import 'test_data_address.dart';
 import 'test_data_bank_card.dart';
 import 'test_data_basket.dart';
@@ -482,6 +484,51 @@ void main() {
       expect(merchant, merchant11);
 
       print('done merchant test case $i\n');
+    }
+  });
+
+  test('delivery fee structure', () {
+    final n = deliveryFeeStructureTestData.length;
+    for (int i = 0; i < n; i++) {
+      print('test deliveryFeeStructure section test case $i');
+      final data = deliveryFeeStructureTestData[i];
+
+      final input = List<Map<String, num>>.from(data['input']);
+      final String stringValue = data['value'];
+      final deliveryFeeStructure = DeliveryFeeStructure.fromMapList(input);
+      final map = deliveryFeeStructure.toMapList();
+      final deliveryFeeStructure2 = DeliveryFeeStructure.fromMapList(map);
+      expect(deliveryFeeStructure, deliveryFeeStructure2);
+      expect(deliveryFeeStructure2.toString(), stringValue);
+
+      print('now test get values');
+      final List<List<num>> tests = data['tests'];
+      tests.forEach((test) {
+        expect(deliveryFeeStructure.getDeliveryFee(test[0]), test[1]);
+      });
+      print('test adding tier');
+      final addedTier = data['added'] as Map<String, num>;
+      final deliveryFeeStructure3 = DeliveryFeeStructure.fromMapList(
+        deliveryFeeStructure.addTierReturnMap(
+          threshold: addedTier['threshold'],
+          fee: addedTier['fee'],
+        ),
+      );
+
+      final List<List<num>> newTests = data['new_tests'];
+      newTests.forEach((test) {
+        expect(deliveryFeeStructure3.getDeliveryFee(test[0]), test[1]);
+      });
+
+      print('test removing tier');
+      final deliveryFeeStructure4 = DeliveryFeeStructure.fromMapList(
+        deliveryFeeStructure3.removeTierReturnMap(
+          threshold: addedTier['threshold'],
+        ),
+      );
+      expect(deliveryFeeStructure, deliveryFeeStructure4);
+
+      print('done basket section test case $i\n');
     }
   });
 

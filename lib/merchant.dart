@@ -1,3 +1,4 @@
+import 'package:commerce_models/delivery_fee_structure.dart';
 import 'package:commerce_models/info_section.dart';
 import 'package:commerce_models/order.dart';
 import 'package:flutter/foundation.dart';
@@ -27,6 +28,7 @@ class MerchantModel {
   final List<InfoSectionModel> infoList;
   final List<String> productCategoryList;
   final DateTime createTime;
+  final DeliveryFeeStructure _deliveryFeeStructure;
 
   MerchantModel({
     @required this.uid,
@@ -42,7 +44,8 @@ class MerchantModel {
     @required this.infoList,
     @required this.productCategoryList,
     @required this.createTime,
-  });
+    @required DeliveryFeeStructure deliveryFeeStructure,
+  }) : _deliveryFeeStructure = deliveryFeeStructure;
 
   static MerchantModel fromMap(Map<String, dynamic> map) {
     final address = map['address'] == null
@@ -59,6 +62,11 @@ class MerchantModel {
     final orderTypeList = List<String>.from(map['orderTypeList'] ?? [])
         .map((str) => OrderType.parse(str))
         .toList();
+    final deliveryFeeStructure = DeliveryFeeStructure.fromMapList(
+      List<Map<String, num>>.from(
+        map['deliveryFeeStructure'] ?? [],
+      ),
+    );
 
     if (orderTypeList.length == 0) {
       print('warning, order type list should contain at least one type');
@@ -81,6 +89,7 @@ class MerchantModel {
       productCategoryList: productCategoryList,
       createTime: createTime,
       orderTypeList: orderTypeList,
+      deliveryFeeStructure: deliveryFeeStructure,
     );
   }
 
@@ -99,11 +108,12 @@ class MerchantModel {
       'infoList': infoList.map((info) => info.toMap()).toList(),
       'productCategoryList': productCategoryList,
       'createTime': createTime.millisecondsSinceEpoch,
+      'deliveryFeeStructure': _deliveryFeeStructure.toMapList(),
     };
   }
 
   String toString() =>
-      'MerchantModel(uid: $uid, name: $name, description: $description, phone: $phone, email: $email, onlinePaymentAllowed: $onlinePaymentAllowed, onlinePaymentRequired: $onlinePaymentRequired, orderTypeList: $orderTypeList, address: ${address.toString()}, photoUrlList: $photoUrlList, infoList: $infoList, productCategoryList: $productCategoryList, createTime: ${DateFormat('yyyy-MM-dd HH:mm').format(createTime)})';
+      'MerchantModel(uid: $uid, name: $name, description: $description, phone: $phone, email: $email, onlinePaymentAllowed: $onlinePaymentAllowed, onlinePaymentRequired: $onlinePaymentRequired, orderTypeList: $orderTypeList, address: $address, photoUrlList: $photoUrlList, infoList: $infoList, productCategoryList: $productCategoryList, createTime: ${DateFormat('yyyy-MM-dd HH:mm').format(createTime)}, deliveryFeeStructure: $_deliveryFeeStructure)';
 
   Map<String, dynamic> changeAddressReturnMap(AddressModel newAddress) => {
         ...toMap(),
