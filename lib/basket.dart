@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 
 class BasketModel {
   // key is item uid
-  final List<ItemModel> itemList;
+  final List<ItemModel> _itemList;
 
   final String merchantUid;
 
@@ -14,11 +14,14 @@ class BasketModel {
   final num totalPrice;
 
   BasketModel({
-    @required this.itemList,
+    @required List<ItemModel> itemList,
     @required this.merchantUid,
     @required this.quantity,
     @required this.totalPrice,
-  });
+  }) : _itemList = itemList;
+
+  // this will prevent _itemList from getting mutated
+  List<ItemModel> get itemList => [..._itemList];
 
   static BasketModel fromMapList(List<Map<String, dynamic>> mapList) {
     final itemList = mapList
@@ -47,9 +50,9 @@ class BasketModel {
       );
 
   List<Map<String, dynamic>> toMapList() =>
-      itemList.map((item) => item.toMap()).toList();
+      _itemList.map((item) => item.toMap()).toList();
 
-  ItemModel getItem(String itemUid) => itemList.firstWhere(
+  ItemModel getItem(String itemUid) => _itemList.firstWhere(
         (item) => item.uid == itemUid,
         orElse: () => null,
       );
@@ -72,7 +75,7 @@ class BasketModel {
     } else {
       final List<Map<String, dynamic>> result = [];
       bool hasItem = false;
-      this.itemList.forEach((item) {
+      this._itemList.forEach((item) {
         if (item.uid == addedItem.uid) {
           hasItem = true;
           result.add(item.addOneReturnMap());
@@ -86,7 +89,7 @@ class BasketModel {
   }
 
   List<Map<String, dynamic>> removeOneItemReturnMapList(ItemModel removedItem) {
-    return itemList.map((item) {
+    return _itemList.map((item) {
       if (item.uid == removedItem.uid) {
         // return null if item.quantity == 1, so need to remove possible null
         return item.minusOneReturnMap();
@@ -97,14 +100,14 @@ class BasketModel {
   }
 
   List<Map<String, dynamic>> deleteItemReturnMapList(ItemModel removedItem) {
-    return itemList
+    return _itemList
         .where((item) => item.uid != removedItem.uid)
         .map((item) => item.toMap())
         .toList();
   }
 
   String toString() {
-    return 'BasketModel(itemList: ${itemList.map((item) => item.toString()).toList()}, quantity: $quantity, totalPrice: $totalPrice)';
+    return 'BasketModel(itemList: ${_itemList.map((item) => item.toString()).toList()}, quantity: $quantity, totalPrice: $totalPrice)';
   }
 
   @override

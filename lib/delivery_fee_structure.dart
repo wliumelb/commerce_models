@@ -21,7 +21,7 @@ class DeliveryFeeStructure {
     return DeliveryFeeStructure(tierList);
   }
 
-  List<_Tier> get tiers => _tierList;
+  List<_Tier> get tiers => [..._tierList];
 
   num getDeliveryFee(num orderAmount) {
     final length = _tierList.length;
