@@ -25,6 +25,10 @@ class DeliveryFeeStructure {
 
   num getDeliveryFee(num orderAmount) {
     final length = _tierList.length;
+    if (length == 0) {
+      print('got error, delivery fee structure not available');
+      return 0;
+    }
     for (int i = length - 1; i >= 0; i--) {
       final tier = _tierList[i];
       if (orderAmount >= tier.threshold) {
