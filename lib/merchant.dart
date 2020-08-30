@@ -28,7 +28,7 @@ class MerchantModel {
   final List<InfoSectionModel> infoList;
   final List<String> productCategoryList;
   final DateTime createTime;
-  final DeliveryFeeStructure _deliveryFeeStructure;
+  final DeliveryFeeStructure deliveryFeeStructure;
 
   MerchantModel({
     @required this.uid,
@@ -44,8 +44,8 @@ class MerchantModel {
     @required this.infoList,
     @required this.productCategoryList,
     @required this.createTime,
-    @required DeliveryFeeStructure deliveryFeeStructure,
-  }) : _deliveryFeeStructure = deliveryFeeStructure;
+    @required this.deliveryFeeStructure,
+  });
 
   static MerchantModel fromMap(Map<String, dynamic> map) {
     final address = map['address'] == null
@@ -108,12 +108,12 @@ class MerchantModel {
       'infoList': infoList.map((info) => info.toMap()).toList(),
       'productCategoryList': productCategoryList,
       'createTime': createTime.millisecondsSinceEpoch,
-      'deliveryFeeStructure': _deliveryFeeStructure.toMapList(),
+      'deliveryFeeStructure': deliveryFeeStructure.toMapList(),
     };
   }
 
   String toString() =>
-      'MerchantModel(uid: $uid, name: $name, description: $description, phone: $phone, email: $email, onlinePaymentAllowed: $onlinePaymentAllowed, onlinePaymentRequired: $onlinePaymentRequired, orderTypeList: $orderTypeList, address: $address, photoUrlList: $photoUrlList, infoList: $infoList, productCategoryList: $productCategoryList, createTime: ${DateFormat('yyyy-MM-dd HH:mm').format(createTime)}, deliveryFeeStructure: $_deliveryFeeStructure)';
+      'MerchantModel(uid: $uid, name: $name, description: $description, phone: $phone, email: $email, onlinePaymentAllowed: $onlinePaymentAllowed, onlinePaymentRequired: $onlinePaymentRequired, orderTypeList: $orderTypeList, address: $address, photoUrlList: $photoUrlList, infoList: $infoList, productCategoryList: $productCategoryList, createTime: ${DateFormat('yyyy-MM-dd HH:mm').format(createTime)}, deliveryFeeStructure: $deliveryFeeStructure)';
 
   Map<String, dynamic> changeAddressReturnMap(AddressModel newAddress) => {
         ...toMap(),
