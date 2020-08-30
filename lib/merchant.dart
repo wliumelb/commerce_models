@@ -63,9 +63,9 @@ class MerchantModel {
         .map((str) => OrderType.parse(str))
         .toList();
     final deliveryFeeStructure = DeliveryFeeStructure.fromMapList(
-      List<Map<String, num>>.from(
+      List<Map>.from(
         map['deliveryFeeStructure'] ?? [],
-      ),
+      ).map((map) => Map<String, num>.from(map)).toList(),
     );
 
     if (orderTypeList.length == 0) {
