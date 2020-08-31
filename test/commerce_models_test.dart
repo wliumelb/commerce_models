@@ -366,6 +366,7 @@ void main() {
       final merchant = MerchantModel.fromMap(merchantTestData[0]['input']);
       final voucher = VoucherModel.fromMap(voucherTestData[0]['input']);
       final order3 = OrderModel.fromBasket(user, merchant, OrderType.delivery);
+      expect(order3.type, OrderType.delivery);
 
       expect(order3.itemsTotalPrice, user.basket.totalPrice);
       expect(
@@ -375,6 +376,7 @@ void main() {
       expect(order3.phone, user.phone);
 
       final order4 = OrderModel.fromBasket(user, merchant, OrderType.pickup);
+      expect(order4.type, OrderType.pickup);
       expect(order4.deliveryFee, 0);
 
       final order5 = order3.addVoucher(voucher);

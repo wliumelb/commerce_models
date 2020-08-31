@@ -173,7 +173,7 @@ class OrderModel {
       itemsTotalPrice: user.basket.totalPrice,
       orderTotalPrice: user.basket.totalPrice + deliveryFee,
       status: OrderStatus.pending,
-      type: null,
+      type: orderType,
       voucherList: [],
       voucherAmount: 0,
       isPaid: false,
