@@ -131,7 +131,8 @@ class OrderModel {
   }
 
   /// create order from basket and user info. this will be used in the order confirmaiton page
-  static OrderModel fromBasket(UserModel user, double deliveryFee) {
+  static OrderModel fromBasket(
+      UserModel user, num deliveryFee, OrderType orderType) {
     return OrderModel(
       uid: null,
       merchantUid: user.basket.merchantUid,
@@ -150,7 +151,7 @@ class OrderModel {
       itemsTotalPrice: user.basket.totalPrice,
       orderTotalPrice: user.basket.totalPrice + deliveryFee,
       status: OrderStatus.pending,
-      type: null,
+      type: orderType,
       voucherList: [],
       voucherAmount: 0,
       isPaid: false,

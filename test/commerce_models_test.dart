@@ -364,7 +364,7 @@ void main() {
         'basket': basketTestData[0]['input'],
       });
       final voucher = VoucherModel.fromMap(voucherTestData[0]['input']);
-      final order3 = OrderModel.fromBasket(user, 6);
+      final order3 = OrderModel.fromBasket(user, 6, null);
 
       expect(order3.itemsTotalPrice, user.basket.totalPrice);
       expect(
@@ -533,6 +533,7 @@ void main() {
   });
 
   test('create_user', () {
+    final now = DateTime.now();
     final user = UserModel(
       address: null,
       basket: BasketModel.emptyBasket(),
@@ -541,7 +542,8 @@ void main() {
       name: 'Google Name',
       uid: '12345',
       isAnonymous: true,
-      createTime: DateTime.now(),
+      createTime: now,
+      lastActiveTime: now,
     );
     final user2 =
         UserModel.fromMap(user.changeEmailReturnMap('newEmail@gne.com'));

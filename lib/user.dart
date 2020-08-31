@@ -14,6 +14,7 @@ class UserModel {
   final AddressModel address;
   final BasketModel basket;
   final DateTime createTime;
+  final DateTime lastActiveTime;
 
   UserModel({
     @required this.uid,
@@ -24,6 +25,7 @@ class UserModel {
     @required this.address,
     @required this.basket,
     @required this.createTime,
+    @required this.lastActiveTime,
   });
 
   static UserModel fromMap(Map<String, dynamic> map) {
@@ -33,8 +35,11 @@ class UserModel {
 
     final itemMapList = List<Map<String, dynamic>>.from(map['basket']);
     final basket = BasketModel.fromMapList(itemMapList);
-    final int timeStamp = map['createTime'] ?? 1597884720000;
-    final createTime = DateTime.fromMillisecondsSinceEpoch(timeStamp);
+    final int createTimeStamp = map['createTime'] ?? 1597884720000;
+    final int lastActiveTimeStamp = map['lastActiveTime'] ?? 1597884720000;
+    final createTime = DateTime.fromMillisecondsSinceEpoch(createTimeStamp);
+    final lastActiveTime =
+        DateTime.fromMillisecondsSinceEpoch(lastActiveTimeStamp);
 
     return UserModel(
       uid: map['uid'],
@@ -45,6 +50,7 @@ class UserModel {
       address: address,
       basket: basket,
       createTime: createTime,
+      lastActiveTime: lastActiveTime,
     );
   }
 
@@ -58,11 +64,12 @@ class UserModel {
       'address': address?.toMap(),
       'basket': basket.toMapList(),
       'createTime': createTime.millisecondsSinceEpoch,
+      'lastActiveTime': lastActiveTime.millisecondsSinceEpoch,
     };
   }
 
   String toString() =>
-      'UserModel(uid: $uid, name: $name, isAnonymous: $isAnonymous, phone: $phone, email: $email, address: ${address.toString()}, basket: ${basket.toString()}, createTime: ${DateFormat('yyyy-MM-dd HH:mm').format(createTime)})';
+      'UserModel(uid: $uid, name: $name, isAnonymous: $isAnonymous, phone: $phone, email: $email, address: ${address.toString()}, basket: ${basket.toString()}, createTime: ${DateFormat('yyyy-MM-dd HH:mm').format(createTime)}, lastActiveTime: ${DateFormat('yyyy-MM-dd HH:mm').format(lastActiveTime)})';
 
   Map<String, dynamic> changeAddressReturnMap(AddressModel newAddress) => {
         ...toMap(),
@@ -92,6 +99,10 @@ class UserModel {
   Map<String, dynamic> removeItemFromBasketReturnMap(ItemModel removedItem) => {
         ...toMap(),
         'basket': basket.removeOneItemReturnMapList(removedItem),
+      };
+  Map<String, dynamic> updateLastActiveTimeReturnMap(ItemModel removedItem) => {
+        ...toMap(),
+        'lastActiveTime': DateTime.now(),
       };
 
   @override
