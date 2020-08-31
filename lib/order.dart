@@ -1,3 +1,4 @@
+import 'package:commerce_models/merchant.dart';
 import 'package:commerce_models/user.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
@@ -21,9 +22,12 @@ class OrderModel {
   final int totalItems;
   final List<VoucherModel> voucherList;
   final String name;
+  final String storeName;
   final String email;
   final String phone;
+  final String storePhone;
   final AddressModel address;
+  final AddressModel storeAddress;
   final num itemsTotalPrice;
   final num voucherAmount;
   final num deliveryFee;
@@ -47,9 +51,12 @@ class OrderModel {
     @required this.type,
     @required this.voucherList,
     @required this.name,
+    @required this.storeName,
     @required this.address,
+    @required this.storeAddress,
     @required this.email,
     @required this.phone,
+    @required this.storePhone,
     @required this.totalItems,
     @required this.itemsTotalPrice,
     @required this.voucherAmount,
@@ -88,6 +95,9 @@ class OrderModel {
     final _address = map['address'] == null
         ? null
         : AddressModel.fromMap(Map<String, dynamic>.from(map['address']));
+    final _storeAddress = map['storeAddress'] == null
+        ? null
+        : AddressModel.fromMap(Map<String, dynamic>.from(map['storeAddress']));
 
     int _totalItems = 0;
     num _itemsTotalPrice = 0;
@@ -113,9 +123,12 @@ class OrderModel {
       status: status,
       type: type,
       name: map['name'],
+      storeName: map['storeName'],
       email: map['email'],
       phone: map['phone'],
+      storePhone: map['storePhone'],
       address: _address,
+      storeAddress: _storeAddress,
       itemList: _itemList,
       voucherList: _voucherList,
       review: _review,
@@ -132,7 +145,13 @@ class OrderModel {
 
   /// create order from basket and user info. this will be used in the order confirmaiton page
   static OrderModel fromBasket(
-      UserModel user, num deliveryFee, OrderType orderType) {
+    UserModel user,
+    MerchantModel merchant,
+    OrderType orderType,
+  ) {
+    final deliveryFee = orderType == OrderType.delivery
+        ? merchant.deliveryFeeStructure.getDeliveryFee(user.basket.totalPrice)
+        : 0;
     return OrderModel(
       uid: null,
       merchantUid: user.basket.merchantUid,
@@ -143,15 +162,18 @@ class OrderModel {
       review: null,
       deliveryFee: deliveryFee,
       name: user.name,
+      storeName: merchant.name,
       address: user.address,
+      storeAddress: merchant.address,
       email: user.email,
       phone: user.phone,
+      storePhone: merchant.phone,
       totalItems: user.basket.quantity,
       itemList: user.basket.itemList,
       itemsTotalPrice: user.basket.totalPrice,
       orderTotalPrice: user.basket.totalPrice + deliveryFee,
       status: OrderStatus.pending,
-      type: orderType,
+      type: null,
       voucherList: [],
       voucherAmount: 0,
       isPaid: false,
@@ -183,6 +205,9 @@ class OrderModel {
       'email': this.email,
       'phone': this.phone,
       'address': this.address?.toMap(),
+      'storeName': this.storeName,
+      'storePhone': this.storePhone,
+      'storeAddress': this.storeAddress?.toMap(),
       'itemList': this.itemList.map((item) => item.toMap()).toList(),
       'voucherList':
           this.voucherList.map((voucher) => voucher.toMap()).toList(),
@@ -226,7 +251,7 @@ class OrderModel {
     final deliveryTimeString = this.deliveryTime == null
         ? null
         : DateFormat('yyyy-MM-dd HH:mm').format(this.deliveryTime);
-    return 'OrderModel(uid: $uid, merchantUid: $merchantUid, note: $note, orderNumber: $orderNumber, status: $status, type: $type, name: $name, email: $email, phone: $phone, address: $address, itemList: $itemList, voucherList: $voucherList, deliveryFee: $deliveryFee, createTime: $createTimeString, deliveryTime: $deliveryTimeString, isPaid: ${isPaid ?? false})';
+    return 'OrderModel(uid: $uid, merchantUid: $merchantUid, note: $note, orderNumber: $orderNumber, status: $status, type: $type, name: $name, email: $email, phone: $phone, address: $address, storeName: $storeName, storePhone: $storePhone, storeAddress: $storeAddress, itemList: $itemList, voucherList: $voucherList, deliveryFee: $deliveryFee, createTime: $createTimeString, deliveryTime: $deliveryTimeString, isPaid: ${isPaid ?? false})';
   }
 
   @override

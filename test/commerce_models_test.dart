@@ -363,21 +363,26 @@ void main() {
         ...Map.from(userTestData[0]['input']),
         'basket': basketTestData[0]['input'],
       });
+      final merchant = MerchantModel.fromMap(merchantTestData[0]['input']);
       final voucher = VoucherModel.fromMap(voucherTestData[0]['input']);
-      final order3 = OrderModel.fromBasket(user, 6, null);
+      final order3 = OrderModel.fromBasket(user, merchant, OrderType.delivery);
 
       expect(order3.itemsTotalPrice, user.basket.totalPrice);
       expect(
           order3.orderTotalPrice, order3.itemsTotalPrice + order3.deliveryFee);
       expect(order3.address, user.address);
+      expect(order3.storeAddress, merchant.address);
       expect(order3.phone, user.phone);
 
-      final order4 = order3.addVoucher(voucher);
-      expect(order4.voucherAmount, voucher.value);
-      expect(order4.orderTotalPrice, order3.orderTotalPrice - voucher.value);
+      final order4 = OrderModel.fromBasket(user, merchant, OrderType.pickup);
+      expect(order4.deliveryFee, 0);
 
-      final order5 = order4.removeVoucher(voucher);
-      expect(order5, order3);
+      final order5 = order3.addVoucher(voucher);
+      expect(order5.voucherAmount, voucher.value);
+      expect(order5.orderTotalPrice, order3.orderTotalPrice - voucher.value);
+
+      final order6 = order5.removeVoucher(voucher);
+      expect(order6, order3);
 
       print('done order section test case $i\n');
     }

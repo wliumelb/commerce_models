@@ -23,6 +23,17 @@ final addressTestData = [
   },
 ];
 
+final storeAddressTestData = {
+  'input': {
+    'unitNumber': '1234',
+    'postcode': '3053',
+    'suburb': 'Cauld',
+    'state': 'VIC',
+    'streetAddress': '333B Cal Road',
+  },
+  'value': '1234 / 333B Cal Road, Cauld, VIC 3053'
+};
+
 final List<AddressModel> addressList = addressTestData.map((map) {
   final inputMap = Map<String, dynamic>.from(map['input']);
   return AddressModel.fromMap(inputMap);
