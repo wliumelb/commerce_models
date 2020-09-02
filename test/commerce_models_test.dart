@@ -319,15 +319,21 @@ void main() {
     }
   });
 
-  test('order type and status', () {
+  test('order type, payment method and order status', () {
     print('test OrderType');
-    final expectedTypes = [OrderType.delivery, OrderType.pickup];
+    final expectedTypes = [
+      OrderType.delivery,
+      OrderType.pickup,
+    ];
     final types = OrderType.values;
     types.forEach((type) {
       expect(expectedTypes.contains(type), true);
       expect(type, OrderType.parse(type.string));
+      expectedTypes.remove(type);
     });
+    expect(expectedTypes.length, 0);
     print('done test OrderType');
+
     print('test OrderStatus');
     final expectedStatuses = [
       OrderStatus.pending,
@@ -339,11 +345,28 @@ void main() {
       OrderStatus.cancelled,
     ];
     final statuses = OrderStatus.values;
-    statuses.forEach((type) {
-      expect(expectedStatuses.contains(type), true);
-      expect(type, OrderStatus.parse(type.string));
+    statuses.forEach((status) {
+      expect(expectedStatuses.contains(status), true);
+      expect(status, OrderStatus.parse(status.string));
+      expectedStatuses.remove(status);
     });
+    expect(expectedStatuses.length, 0);
     print('done test OrderStatus');
+
+    print('test PaymentMethod');
+    final expectedPaymentMethods = [
+      PaymentMethod.cash,
+      PaymentMethod.online,
+      PaymentMethod.transfer,
+    ];
+    final methods = PaymentMethod.values;
+    methods.forEach((method) {
+      expect(expectedPaymentMethods.contains(method), true);
+      expect(method, PaymentMethod.parse(method.string));
+      expectedPaymentMethods.remove(method);
+    });
+    expect(expectedPaymentMethods.length, 0);
+    print('done test PaymentMethod');
   });
 
   test('order', () {
@@ -365,8 +388,10 @@ void main() {
       });
       final merchant = MerchantModel.fromMap(merchantTestData[0]['input']);
       final voucher = VoucherModel.fromMap(voucherTestData[0]['input']);
-      final order3 = OrderModel.fromBasket(user, merchant, OrderType.delivery);
+      final order3 = OrderModel.fromBasket(
+          user, merchant, OrderType.delivery, PaymentMethod.online);
       expect(order3.type, OrderType.delivery);
+      expect(order3.paymentMethod, PaymentMethod.online);
 
       expect(order3.itemsTotalPrice, user.basket.totalPrice);
       expect(
@@ -375,8 +400,10 @@ void main() {
       expect(order3.storeAddress, merchant.address);
       expect(order3.phone, user.phone);
 
-      final order4 = OrderModel.fromBasket(user, merchant, OrderType.pickup);
+      final order4 = OrderModel.fromBasket(
+          user, merchant, OrderType.pickup, PaymentMethod.transfer);
       expect(order4.type, OrderType.pickup);
+      expect(order4.paymentMethod, PaymentMethod.transfer);
       expect(order4.deliveryFee, 0);
 
       final order5 = order3.addVoucher(voucher);

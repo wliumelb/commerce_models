@@ -13,9 +13,8 @@ final merchantTestData = [
       'description': "This is Edwin's shop",
       'phone': '0444444444',
       'email': 'email@email.com',
-      'onlinePaymentAllowed': true,
-      'onlinePaymentRequired': false,
       'orderTypeList': ['delivery', 'pickup'],
+      'paymentMethodList': ['online', 'cash'],
       'address': addressList[0].toMap(),
       'photoUrlList': ['photoUrl1, photoUrl2'],
       'infoList': infoSectionList.map((info) => info.toMap()),
@@ -24,7 +23,7 @@ final merchantTestData = [
       'deliveryFeeStructure': deliveryFeeStructureTestData[0]['input'],
     },
     'value':
-        "MerchantModel(uid: userUid1, name: Edwin, description: This is Edwin's shop, phone: 0444444444, email: email@email.com, onlinePaymentAllowed: true, onlinePaymentRequired: false, orderTypeList: [delivery, pickup], address: ${addressTestData[0]['value']}, photoUrlList: [photoUrl1, photoUrl2], infoList: $infoSectionList, productCategoryList: [fresh, meat], createTime: $dateTimeString, deliveryFeeStructure: ${deliveryFeeStructureTestData[0]['value']})",
+        "MerchantModel(uid: userUid1, name: Edwin, description: This is Edwin's shop, phone: 0444444444, email: email@email.com, orderTypeList: [OrderType.delivery, OrderType.pickup], paymentMethodList: [PaymentMethod.online, PaymentMethod.cash], address: ${addressTestData[0]['value']}, photoUrlList: [photoUrl1, photoUrl2], infoList: $infoSectionList, productCategoryList: [fresh, meat], createTime: $dateTimeString, deliveryFeeStructure: ${deliveryFeeStructureTestData[0]['value']})",
   },
   {
     'input': {
@@ -38,6 +37,6 @@ final merchantTestData = [
       'productCategoryList': [],
     },
     'value':
-        'MerchantModel(uid: uid111, name: Edwin Shop, description: null, phone: null, email: email@email.com, onlinePaymentAllowed: false, onlinePaymentRequired: false, orderTypeList: [], address: null, photoUrlList: [], infoList: [], productCategoryList: [], createTime: 2020-08-20 10:52, deliveryFeeStructure: DeliveryFeeStructure([]))',
+        'MerchantModel(uid: uid111, name: Edwin Shop, description: null, phone: null, email: email@email.com, orderTypeList: [], paymentMethodList: [], address: null, photoUrlList: [], infoList: [], productCategoryList: [], createTime: 2020-08-20 10:52, deliveryFeeStructure: DeliveryFeeStructure([]))',
   }
 ];

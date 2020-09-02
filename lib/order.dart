@@ -37,6 +37,8 @@ class OrderModel {
   final DateTime deliveryTime;
   final ReviewModel review;
 
+  final PaymentMethod paymentMethod;
+
   /// whether or not merchant has received payment; shall be set to yes if paid online
   /// merchant could manually set to true after receiving payment through other means
   final bool isPaid;
@@ -65,12 +67,14 @@ class OrderModel {
     @required this.createTime,
     @required this.deliveryTime,
     @required this.review,
+    @required this.paymentMethod,
     @required this.isPaid,
   });
 
   static OrderModel fromMap(Map<String, dynamic> map) {
     OrderStatus status = OrderStatus.parse(map['status']);
     OrderType type = OrderType.parse(map['type']);
+    PaymentMethod paymentMethod = PaymentMethod.parse(map['paymentMethod']);
     final List<ItemModel> _itemList = List.from(map['itemList'])
         .map((itemMap) => ItemModel.fromMap(Map<String, dynamic>.from(itemMap)))
         .toList();
@@ -139,6 +143,7 @@ class OrderModel {
       deliveryFee: _deliveryFee,
       voucherAmount: _voucherAmount,
       orderTotalPrice: _orderTotalPrice,
+      paymentMethod: paymentMethod,
       isPaid: map['isPaid'] ?? false,
     );
   }
@@ -148,6 +153,7 @@ class OrderModel {
     UserModel user,
     MerchantModel merchant,
     OrderType orderType,
+    PaymentMethod paymentMethod,
   ) {
     final deliveryFee = orderType == OrderType.delivery
         ? merchant.deliveryFeeStructure.getDeliveryFee(user.basket.totalPrice)
@@ -177,6 +183,7 @@ class OrderModel {
       voucherList: [],
       voucherAmount: 0,
       isPaid: false,
+      paymentMethod: paymentMethod,
     );
   }
 
@@ -214,6 +221,7 @@ class OrderModel {
       'deliveryFee': this.deliveryFee,
       'createTime': this.createTime?.millisecondsSinceEpoch,
       'deliveryTime': this.deliveryTime?.millisecondsSinceEpoch,
+      'paymentMethod': this.paymentMethod.string,
       'isPaid': this.isPaid ?? false,
     };
   }
@@ -251,7 +259,7 @@ class OrderModel {
     final deliveryTimeString = this.deliveryTime == null
         ? null
         : DateFormat('yyyy-MM-dd HH:mm').format(this.deliveryTime);
-    return 'OrderModel(uid: $uid, merchantUid: $merchantUid, note: $note, orderNumber: $orderNumber, status: $status, type: $type, name: $name, email: $email, phone: $phone, address: $address, storeName: $storeName, storePhone: $storePhone, storeAddress: $storeAddress, itemList: $itemList, voucherList: $voucherList, deliveryFee: $deliveryFee, createTime: $createTimeString, deliveryTime: $deliveryTimeString, isPaid: ${isPaid ?? false})';
+    return 'OrderModel(uid: $uid, merchantUid: $merchantUid, note: $note, orderNumber: $orderNumber, status: ${status.string}, type: ${type.string}, name: $name, email: $email, phone: $phone, address: $address, storeName: $storeName, storePhone: $storePhone, storeAddress: $storeAddress, itemList: $itemList, voucherList: $voucherList, deliveryFee: $deliveryFee, createTime: $createTimeString, deliveryTime: $deliveryTimeString, paymentMethod: ${paymentMethod.string}, isPaid: ${isPaid ?? false})';
   }
 
   @override
@@ -264,8 +272,8 @@ class OrderModel {
 }
 
 class OrderType {
-  final String _type;
-  const OrderType._(this._type);
+  final String string;
+  const OrderType._(this.string);
 
   static const delivery = OrderType._('delivery');
   static const pickup = OrderType._('pickup');
@@ -288,22 +296,45 @@ class OrderType {
 
   @override
   String toString() {
-    return _type;
+    return 'OrderType.$string';
+  }
+}
+
+class PaymentMethod {
+  final String string;
+  const PaymentMethod._(this.string);
+
+  static const online = PaymentMethod._('online');
+  static const transfer = PaymentMethod._('transfer');
+  static const cash = PaymentMethod._('cash');
+
+  static const values = [online, transfer, cash];
+
+  static PaymentMethod parse(String value) {
+    switch (value) {
+      case 'online':
+        return PaymentMethod.online;
+        break;
+      case 'transfer':
+        return PaymentMethod.transfer;
+        break;
+      case 'cash':
+        return PaymentMethod.cash;
+      default:
+        print('got error, invalid payment type $value');
+        return null;
+    }
   }
 
-  String get string => _type;
   @override
-  bool operator ==(dynamic o) {
-    return o is OrderType && o._type == this._type;
+  String toString() {
+    return 'PaymentMethod.$string';
   }
-
-  @override
-  int get hashCode => this._type.hashCode;
 }
 
 class OrderStatus {
-  final String _status;
-  const OrderStatus._(this._status);
+  final String string;
+  const OrderStatus._(this.string);
 
   static const pending = OrderStatus._('pending');
   static const processing = OrderStatus._('processing');
@@ -354,15 +385,6 @@ class OrderStatus {
 
   @override
   String toString() {
-    return _status;
+    return 'OrderStatus.$string';
   }
-
-  String get string => _status;
-  @override
-  bool operator ==(dynamic o) {
-    return o is OrderStatus && o._status == this._status;
-  }
-
-  @override
-  int get hashCode => this._status.hashCode;
 }

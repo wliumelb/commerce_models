@@ -13,16 +13,11 @@ class MerchantModel {
   final String phone;
   final String email;
 
-  /// if the merchant allow user to make online payment (through Stripe SDK)
-  /// false means merchant only accept other payment methods such as bank transfer, cash on delivery
-  final bool onlinePaymentAllowed;
-
-  /// if the merchant require payemnt to be made when order is submitted
-  /// if false user could submit order and then make payment
-  final bool onlinePaymentRequired;
-
-  /// order types allowed for this merchant
+  /// order types allowed for this merchant e.g. delivery, pickup
   final List<OrderType> orderTypeList;
+
+  /// list of allowed payment methods online, transfer, cash
+  final List<PaymentMethod> paymentMethodList;
   final AddressModel address;
   final List<String> photoUrlList;
   final List<InfoSectionModel> infoList;
@@ -36,9 +31,8 @@ class MerchantModel {
     @required this.description,
     @required this.phone,
     @required this.email,
-    @required this.onlinePaymentAllowed,
-    @required this.onlinePaymentRequired,
     @required this.orderTypeList,
+    @required this.paymentMethodList,
     @required this.address,
     @required this.photoUrlList,
     @required this.infoList,
@@ -62,6 +56,9 @@ class MerchantModel {
     final orderTypeList = List<String>.from(map['orderTypeList'] ?? [])
         .map((str) => OrderType.parse(str))
         .toList();
+    final paymentMethodList = List<String>.from(map['paymentMethodList'] ?? [])
+        .map((str) => PaymentMethod.parse(str))
+        .toList();
     final deliveryFeeStructure = DeliveryFeeStructure.fromMapList(
       List<Map>.from(
         map['deliveryFeeStructure'] ?? [],
@@ -81,14 +78,13 @@ class MerchantModel {
       description: map['description'],
       phone: map['phone'],
       email: map['email'],
-      onlinePaymentAllowed: map['onlinePaymentAllowed'] ?? false,
-      onlinePaymentRequired: map['onlinePaymentRequired'] ?? false,
       address: address,
       photoUrlList: photoUrlList,
       infoList: infoList,
       productCategoryList: productCategoryList,
       createTime: createTime,
       orderTypeList: orderTypeList,
+      paymentMethodList: paymentMethodList,
       deliveryFeeStructure: deliveryFeeStructure,
     );
   }
@@ -100,9 +96,9 @@ class MerchantModel {
       'description': description,
       'phone': phone,
       'email': email,
-      'onlinePaymentAllowed': onlinePaymentAllowed,
-      'onlinePaymentRequired': onlinePaymentRequired,
       'orderTypeList': orderTypeList.map((type) => type.string).toList(),
+      'paymentMethodList':
+          paymentMethodList.map((method) => method.string).toList(),
       'address': address?.toMap(),
       'photoUrlList': photoUrlList,
       'infoList': infoList.map((info) => info.toMap()).toList(),
@@ -113,7 +109,7 @@ class MerchantModel {
   }
 
   String toString() =>
-      'MerchantModel(uid: $uid, name: $name, description: $description, phone: $phone, email: $email, onlinePaymentAllowed: $onlinePaymentAllowed, onlinePaymentRequired: $onlinePaymentRequired, orderTypeList: $orderTypeList, address: $address, photoUrlList: $photoUrlList, infoList: $infoList, productCategoryList: $productCategoryList, createTime: ${DateFormat('yyyy-MM-dd HH:mm').format(createTime)}, deliveryFeeStructure: $deliveryFeeStructure)';
+      'MerchantModel(uid: $uid, name: $name, description: $description, phone: $phone, email: $email, orderTypeList: $orderTypeList, paymentMethodList: $paymentMethodList, address: $address, photoUrlList: $photoUrlList, infoList: $infoList, productCategoryList: $productCategoryList, createTime: ${DateFormat('yyyy-MM-dd HH:mm').format(createTime)}, deliveryFeeStructure: $deliveryFeeStructure)';
 
   Map<String, dynamic> changeAddressReturnMap(AddressModel newAddress) => {
         ...toMap(),
