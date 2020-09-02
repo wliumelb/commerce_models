@@ -5,7 +5,6 @@ class DeliveryFeeStructure {
   DeliveryFeeStructure(List<_Tier> tierList) : _tierList = tierList;
 
   static DeliveryFeeStructure fromMapList(List<Map<String, num>> mapList) {
-    print('map list is $mapList');
     final tierList = mapList
         .map(
           (map) => _Tier(
@@ -17,7 +16,6 @@ class DeliveryFeeStructure {
           ..sort(
             (tier1, tier2) => (tier1.threshold - tier2.threshold).toInt(),
           );
-    print('tier list is $tierList');
     return DeliveryFeeStructure(tierList);
   }
 
