@@ -355,7 +355,8 @@ void main() {
 
     print('test PaymentMethod');
     final expectedPaymentMethods = [
-      PaymentMethod.cash,
+      PaymentMethod.onDelivery,
+      PaymentMethod.inStore,
       PaymentMethod.online,
       PaymentMethod.transfer,
     ];

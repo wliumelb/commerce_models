@@ -14,7 +14,7 @@ final merchantTestData = [
       'phone': '0444444444',
       'email': 'email@email.com',
       'orderTypeList': ['delivery', 'pickup'],
-      'paymentMethodList': ['online', 'cash'],
+      'paymentMethodList': ['Online', 'In Store'],
       'address': addressList[0].toMap(),
       'photoUrlList': ['photoUrl1, photoUrl2'],
       'infoList': infoSectionList.map((info) => info.toMap()),
@@ -23,7 +23,7 @@ final merchantTestData = [
       'deliveryFeeStructure': deliveryFeeStructureTestData[0]['input'],
     },
     'value':
-        "MerchantModel(uid: userUid1, name: Edwin, description: This is Edwin's shop, phone: 0444444444, email: email@email.com, orderTypeList: [OrderType.delivery, OrderType.pickup], paymentMethodList: [PaymentMethod.online, PaymentMethod.cash], address: ${addressTestData[0]['value']}, photoUrlList: [photoUrl1, photoUrl2], infoList: $infoSectionList, productCategoryList: [fresh, meat], createTime: $dateTimeString, deliveryFeeStructure: ${deliveryFeeStructureTestData[0]['value']})",
+        "MerchantModel(uid: userUid1, name: Edwin, description: This is Edwin's shop, phone: 0444444444, email: email@email.com, orderTypeList: [OrderType.delivery, OrderType.pickup], paymentMethodList: [PaymentMethod.Online, PaymentMethod.In Store], address: ${addressTestData[0]['value']}, photoUrlList: [photoUrl1, photoUrl2], infoList: $infoSectionList, productCategoryList: [fresh, meat], createTime: $dateTimeString, deliveryFeeStructure: ${deliveryFeeStructureTestData[0]['value']})",
   },
   {
     'input': {
