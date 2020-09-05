@@ -301,34 +301,41 @@ class OrderType {
 }
 
 class PaymentMethod {
-  final String string;
-  const PaymentMethod._(this.string);
+  final String _val;
+  const PaymentMethod._(this._val);
 
-  static const online = PaymentMethod._('online');
-  static const transfer = PaymentMethod._('transfer');
-  static const cash = PaymentMethod._('cash');
+  static const online = PaymentMethod._('Online');
+  static const transfer = PaymentMethod._('Transfer');
+  static const onDelivery = PaymentMethod._('On Delivery');
+  static const inStore = PaymentMethod._('In Store');
 
-  static const values = [online, transfer, cash];
+  static const values = [online, transfer, onDelivery, inStore];
 
   static PaymentMethod parse(String value) {
-    switch (value) {
+    switch (value.toLowerCase()) {
       case 'online':
         return PaymentMethod.online;
         break;
       case 'transfer':
         return PaymentMethod.transfer;
         break;
-      case 'cash':
-        return PaymentMethod.cash;
+      case 'on delivery':
+        return PaymentMethod.onDelivery;
+        break;
+      case 'in store':
+        return PaymentMethod.inStore;
+        break;
       default:
         print('got error, invalid payment type $value');
         return null;
     }
   }
 
+  String get string => _val;
+
   @override
   String toString() {
-    return 'PaymentMethod.$string';
+    return 'PaymentMethod.$_val';
   }
 }
 
