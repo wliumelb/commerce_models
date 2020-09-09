@@ -1,13 +1,13 @@
 import 'package:flutter/foundation.dart';
 
 class DeliveryFeeStructure {
-  final List<_Tier> _tierList;
-  DeliveryFeeStructure(List<_Tier> tierList) : _tierList = tierList;
+  final List<FeeTier> tierList;
+  DeliveryFeeStructure(this.tierList);
 
   static DeliveryFeeStructure fromMapList(List<Map<String, num>> mapList) {
     final tierList = mapList
         .map(
-          (map) => _Tier(
+          (map) => FeeTier(
             threshold: map['threshold'],
             fee: map['fee'],
           ),
@@ -19,25 +19,25 @@ class DeliveryFeeStructure {
     return DeliveryFeeStructure(tierList);
   }
 
-  List<_Tier> get tiers => [..._tierList];
+  List<FeeTier> get tiers => [...tierList];
 
   num getDeliveryFee(num orderAmount) {
-    final length = _tierList.length;
+    final length = tierList.length;
     if (length == 0) {
       print('got error, delivery fee structure not available');
       return 0;
     }
     for (int i = length - 1; i >= 0; i--) {
-      final tier = _tierList[i];
+      final tier = tierList[i];
       if (orderAmount >= tier.threshold) {
         return tier.fee;
       }
     }
-    return _tierList.first.fee;
+    return tierList.first.fee;
   }
 
   List<Map<String, num>> toMapList() {
-    return _tierList
+    return tierList
         .map(
           (tier) => {'threshold': tier.threshold, 'fee': tier.fee},
         )
@@ -48,7 +48,7 @@ class DeliveryFeeStructure {
     @required num threshold,
     @required num fee,
   }) {
-    if (_tierList.any((tier) =>
+    if (tierList.any((tier) =>
         tier.threshold == threshold ||
         tier.threshold > threshold && tier.fee >= fee ||
         tier.threshold < threshold && tier.fee <= fee)) {
@@ -77,7 +77,7 @@ class DeliveryFeeStructure {
   }
 
   String toString() {
-    return 'DeliveryFeeStructure($_tierList)';
+    return 'DeliveryFeeStructure($tierList)';
   }
 
   @override
@@ -89,10 +89,10 @@ class DeliveryFeeStructure {
   int get hashCode => this.toString().hashCode;
 }
 
-class _Tier {
+class FeeTier {
   num threshold;
   num fee;
-  _Tier({
+  FeeTier({
     @required this.threshold,
     @required this.fee,
   });
