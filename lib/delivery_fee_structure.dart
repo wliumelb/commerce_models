@@ -5,17 +5,10 @@ class DeliveryFeeStructure {
   DeliveryFeeStructure(this.tierList);
 
   static DeliveryFeeStructure fromMapList(List<Map<String, num>> mapList) {
-    final tierList = mapList
-        .map(
-          (map) => FeeTier(
-            threshold: map['threshold'],
-            fee: map['fee'],
-          ),
-        )
-        .toList()
-          ..sort(
-            (tier1, tier2) => (tier1.threshold - tier2.threshold).toInt(),
-          );
+    final tierList = mapList.map(FeeTier.fromMap).toList()
+      ..sort(
+        (tier1, tier2) => (tier1.threshold - tier2.threshold).toInt(),
+      );
     return DeliveryFeeStructure(tierList);
   }
 
@@ -44,31 +37,26 @@ class DeliveryFeeStructure {
         .toList();
   }
 
-  List<Map<String, num>> addTierReturnMap({
-    @required num threshold,
-    @required num fee,
-  }) {
+  List<Map<String, num>> addTierReturnMap(FeeTier addedTier) {
     if (tierList.any((tier) =>
-        tier.threshold == threshold ||
-        tier.threshold > threshold && tier.fee >= fee ||
-        tier.threshold < threshold && tier.fee <= fee)) {
+        tier.threshold == addedTier.threshold ||
+        tier.threshold > addedTier.threshold && tier.fee >= addedTier.fee ||
+        tier.threshold < addedTier.threshold && tier.fee <= addedTier.fee)) {
       print('added tier does not comply with rule');
       return toMapList();
     }
     return [
       ...toMapList(),
       {
-        'threshold': threshold,
-        'fee': fee,
+        'threshold': addedTier.threshold,
+        'fee': addedTier.fee,
       }
     ]..sort((map1, map2) => (map1['threshold'] - map2['threshold']).toInt());
   }
 
-  List<Map<String, num>> removeTierReturnMap({
-    @required num threshold,
-  }) {
+  List<Map<String, num>> removeTierReturnMap(FeeTier removedTier) {
     return tiers
-        .where((tier) => tier.threshold != threshold)
+        .where((tier) => tier.threshold != removedTier.threshold)
         .map((tier) => {
               'threshold': tier.threshold,
               'fee': tier.fee,
@@ -96,6 +84,13 @@ class FeeTier {
     @required this.threshold,
     @required this.fee,
   });
+
+  static FeeTier fromMap(Map<String, dynamic> map) {
+    return FeeTier(
+      threshold: map['threshold'],
+      fee: map['fee'],
+    );
+  }
 
   String toString() {
     return '(threshold: $threshold, fee: $fee)';

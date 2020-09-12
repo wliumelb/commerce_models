@@ -542,12 +542,9 @@ void main() {
         expect(deliveryFeeStructure.getDeliveryFee(test[0]), test[1]);
       });
       print('test adding tier');
-      final addedTier = data['added'] as Map<String, num>;
+      final addedTier = FeeTier.fromMap(data['added'] as Map<String, num>);
       final deliveryFeeStructure3 = DeliveryFeeStructure.fromMapList(
-        deliveryFeeStructure.addTierReturnMap(
-          threshold: addedTier['threshold'],
-          fee: addedTier['fee'],
-        ),
+        deliveryFeeStructure.addTierReturnMap(addedTier),
       );
 
       final List<List<num>> newTests = data['new_tests'];
@@ -557,9 +554,7 @@ void main() {
 
       print('test removing tier');
       final deliveryFeeStructure4 = DeliveryFeeStructure.fromMapList(
-        deliveryFeeStructure3.removeTierReturnMap(
-          threshold: addedTier['threshold'],
-        ),
+        deliveryFeeStructure3.removeTierReturnMap(addedTier),
       );
       expect(deliveryFeeStructure, deliveryFeeStructure4);
 
