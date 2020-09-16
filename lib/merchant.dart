@@ -13,6 +13,9 @@ class MerchantModel {
   final String phone;
   final String email;
 
+  /// the url of store
+  final String url;
+
   /// order types allowed for this merchant e.g. delivery, pickup
   final List<OrderType> orderTypeList;
 
@@ -31,6 +34,7 @@ class MerchantModel {
     @required this.description,
     @required this.phone,
     @required this.email,
+    @required this.url,
     @required this.orderTypeList,
     @required this.paymentMethodList,
     @required this.address,
@@ -78,6 +82,7 @@ class MerchantModel {
       description: map['description'],
       phone: map['phone'],
       email: map['email'],
+      url: map['url'],
       address: address,
       photoUrlList: photoUrlList,
       infoList: infoList,
@@ -96,6 +101,7 @@ class MerchantModel {
       'description': description,
       'phone': phone,
       'email': email,
+      'url': url,
       'orderTypeList': orderTypeList.map((type) => type.string).toList(),
       'paymentMethodList':
           paymentMethodList.map((method) => method.string).toList(),
@@ -109,7 +115,7 @@ class MerchantModel {
   }
 
   String toString() =>
-      'MerchantModel(uid: $uid, name: $name, description: $description, phone: $phone, email: $email, orderTypeList: $orderTypeList, paymentMethodList: $paymentMethodList, address: $address, photoUrlList: $photoUrlList, infoList: $infoList, productCategoryList: $productCategoryList, createTime: ${DateFormat('yyyy-MM-dd HH:mm').format(createTime)}, deliveryFeeStructure: $deliveryFeeStructure)';
+      'MerchantModel(uid: $uid, name: $name, description: $description, phone: $phone, email: $email, url: $url, orderTypeList: $orderTypeList, paymentMethodList: $paymentMethodList, address: $address, photoUrlList: $photoUrlList, infoList: $infoList, productCategoryList: $productCategoryList, createTime: ${DateFormat('yyyy-MM-dd HH:mm').format(createTime)}, deliveryFeeStructure: $deliveryFeeStructure)';
 
   Map<String, dynamic> changeAddressReturnMap(AddressModel newAddress) => {
         ...toMap(),
