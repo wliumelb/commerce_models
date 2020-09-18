@@ -16,6 +16,10 @@ class MerchantModel {
   /// the url of store
   final String url;
 
+  /// the url of the icon photo of the merchant
+  /// this will be used as the icon of the web app and mobile phone app
+  final String icon;
+
   /// order types allowed for this merchant e.g. delivery, pickup
   final List<OrderType> orderTypeList;
 
@@ -35,6 +39,7 @@ class MerchantModel {
     @required this.phone,
     @required this.email,
     @required this.url,
+    @required this.icon,
     @required this.orderTypeList,
     @required this.paymentMethodList,
     @required this.address,
@@ -83,6 +88,7 @@ class MerchantModel {
       phone: map['phone'],
       email: map['email'],
       url: map['url'],
+      icon: map['icon'],
       address: address,
       photoUrlList: photoUrlList,
       infoList: infoList,
@@ -102,6 +108,7 @@ class MerchantModel {
       'phone': phone,
       'email': email,
       'url': url,
+      'icon': icon,
       'orderTypeList': orderTypeList.map((type) => type.string).toList(),
       'paymentMethodList':
           paymentMethodList.map((method) => method.string).toList(),
@@ -115,7 +122,7 @@ class MerchantModel {
   }
 
   String toString() =>
-      'MerchantModel(uid: $uid, name: $name, description: $description, phone: $phone, email: $email, url: $url, orderTypeList: $orderTypeList, paymentMethodList: $paymentMethodList, address: $address, photoUrlList: $photoUrlList, infoList: $infoList, productCategoryList: $productCategoryList, createTime: ${DateFormat('yyyy-MM-dd HH:mm').format(createTime)}, deliveryFeeStructure: $deliveryFeeStructure)';
+      'MerchantModel(uid: $uid, name: $name, description: $description, phone: $phone, email: $email, url: $url, icon: $icon, orderTypeList: $orderTypeList, paymentMethodList: $paymentMethodList, address: $address, photoUrlList: $photoUrlList, infoList: $infoList, productCategoryList: $productCategoryList, createTime: ${DateFormat('yyyy-MM-dd HH:mm').format(createTime)}, deliveryFeeStructure: $deliveryFeeStructure)';
 
   Map<String, dynamic> changeAddressReturnMap(AddressModel newAddress) => {
         ...toMap(),

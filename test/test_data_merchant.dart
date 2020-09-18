@@ -14,6 +14,7 @@ final merchantTestData = [
       'phone': '0444444444',
       'email': 'email@email.com',
       'url': 'dummy.group.net.au',
+      'icon': 's3.awsamazon.com/icon',
       'orderTypeList': ['delivery', 'pickup'],
       'paymentMethodList': ['Online', 'In Store'],
       'address': addressList[0].toMap(),
@@ -24,7 +25,7 @@ final merchantTestData = [
       'deliveryFeeStructure': deliveryFeeStructureTestData[0]['input'],
     },
     'value':
-        "MerchantModel(uid: userUid1, name: Edwin, description: This is Edwin's shop, phone: 0444444444, email: email@email.com, url: dummy.group.net.au, orderTypeList: [OrderType.delivery, OrderType.pickup], paymentMethodList: [PaymentMethod.Online, PaymentMethod.In Store], address: ${addressTestData[0]['value']}, photoUrlList: [photoUrl1, photoUrl2], infoList: $infoSectionList, productCategoryList: [fresh, meat], createTime: $dateTimeString, deliveryFeeStructure: ${deliveryFeeStructureTestData[0]['value']})",
+        "MerchantModel(uid: userUid1, name: Edwin, description: This is Edwin's shop, phone: 0444444444, email: email@email.com, url: dummy.group.net.au, icon: s3.awsamazon.com/icon, orderTypeList: [OrderType.delivery, OrderType.pickup], paymentMethodList: [PaymentMethod.Online, PaymentMethod.In Store], address: ${addressTestData[0]['value']}, photoUrlList: [photoUrl1, photoUrl2], infoList: $infoSectionList, productCategoryList: [fresh, meat], createTime: $dateTimeString, deliveryFeeStructure: ${deliveryFeeStructureTestData[0]['value']})",
   },
   {
     'input': {
@@ -38,6 +39,6 @@ final merchantTestData = [
       'productCategoryList': [],
     },
     'value':
-        'MerchantModel(uid: uid111, name: Edwin Shop, description: null, phone: null, email: email@email.com, url: null, orderTypeList: [], paymentMethodList: [], address: null, photoUrlList: [], infoList: [], productCategoryList: [], createTime: 2020-08-20 10:52, deliveryFeeStructure: DeliveryFeeStructure([]))',
+        'MerchantModel(uid: uid111, name: Edwin Shop, description: null, phone: null, email: email@email.com, url: null, icon: null, orderTypeList: [], paymentMethodList: [], address: null, photoUrlList: [], infoList: [], productCategoryList: [], createTime: 2020-08-20 10:52, deliveryFeeStructure: DeliveryFeeStructure([]))',
   }
 ];
