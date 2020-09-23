@@ -13,8 +13,8 @@ class MerchantModel {
   final String phone;
   final String email;
 
-  /// the url of store
-  final String url;
+  /// the domain name of store
+  final String domainName;
 
   /// the url of the icon photo of the merchant
   /// this will be used as the icon of the web app and mobile phone app
@@ -38,7 +38,7 @@ class MerchantModel {
     @required this.description,
     @required this.phone,
     @required this.email,
-    @required this.url,
+    @required this.domainName,
     @required this.icon,
     @required this.orderTypeList,
     @required this.paymentMethodList,
@@ -87,7 +87,7 @@ class MerchantModel {
       description: map['description'],
       phone: map['phone'],
       email: map['email'],
-      url: map['url'],
+      domainName: map['domainName'],
       icon: map['icon'],
       address: address,
       photoUrlList: photoUrlList,
@@ -107,7 +107,7 @@ class MerchantModel {
       'description': description,
       'phone': phone,
       'email': email,
-      'url': url,
+      'domainName': domainName,
       'icon': icon,
       'orderTypeList': orderTypeList.map((type) => type.string).toList(),
       'paymentMethodList':
@@ -122,7 +122,7 @@ class MerchantModel {
   }
 
   String toString() =>
-      'MerchantModel(uid: $uid, name: $name, description: $description, phone: $phone, email: $email, url: $url, icon: $icon, orderTypeList: $orderTypeList, paymentMethodList: $paymentMethodList, address: $address, photoUrlList: $photoUrlList, infoList: $infoList, productCategoryList: $productCategoryList, createTime: ${DateFormat('yyyy-MM-dd HH:mm').format(createTime)}, deliveryFeeStructure: $deliveryFeeStructure)';
+      'MerchantModel(uid: $uid, name: $name, description: $description, phone: $phone, email: $email, domainName: $domainName, icon: $icon, orderTypeList: $orderTypeList, paymentMethodList: $paymentMethodList, address: $address, photoUrlList: $photoUrlList, infoList: $infoList, productCategoryList: $productCategoryList, createTime: ${DateFormat('yyyy-MM-dd HH:mm').format(createTime)}, deliveryFeeStructure: $deliveryFeeStructure)';
 
   Map<String, dynamic> changeAddressReturnMap(AddressModel newAddress) => {
         ...toMap(),
