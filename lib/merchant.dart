@@ -25,6 +25,7 @@ class MerchantModel {
 
   /// list of allowed payment methods online, transfer, cash
   final List<PaymentMethod> paymentMethodList;
+  final String stripeAccountId;
   final AddressModel address;
   final List<String> photoUrlList;
   final List<InfoSectionModel> infoList;
@@ -42,6 +43,7 @@ class MerchantModel {
     @required this.icon,
     @required this.orderTypeList,
     @required this.paymentMethodList,
+    @required this.stripeAccountId,
     @required this.address,
     @required this.photoUrlList,
     @required this.infoList,
@@ -89,6 +91,7 @@ class MerchantModel {
       email: map['email'],
       domainName: map['domainName'],
       icon: map['icon'],
+      stripeAccountId: map['stripeAccountId'],
       address: address,
       photoUrlList: photoUrlList,
       infoList: infoList,
@@ -109,6 +112,7 @@ class MerchantModel {
       'email': email,
       'domainName': domainName,
       'icon': icon,
+      'stripeAccountId': stripeAccountId,
       'orderTypeList': orderTypeList.map((type) => type.string).toList(),
       'paymentMethodList':
           paymentMethodList.map((method) => method.string).toList(),
@@ -122,7 +126,7 @@ class MerchantModel {
   }
 
   String toString() =>
-      'MerchantModel(uid: $uid, name: $name, description: $description, phone: $phone, email: $email, domainName: $domainName, icon: $icon, orderTypeList: $orderTypeList, paymentMethodList: $paymentMethodList, address: $address, photoUrlList: $photoUrlList, infoList: $infoList, productCategoryList: $productCategoryList, createTime: ${DateFormat('yyyy-MM-dd HH:mm').format(createTime)}, deliveryFeeStructure: $deliveryFeeStructure)';
+      'MerchantModel(uid: $uid, name: $name, description: $description, phone: $phone, email: $email, domainName: $domainName, icon: $icon, stripeAccountId: $stripeAccountId, orderTypeList: $orderTypeList, paymentMethodList: $paymentMethodList, address: $address, photoUrlList: $photoUrlList, infoList: $infoList, productCategoryList: $productCategoryList, createTime: ${DateFormat('yyyy-MM-dd HH:mm').format(createTime)}, deliveryFeeStructure: $deliveryFeeStructure)';
 
   Map<String, dynamic> changeAddressReturnMap(AddressModel newAddress) => {
         ...toMap(),

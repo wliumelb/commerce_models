@@ -38,6 +38,8 @@ class OrderModel {
   final ReviewModel review;
 
   final PaymentMethod paymentMethod;
+  // stripe payment id
+  final String paymentId;
 
   /// whether or not merchant has received payment; shall be set to yes if paid online
   /// merchant could manually set to true after receiving payment through other means
@@ -68,6 +70,7 @@ class OrderModel {
     @required this.deliveryTime,
     @required this.review,
     @required this.paymentMethod,
+    @required this.paymentId, 
     @required this.isPaid,
   });
 
@@ -144,6 +147,7 @@ class OrderModel {
       voucherAmount: _voucherAmount,
       orderTotalPrice: _orderTotalPrice,
       paymentMethod: paymentMethod,
+      paymentId: map['paymentId'],
       isPaid: map['isPaid'] ?? false,
     );
   }
@@ -184,6 +188,7 @@ class OrderModel {
       voucherAmount: 0,
       isPaid: false,
       paymentMethod: paymentMethod,
+      paymentId: null,
     );
   }
 
@@ -222,6 +227,7 @@ class OrderModel {
       'createTime': this.createTime?.millisecondsSinceEpoch,
       'deliveryTime': this.deliveryTime?.millisecondsSinceEpoch,
       'paymentMethod': this.paymentMethod.string,
+      'paymentId': this.paymentId,
       'isPaid': this.isPaid ?? false,
     };
   }
@@ -259,7 +265,7 @@ class OrderModel {
     final deliveryTimeString = this.deliveryTime == null
         ? null
         : DateFormat('yyyy-MM-dd HH:mm').format(this.deliveryTime);
-    return 'OrderModel(uid: $uid, merchantUid: $merchantUid, note: $note, orderNumber: $orderNumber, status: ${status.string}, type: ${type.string}, name: $name, email: $email, phone: $phone, address: $address, storeName: $storeName, storePhone: $storePhone, storeAddress: $storeAddress, itemList: $itemList, voucherList: $voucherList, deliveryFee: $deliveryFee, createTime: $createTimeString, deliveryTime: $deliveryTimeString, paymentMethod: ${paymentMethod.string}, isPaid: ${isPaid ?? false})';
+    return 'OrderModel(uid: $uid, merchantUid: $merchantUid, note: $note, orderNumber: $orderNumber, status: ${status.string}, type: ${type.string}, name: $name, email: $email, phone: $phone, address: $address, storeName: $storeName, storePhone: $storePhone, storeAddress: $storeAddress, itemList: $itemList, voucherList: $voucherList, deliveryFee: $deliveryFee, createTime: $createTimeString, deliveryTime: $deliveryTimeString, paymentMethod: ${paymentMethod.string}, paymentId: $paymentId, isPaid: ${isPaid ?? false})';
   }
 
   @override
