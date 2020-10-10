@@ -70,7 +70,7 @@ class OrderModel {
     @required this.deliveryTime,
     @required this.review,
     @required this.paymentMethod,
-    @required this.paymentId, 
+    @required this.paymentId,
     @required this.isPaid,
   });
 
@@ -106,22 +106,6 @@ class OrderModel {
         ? null
         : AddressModel.fromMap(Map<String, dynamic>.from(map['storeAddress']));
 
-    int _totalItems = 0;
-    num _itemsTotalPrice = 0;
-    num _voucherAmount = 0;
-    final num _deliveryFee = map['deliveryFee'];
-
-    _itemList.forEach((item) {
-      _totalItems += item.quantity;
-      _itemsTotalPrice += item.quantity * item.price;
-    });
-
-    _voucherList.forEach((voucher) {
-      _voucherAmount += voucher.value;
-    });
-
-    final _orderTotalPrice = _itemsTotalPrice + _deliveryFee - _voucherAmount;
-
     return OrderModel(
       uid: map['uid'],
       merchantUid: map['merchantUid'],
@@ -141,11 +125,11 @@ class OrderModel {
       review: _review,
       createTime: _createTime,
       deliveryTime: _deliveryTime,
-      totalItems: _totalItems,
-      itemsTotalPrice: _itemsTotalPrice,
-      deliveryFee: _deliveryFee,
-      voucherAmount: _voucherAmount,
-      orderTotalPrice: _orderTotalPrice,
+      totalItems: map['totalItems'],
+      itemsTotalPrice: map['itemsTotalPrice'],
+      deliveryFee: map['deliveryFee'],
+      voucherAmount: map['voucherAmount'],
+      orderTotalPrice: map['orderTotalPrice'],
       paymentMethod: paymentMethod,
       paymentId: map['paymentId'],
       isPaid: map['isPaid'] ?? false,
@@ -229,6 +213,10 @@ class OrderModel {
       'paymentMethod': this.paymentMethod.string,
       'paymentId': this.paymentId,
       'isPaid': this.isPaid ?? false,
+      'totalItems': this.totalItems,
+      'voucherAmount': this.voucherAmount,
+      'itemsTotalPrice': this.itemsTotalPrice,
+      'orderTotalPrice': this.orderTotalPrice,
     };
   }
 
@@ -243,6 +231,8 @@ class OrderModel {
     return OrderModel.fromMap({
       ...toMap(),
       'voucherList': voucherMapList,
+      'voucherAmount': voucherAmount + addedVoucher.value,
+      'orderTotalPrice': orderTotalPrice - addedVoucher.value,
     });
   }
 
@@ -255,6 +245,8 @@ class OrderModel {
     return OrderModel.fromMap({
       ...toMap(),
       'voucherList': voucherMapList,
+      'voucherAmount': voucherAmount - removedVoucher.value,
+      'orderTotalPrice': orderTotalPrice + removedVoucher.value
     });
   }
 
