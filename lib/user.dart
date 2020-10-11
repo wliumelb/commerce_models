@@ -7,6 +7,7 @@ import 'address.dart';
 
 class UserModel {
   final String uid;
+  final String stripeCustomerId;
   final String name;
   final bool isAnonymous;
   final String phone;
@@ -18,6 +19,7 @@ class UserModel {
 
   UserModel({
     @required this.uid,
+    @required this.stripeCustomerId,
     @required this.name,
     @required this.isAnonymous,
     @required this.phone,
@@ -43,6 +45,7 @@ class UserModel {
 
     return UserModel(
       uid: map['uid'],
+      stripeCustomerId: map['stripeCustomerId'],
       name: map['name'],
       isAnonymous: map['isAnonymous'],
       phone: map['phone'],
@@ -57,6 +60,7 @@ class UserModel {
   Map<String, dynamic> toMap() {
     return {
       'uid': uid,
+      'stripeCustomerId': stripeCustomerId,
       'name': name,
       'isAnonymous': isAnonymous,
       'phone': phone,
@@ -69,7 +73,7 @@ class UserModel {
   }
 
   String toString() =>
-      'UserModel(uid: $uid, name: $name, isAnonymous: $isAnonymous, phone: $phone, email: $email, address: ${address.toString()}, basket: ${basket.toString()}, createTime: ${DateFormat('yyyy-MM-dd HH:mm').format(createTime)}, lastActiveTime: ${DateFormat('yyyy-MM-dd HH:mm').format(lastActiveTime)})';
+      'UserModel(uid: $uid, stripeCustomerId: $stripeCustomerId, name: $name, isAnonymous: $isAnonymous, phone: $phone, email: $email, address: ${address.toString()}, basket: ${basket.toString()}, createTime: ${DateFormat('yyyy-MM-dd HH:mm').format(createTime)}, lastActiveTime: ${DateFormat('yyyy-MM-dd HH:mm').format(lastActiveTime)})';
 
   Map<String, dynamic> changeAddressReturnMap(AddressModel newAddress) => {
         ...toMap(),

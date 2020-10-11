@@ -11,6 +11,7 @@ final userTestData = [
   {
     'input': {
       'uid': 'userUid1',
+      'stripeCustomerId': 'sp_123',
       'name': 'Edwin',
       'isAnonymous': false,
       'phone': '0444444444',
@@ -21,7 +22,7 @@ final userTestData = [
       'lastActiveTime': timestamp2,
     },
     'value':
-        'UserModel(uid: userUid1, name: Edwin, isAnonymous: false, phone: 0444444444, email: email@email.com, address: ${addressTestData[0]['value']}, basket: ${basketTestData[0]['value']}, createTime: $dateTimeString, lastActiveTime: $dateTimeString2)',
+        'UserModel(uid: userUid1, stripeCustomerId: sp_123, name: Edwin, isAnonymous: false, phone: 0444444444, email: email@email.com, address: ${addressTestData[0]['value']}, basket: ${basketTestData[0]['value']}, createTime: $dateTimeString, lastActiveTime: $dateTimeString2)',
   },
   {
     'input': {
@@ -34,6 +35,6 @@ final userTestData = [
       'basket': [],
     },
     'value':
-        'UserModel(uid: userUid1, name: Edwin, isAnonymous: true, phone: null, email: null, address: null, basket: BasketModel(itemList: [], quantity: 0, totalPrice: 0), createTime: 2020-08-20 10:52, lastActiveTime: 2020-08-20 10:52)',
+        'UserModel(uid: userUid1, stripeCustomerId: null, name: Edwin, isAnonymous: true, phone: null, email: null, address: null, basket: BasketModel(itemList: [], quantity: 0, totalPrice: 0), createTime: 2020-08-20 10:52, lastActiveTime: 2020-08-20 10:52)',
   }
 ];

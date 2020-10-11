@@ -571,6 +571,7 @@ void main() {
       phone: '0129292',
       name: 'Google Name',
       uid: '12345',
+      stripeCustomerId: 'sp_123',
       isAnonymous: true,
       createTime: now,
       lastActiveTime: now,
