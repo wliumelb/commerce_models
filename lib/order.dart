@@ -359,6 +359,10 @@ class OrderStatus {
     cancelled
   ];
 
+  static const active = [pending, processing, delivering, ready];
+
+  static const finished = [completed, reviewed, cancelled];
+
   static OrderStatus parse(String value) {
     switch (value) {
       case 'pending':
