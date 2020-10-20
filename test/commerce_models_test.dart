@@ -389,10 +389,16 @@ void main() {
       });
       final merchant = MerchantModel.fromMap(merchantTestData[0]['input']);
       final voucher = VoucherModel.fromMap(voucherTestData[0]['input']);
-      final order3 = OrderModel.fromBasket(
-          user, merchant, OrderType.delivery, PaymentMethod.online);
+      final order3 = OrderModel.create(
+        orderUid: 'uid1234',
+        user: user,
+        merchant: merchant,
+        orderType: OrderType.delivery,
+        paymentMethod: PaymentMethod.online,
+      );
       expect(order3.type, OrderType.delivery);
       expect(order3.paymentMethod, PaymentMethod.online);
+      expect(order3.uid, 'uid1234');
 
       expect(order3.itemsTotalPrice, user.basket.totalPrice);
       expect(
@@ -401,8 +407,14 @@ void main() {
       expect(order3.storeAddress, merchant.address);
       expect(order3.phone, user.phone);
 
-      final order4 = OrderModel.fromBasket(
-          user, merchant, OrderType.pickup, PaymentMethod.transfer);
+      final order4 = OrderModel.create(
+        orderUid: 'uid444',
+        user: user,
+        merchant: merchant,
+        orderType: OrderType.pickup,
+        paymentMethod: PaymentMethod.transfer,
+      );
+      expect(order4.uid, 'uid444');
       expect(order4.type, OrderType.pickup);
       expect(order4.paymentMethod, PaymentMethod.transfer);
       expect(order4.deliveryFee, 0);

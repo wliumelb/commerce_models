@@ -137,17 +137,18 @@ class OrderModel {
   }
 
   /// create order from basket and user info. this will be used in the order confirmaiton page
-  static OrderModel fromBasket(
-    UserModel user,
-    MerchantModel merchant,
-    OrderType orderType,
-    PaymentMethod paymentMethod,
-  ) {
+  static OrderModel create({
+    @required UserModel user,
+    @required MerchantModel merchant,
+    @required OrderType orderType,
+    @required PaymentMethod paymentMethod,
+    @required String orderUid,
+  }) {
     final deliveryFee = orderType == OrderType.delivery
         ? merchant.deliveryFeeStructure.getDeliveryFee(user.basket.totalPrice)
         : 0;
     return OrderModel(
-      uid: null,
+      uid: orderUid,
       merchantUid: user.basket.merchantUid,
       note: '',
       orderNumber: null,
