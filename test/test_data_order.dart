@@ -7,6 +7,7 @@ final orderTestData = [
     'input': {
       'uid': 'orderUid1',
       'merchantUid': 'merchant1',
+      'stripeAccountId': 'test-1234',
       'note': 'leave at the door',
       'orderNumber': 1234,
       'status': 'processing',
@@ -27,7 +28,7 @@ final orderTestData = [
       'paymentId': '12345',
     },
     'value':
-        "OrderModel(uid: orderUid1, merchantUid: merchant1, note: leave at the door, orderNumber: 1234, status: processing, type: delivery, name: Edwin, email: edl@gmail.com, phone: 0412345678, address: ${addressTestData[0]['value']}, storeName: Allganic, storePhone: 0481717171, storeAddress: ${storeAddressTestData['value']}, itemList: ${basketModelList[0].itemList}, voucherList: [${voucherTestData[0]['value']}], deliveryFee: 6, createTime: 2020-08-02 22:10, deliveryTime: 2020-08-04 08:00, paymentMethod: Online, paymentId: 12345, isPaid: false)",
+        "OrderModel(uid: orderUid1, merchantUid: merchant1, stripeAccountId: test-1234, note: leave at the door, orderNumber: 1234, status: processing, type: delivery, name: Edwin, email: edl@gmail.com, phone: 0412345678, address: ${addressTestData[0]['value']}, storeName: Allganic, storePhone: 0481717171, storeAddress: ${storeAddressTestData['value']}, itemList: ${basketModelList[0].itemList}, voucherList: [${voucherTestData[0]['value']}], deliveryFee: 6, createTime: 2020-08-02 22:10, deliveryTime: 2020-08-04 08:00, paymentMethod: Online, paymentId: 12345, isPaid: false)",
   },
   {
     'input': {
@@ -52,6 +53,6 @@ final orderTestData = [
       'paymentMethod': 'In Store',
     },
     'value':
-        "OrderModel(uid: orderUid1, merchantUid: merchant1, note: extra hot please, orderNumber: 1234, status: pending, type: pickup, name: Edwin, email: null, phone: 0412345678, address: null, storeName: Allganic, storePhone: 0481717171, storeAddress: ${storeAddressTestData['value']}, itemList: ${basketModelList[0].itemList}, voucherList: [${voucherTestData[0]['value']}], deliveryFee: 6, createTime: 2020-08-02 22:10, deliveryTime: null, paymentMethod: In Store, paymentId: null, isPaid: false)",
+        "OrderModel(uid: orderUid1, merchantUid: merchant1, stripeAccountId: null, note: extra hot please, orderNumber: 1234, status: pending, type: pickup, name: Edwin, email: null, phone: 0412345678, address: null, storeName: Allganic, storePhone: 0481717171, storeAddress: ${storeAddressTestData['value']}, itemList: ${basketModelList[0].itemList}, voucherList: [${voucherTestData[0]['value']}], deliveryFee: 6, createTime: 2020-08-02 22:10, deliveryTime: null, paymentMethod: In Store, paymentId: null, isPaid: false)",
   }
 ];

@@ -13,6 +13,9 @@ class OrderModel {
   final String uid;
   final String merchantUid;
 
+  /// the connected account id of the merchant
+  final String stripeAccountId;
+
   /// a brief note from the user to merchant
   final String note;
 
@@ -48,6 +51,7 @@ class OrderModel {
   OrderModel({
     @required this.uid,
     @required this.merchantUid,
+    @required this.stripeAccountId,
     @required this.note,
     @required this.orderNumber,
     @required this.itemList,
@@ -109,6 +113,7 @@ class OrderModel {
     return OrderModel(
       uid: map['uid'],
       merchantUid: map['merchantUid'],
+      stripeAccountId: map['stripeAccountId'],
       note: map['note'],
       orderNumber: map['orderNumber'],
       status: status,
@@ -150,6 +155,7 @@ class OrderModel {
     return OrderModel(
       uid: orderUid,
       merchantUid: user.basket.merchantUid,
+      stripeAccountId: merchant.stripeAccountId,
       note: '',
       orderNumber: null,
       createTime: null,
@@ -194,6 +200,7 @@ class OrderModel {
     return {
       'uid': this.uid,
       'merchantUid': this.merchantUid,
+      'stripeAccountId': this.stripeAccountId,
       'note': this.note,
       'orderNumber': this.orderNumber,
       'status': this.status?.string,
@@ -258,7 +265,7 @@ class OrderModel {
     final deliveryTimeString = this.deliveryTime == null
         ? null
         : DateFormat('yyyy-MM-dd HH:mm').format(this.deliveryTime);
-    return 'OrderModel(uid: $uid, merchantUid: $merchantUid, note: $note, orderNumber: $orderNumber, status: ${status.string}, type: ${type.string}, name: $name, email: $email, phone: $phone, address: $address, storeName: $storeName, storePhone: $storePhone, storeAddress: $storeAddress, itemList: $itemList, voucherList: $voucherList, deliveryFee: $deliveryFee, createTime: $createTimeString, deliveryTime: $deliveryTimeString, paymentMethod: ${paymentMethod.string}, paymentId: $paymentId, isPaid: ${isPaid ?? false})';
+    return 'OrderModel(uid: $uid, merchantUid: $merchantUid, stripeAccountId: $stripeAccountId, note: $note, orderNumber: $orderNumber, status: ${status.string}, type: ${type.string}, name: $name, email: $email, phone: $phone, address: $address, storeName: $storeName, storePhone: $storePhone, storeAddress: $storeAddress, itemList: $itemList, voucherList: $voucherList, deliveryFee: $deliveryFee, createTime: $createTimeString, deliveryTime: $deliveryTimeString, paymentMethod: ${paymentMethod.string}, paymentId: $paymentId, isPaid: ${isPaid ?? false})';
   }
 
   @override

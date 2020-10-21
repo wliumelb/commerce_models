@@ -399,6 +399,7 @@ void main() {
       expect(order3.type, OrderType.delivery);
       expect(order3.paymentMethod, PaymentMethod.online);
       expect(order3.uid, 'uid1234');
+      expect(order3.stripeAccountId, merchant.stripeAccountId);
 
       expect(order3.itemsTotalPrice, user.basket.totalPrice);
       expect(
