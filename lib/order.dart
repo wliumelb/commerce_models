@@ -438,7 +438,7 @@ class PaymentStatus {
         return PaymentStatus.cancelled;
         break;
       default:
-        print('got error, invalid order status $value');
+        print('got error, invalid payment status $value');
         return null;
     }
   }
