@@ -46,7 +46,7 @@ class OrderModel {
 
   /// whether or not merchant has received payment; shall be set to yes if paid online
   /// merchant could manually set to true after receiving payment through other means
-  final bool isPaid;
+  final PaymentStatus paymentStatus;
 
   OrderModel({
     @required this.uid,
@@ -75,13 +75,14 @@ class OrderModel {
     @required this.review,
     @required this.paymentMethod,
     @required this.paymentId,
-    @required this.isPaid,
+    @required this.paymentStatus,
   });
 
   static OrderModel fromMap(Map<String, dynamic> map) {
     OrderStatus status = OrderStatus.parse(map['status']);
     OrderType type = OrderType.parse(map['type']);
     PaymentMethod paymentMethod = PaymentMethod.parse(map['paymentMethod']);
+    PaymentStatus  paymentStatus = PaymentStatus.parse(map['paymentStatus']);
     final List<ItemModel> _itemList = List.from(map['itemList'])
         .map((itemMap) => ItemModel.fromMap(Map<String, dynamic>.from(itemMap)))
         .toList();
@@ -137,7 +138,7 @@ class OrderModel {
       orderTotalPrice: map['orderTotalPrice'],
       paymentMethod: paymentMethod,
       paymentId: map['paymentId'],
-      isPaid: map['isPaid'] ?? false,
+      paymentStatus: paymentStatus,
     );
   }
 
@@ -177,7 +178,7 @@ class OrderModel {
       type: orderType,
       voucherList: [],
       voucherAmount: 0,
-      isPaid: false,
+      paymentStatus: paymentMethod == PaymentMethod.online ? PaymentStatus.processing : PaymentStatus.pending,
       paymentMethod: paymentMethod,
       paymentId: null,
     );
@@ -220,7 +221,7 @@ class OrderModel {
       'deliveryTime': this.deliveryTime?.millisecondsSinceEpoch,
       'paymentMethod': this.paymentMethod.string,
       'paymentId': this.paymentId,
-      'isPaid': this.isPaid ?? false,
+      'paymentStatus': this.paymentStatus.string,
       'totalItems': this.totalItems,
       'voucherAmount': this.voucherAmount,
       'itemsTotalPrice': this.itemsTotalPrice,
@@ -265,7 +266,7 @@ class OrderModel {
     final deliveryTimeString = this.deliveryTime == null
         ? null
         : DateFormat('yyyy-MM-dd HH:mm').format(this.deliveryTime);
-    return 'OrderModel(uid: $uid, merchantUid: $merchantUid, stripeAccountId: $stripeAccountId, note: $note, orderNumber: $orderNumber, status: ${status.string}, type: ${type.string}, name: $name, email: $email, phone: $phone, address: $address, storeName: $storeName, storePhone: $storePhone, storeAddress: $storeAddress, itemList: $itemList, voucherList: $voucherList, deliveryFee: $deliveryFee, createTime: $createTimeString, deliveryTime: $deliveryTimeString, paymentMethod: ${paymentMethod.string}, paymentId: $paymentId, isPaid: ${isPaid ?? false})';
+    return 'OrderModel(uid: $uid, merchantUid: $merchantUid, stripeAccountId: $stripeAccountId, note: $note, orderNumber: $orderNumber, status: ${status.string}, type: ${type.string}, name: $name, email: $email, phone: $phone, address: $address, storeName: $storeName, storePhone: $storePhone, storeAddress: $storeAddress, itemList: $itemList, voucherList: $voucherList, deliveryFee: $deliveryFee, createTime: $createTimeString, deliveryTime: $deliveryTimeString, paymentMethod: ${paymentMethod.string}, paymentId: $paymentId, paymentStatus: ${paymentStatus.string})';
   }
 
   @override
@@ -403,5 +404,47 @@ class OrderStatus {
   @override
   String toString() {
     return 'OrderStatus.$string';
+  }
+}
+
+class PaymentStatus {
+  final String string;
+  const PaymentStatus._(this.string);
+
+  static const pending = PaymentStatus._('pending');
+  static const processing = PaymentStatus._('processing');
+  static const succeeded = PaymentStatus._('succeeded');
+  static const cancelled = PaymentStatus._('cancelled');
+
+  static const values = [
+    pending,
+    processing,
+    succeeded,
+    cancelled
+  ];
+
+  static PaymentStatus parse(String value) {
+    switch (value) {
+      case 'pending':
+        return PaymentStatus.pending;
+        break;
+      case 'processing':
+        return PaymentStatus.processing;
+        break;
+      case 'succeeded':
+        return PaymentStatus.succeeded;
+        break;
+      case 'cancelled':
+        return PaymentStatus.cancelled;
+        break;
+      default:
+        print('got error, invalid order status $value');
+        return null;
+    }
+  }
+
+  @override
+  String toString() {
+    return 'PaymentStatus.$string';
   }
 }
