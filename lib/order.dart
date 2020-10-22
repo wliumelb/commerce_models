@@ -356,7 +356,7 @@ class OrderStatus {
   static const ready = OrderStatus._('ready');
   static const completed = OrderStatus._('completed');
   static const reviewed = OrderStatus._('reviewed');
-  static const cancelled = OrderStatus._('cancelled');
+  static const canceled = OrderStatus._('canceled');
 
   static const values = [
     pending,
@@ -365,12 +365,12 @@ class OrderStatus {
     ready,
     completed,
     reviewed,
-    cancelled
+    canceled
   ];
 
   static const active = [pending, processing, delivering, ready];
 
-  static const finished = [completed, reviewed, cancelled];
+  static const finished = [completed, reviewed, canceled];
 
   static OrderStatus parse(String value) {
     switch (value) {
@@ -392,8 +392,8 @@ class OrderStatus {
       case 'reviewed':
         return OrderStatus.reviewed;
         break;
-      case 'cancelled':
-        return OrderStatus.cancelled;
+      case 'canceled':
+        return OrderStatus.canceled;
         break;
       default:
         print('got error, invalid order status $value');
@@ -414,13 +414,13 @@ class PaymentStatus {
   static const pending = PaymentStatus._('pending');
   static const processing = PaymentStatus._('processing');
   static const succeeded = PaymentStatus._('succeeded');
-  static const cancelled = PaymentStatus._('cancelled');
+  static const canceled = PaymentStatus._('canceled');
 
   static const values = [
     pending,
     processing,
     succeeded,
-    cancelled
+    canceled
   ];
 
   static PaymentStatus parse(String value) {
@@ -434,8 +434,8 @@ class PaymentStatus {
       case 'succeeded':
         return PaymentStatus.succeeded;
         break;
-      case 'cancelled':
-        return PaymentStatus.cancelled;
+      case 'canceled':
+        return PaymentStatus.canceled;
         break;
       default:
         print('got error, invalid payment status $value');

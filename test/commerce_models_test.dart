@@ -342,7 +342,7 @@ void main() {
       OrderStatus.delivering,
       OrderStatus.completed,
       OrderStatus.reviewed,
-      OrderStatus.cancelled,
+      OrderStatus.canceled,
     ];
     final statuses = OrderStatus.values;
     statuses.forEach((status) {
