@@ -26,10 +26,10 @@ final orderTestData = [
       'deliveryTime': 1596492000000,
       'paymentMethod': 'online',
       'paymentId': '12345',
-      'paymentStatus': 'succeeded'
+      'paymentStatus': 'paid'
     },
     'value':
-        "OrderModel(uid: orderUid1, merchantUid: merchant1, stripeAccountId: test-1234, note: leave at the door, orderNumber: 1234, status: processing, type: delivery, name: Edwin, email: edl@gmail.com, phone: 0412345678, address: ${addressTestData[0]['value']}, storeName: Allganic, storePhone: 0481717171, storeAddress: ${storeAddressTestData['value']}, itemList: ${basketModelList[0].itemList}, voucherList: [${voucherTestData[0]['value']}], deliveryFee: 6, createTime: 2020-08-02 22:10, deliveryTime: 2020-08-04 08:00, paymentMethod: Online, paymentId: 12345, paymentStatus: succeeded)",
+        "OrderModel(uid: orderUid1, merchantUid: merchant1, stripeAccountId: test-1234, note: leave at the door, orderNumber: 1234, status: processing, type: delivery, name: Edwin, email: edl@gmail.com, phone: 0412345678, address: ${addressTestData[0]['value']}, storeName: Allganic, storePhone: 0481717171, storeAddress: ${storeAddressTestData['value']}, itemList: ${basketModelList[0].itemList}, voucherList: [${voucherTestData[0]['value']}], deliveryFee: 6, createTime: 2020-08-02 22:10, deliveryTime: 2020-08-04 08:00, paymentId: 12345, paymentStatus: paid)",
   },
   {
     'input': {
@@ -51,10 +51,9 @@ final orderTestData = [
       'deliveryFee': 6,
       'createTime': 1596370200000,
       'deliveryTime': null,
-      'paymentMethod': 'In Store',
-      'paymentStatus': 'pending',
+      'paymentStatus': 'unpaid',
     },
     'value':
-        "OrderModel(uid: orderUid1, merchantUid: merchant1, stripeAccountId: null, note: extra hot please, orderNumber: 1234, status: pending, type: pickup, name: Edwin, email: null, phone: 0412345678, address: null, storeName: Allganic, storePhone: 0481717171, storeAddress: ${storeAddressTestData['value']}, itemList: ${basketModelList[0].itemList}, voucherList: [${voucherTestData[0]['value']}], deliveryFee: 6, createTime: 2020-08-02 22:10, deliveryTime: null, paymentMethod: In Store, paymentId: null, paymentStatus: pending)",
+        "OrderModel(uid: orderUid1, merchantUid: merchant1, stripeAccountId: null, note: extra hot please, orderNumber: 1234, status: pending, type: pickup, name: Edwin, email: null, phone: 0412345678, address: null, storeName: Allganic, storePhone: 0481717171, storeAddress: ${storeAddressTestData['value']}, itemList: ${basketModelList[0].itemList}, voucherList: [${voucherTestData[0]['value']}], deliveryFee: 6, createTime: 2020-08-02 22:10, deliveryTime: null, paymentId: null, paymentStatus: unpaid)",
   }
 ];

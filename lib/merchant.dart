@@ -23,8 +23,9 @@ class MerchantModel {
   /// order types allowed for this merchant e.g. delivery, pickup
   final List<OrderType> orderTypeList;
 
-  /// list of allowed payment methods online, transfer, cash
-  final List<PaymentMethod> paymentMethodList;
+  /// require payment before order can be processed
+  final bool requirePayment;
+
   final String stripeAccountId;
   final AddressModel address;
   final List<String> photoUrlList;
@@ -42,7 +43,7 @@ class MerchantModel {
     @required this.domainName,
     @required this.icon,
     @required this.orderTypeList,
-    @required this.paymentMethodList,
+    @required this.requirePayment,
     @required this.stripeAccountId,
     @required this.address,
     @required this.photoUrlList,
@@ -67,9 +68,6 @@ class MerchantModel {
     final orderTypeList = List<String>.from(map['orderTypeList'] ?? [])
         .map((str) => OrderType.parse(str))
         .toList();
-    final paymentMethodList = List<String>.from(map['paymentMethodList'] ?? [])
-        .map((str) => PaymentMethod.parse(str))
-        .toList();
     final deliveryFeeStructure = DeliveryFeeStructure.fromMapList(
       List<Map>.from(
         map['deliveryFeeStructure'] ?? [],
@@ -91,6 +89,7 @@ class MerchantModel {
       email: map['email'],
       domainName: map['domainName'],
       icon: map['icon'],
+      requirePayment: map['requirePayment'],
       stripeAccountId: map['stripeAccountId'],
       address: address,
       photoUrlList: photoUrlList,
@@ -98,7 +97,6 @@ class MerchantModel {
       productCategoryList: productCategoryList,
       createTime: createTime,
       orderTypeList: orderTypeList,
-      paymentMethodList: paymentMethodList,
       deliveryFeeStructure: deliveryFeeStructure,
     );
   }
@@ -114,8 +112,7 @@ class MerchantModel {
       'icon': icon,
       'stripeAccountId': stripeAccountId,
       'orderTypeList': orderTypeList.map((type) => type.string).toList(),
-      'paymentMethodList':
-          paymentMethodList.map((method) => method.string).toList(),
+      'requirePayment': requirePayment,
       'address': address?.toMap(),
       'photoUrlList': photoUrlList,
       'infoList': infoList.map((info) => info.toMap()).toList(),
@@ -126,7 +123,7 @@ class MerchantModel {
   }
 
   String toString() =>
-      'MerchantModel(uid: $uid, name: $name, description: $description, phone: $phone, email: $email, domainName: $domainName, icon: $icon, stripeAccountId: $stripeAccountId, orderTypeList: $orderTypeList, paymentMethodList: $paymentMethodList, address: $address, photoUrlList: $photoUrlList, infoList: $infoList, productCategoryList: $productCategoryList, createTime: ${DateFormat('yyyy-MM-dd HH:mm').format(createTime)}, deliveryFeeStructure: $deliveryFeeStructure)';
+      'MerchantModel(uid: $uid, name: $name, description: $description, phone: $phone, email: $email, domainName: $domainName, icon: $icon, stripeAccountId: $stripeAccountId, orderTypeList: $orderTypeList, requirePayment: $requirePayment, address: $address, photoUrlList: $photoUrlList, infoList: $infoList, productCategoryList: $productCategoryList, createTime: ${DateFormat('yyyy-MM-dd HH:mm').format(createTime)}, deliveryFeeStructure: $deliveryFeeStructure)';
 
   Map<String, dynamic> changeAddressReturnMap(AddressModel newAddress) => {
         ...toMap(),

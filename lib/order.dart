@@ -40,7 +40,6 @@ class OrderModel {
   final DateTime deliveryTime;
   final ReviewModel review;
 
-  final PaymentMethod paymentMethod;
   // stripe payment id
   final String paymentId;
 
@@ -73,7 +72,6 @@ class OrderModel {
     @required this.createTime,
     @required this.deliveryTime,
     @required this.review,
-    @required this.paymentMethod,
     @required this.paymentId,
     @required this.paymentStatus,
   });
@@ -81,8 +79,7 @@ class OrderModel {
   static OrderModel fromMap(Map<String, dynamic> map) {
     OrderStatus status = OrderStatus.parse(map['status']);
     OrderType type = OrderType.parse(map['type']);
-    PaymentMethod paymentMethod = PaymentMethod.parse(map['paymentMethod']);
-    PaymentStatus  paymentStatus = PaymentStatus.parse(map['paymentStatus']);
+    PaymentStatus paymentStatus = PaymentStatus.parse(map['paymentStatus']);
     final List<ItemModel> _itemList = List.from(map['itemList'])
         .map((itemMap) => ItemModel.fromMap(Map<String, dynamic>.from(itemMap)))
         .toList();
@@ -136,7 +133,6 @@ class OrderModel {
       deliveryFee: map['deliveryFee'],
       voucherAmount: map['voucherAmount'],
       orderTotalPrice: map['orderTotalPrice'],
-      paymentMethod: paymentMethod,
       paymentId: map['paymentId'],
       paymentStatus: paymentStatus,
     );
@@ -147,7 +143,7 @@ class OrderModel {
     @required UserModel user,
     @required MerchantModel merchant,
     @required OrderType orderType,
-    @required PaymentMethod paymentMethod,
+    @required bool requirePayment,
     @required String orderUid,
   }) {
     final deliveryFee = orderType == OrderType.delivery
@@ -178,8 +174,8 @@ class OrderModel {
       type: orderType,
       voucherList: [],
       voucherAmount: 0,
-      paymentStatus: paymentMethod == PaymentMethod.online ? PaymentStatus.processing : PaymentStatus.pending,
-      paymentMethod: paymentMethod,
+      paymentStatus:
+          requirePayment ? PaymentStatus.unpaid : PaymentStatus.deferred,
       paymentId: null,
     );
   }
@@ -219,7 +215,6 @@ class OrderModel {
       'deliveryFee': this.deliveryFee,
       'createTime': this.createTime?.millisecondsSinceEpoch,
       'deliveryTime': this.deliveryTime?.millisecondsSinceEpoch,
-      'paymentMethod': this.paymentMethod.string,
       'paymentId': this.paymentId,
       'paymentStatus': this.paymentStatus.string,
       'totalItems': this.totalItems,
@@ -266,7 +261,7 @@ class OrderModel {
     final deliveryTimeString = this.deliveryTime == null
         ? null
         : DateFormat('yyyy-MM-dd HH:mm').format(this.deliveryTime);
-    return 'OrderModel(uid: $uid, merchantUid: $merchantUid, stripeAccountId: $stripeAccountId, note: $note, orderNumber: $orderNumber, status: ${status.string}, type: ${type.string}, name: $name, email: $email, phone: $phone, address: $address, storeName: $storeName, storePhone: $storePhone, storeAddress: $storeAddress, itemList: $itemList, voucherList: $voucherList, deliveryFee: $deliveryFee, createTime: $createTimeString, deliveryTime: $deliveryTimeString, paymentMethod: ${paymentMethod.string}, paymentId: $paymentId, paymentStatus: ${paymentStatus.string})';
+    return 'OrderModel(uid: $uid, merchantUid: $merchantUid, stripeAccountId: $stripeAccountId, note: $note, orderNumber: $orderNumber, status: ${status.string}, type: ${type.string}, name: $name, email: $email, phone: $phone, address: $address, storeName: $storeName, storePhone: $storePhone, storeAddress: $storeAddress, itemList: $itemList, voucherList: $voucherList, deliveryFee: $deliveryFee, createTime: $createTimeString, deliveryTime: $deliveryTimeString, paymentId: $paymentId, paymentStatus: ${paymentStatus.string})';
   }
 
   @override
@@ -307,53 +302,23 @@ class OrderType {
   }
 }
 
-class PaymentMethod {
-  final String _val;
-  const PaymentMethod._(this._val);
-
-  static const online = PaymentMethod._('Online');
-  static const transfer = PaymentMethod._('Transfer');
-  static const onDelivery = PaymentMethod._('On Delivery');
-  static const inStore = PaymentMethod._('In Store');
-
-  static const values = [online, transfer, onDelivery, inStore];
-
-  static PaymentMethod parse(String value) {
-    switch (value.toLowerCase()) {
-      case 'online':
-        return PaymentMethod.online;
-        break;
-      case 'transfer':
-        return PaymentMethod.transfer;
-        break;
-      case 'on delivery':
-        return PaymentMethod.onDelivery;
-        break;
-      case 'in store':
-        return PaymentMethod.inStore;
-        break;
-      default:
-        print('got error, invalid payment type $value');
-        return null;
-    }
-  }
-
-  String get string => _val;
-
-  @override
-  String toString() {
-    return 'PaymentMethod.$_val';
-  }
-}
-
 class OrderStatus {
   final String string;
   const OrderStatus._(this.string);
 
+  /// pending payment
   static const pending = OrderStatus._('pending');
+
+  /// payment has been made
   static const processing = OrderStatus._('processing');
+
+  /// order is on the way
   static const delivering = OrderStatus._('delivering');
+
+  /// order is ready for pickup
   static const ready = OrderStatus._('ready');
+
+  /// order is finalised
   static const completed = OrderStatus._('completed');
   static const reviewed = OrderStatus._('reviewed');
   static const canceled = OrderStatus._('canceled');
@@ -411,31 +376,33 @@ class PaymentStatus {
   final String string;
   const PaymentStatus._(this.string);
 
-  static const pending = PaymentStatus._('pending');
-  static const processing = PaymentStatus._('processing');
-  static const succeeded = PaymentStatus._('succeeded');
-  static const canceled = PaymentStatus._('canceled');
+  /// payment not required when order is submitted
+  static const deferred = PaymentStatus._('deferred');
 
-  static const values = [
-    pending,
-    processing,
-    succeeded,
-    canceled
-  ];
+  /// payment has not been finalised
+  static const unpaid = PaymentStatus._('unpaid');
+
+  /// payment is finished
+  static const paid = PaymentStatus._('paid');
+
+  /// order is refunded
+  static const refunded = PaymentStatus._('refunded');
+
+  static const values = [deferred, unpaid, paid, refunded];
 
   static PaymentStatus parse(String value) {
     switch (value) {
-      case 'pending':
-        return PaymentStatus.pending;
+      case 'deferred':
+        return PaymentStatus.deferred;
         break;
-      case 'processing':
-        return PaymentStatus.processing;
+      case 'unpaid':
+        return PaymentStatus.unpaid;
         break;
-      case 'succeeded':
-        return PaymentStatus.succeeded;
+      case 'paid':
+        return PaymentStatus.paid;
         break;
-      case 'canceled':
-        return PaymentStatus.canceled;
+      case 'refunded':
+        return PaymentStatus.refunded;
         break;
       default:
         print('got error, invalid payment status $value');

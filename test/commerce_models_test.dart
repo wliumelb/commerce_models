@@ -352,22 +352,6 @@ void main() {
     });
     expect(expectedStatuses.length, 0);
     print('done test OrderStatus');
-
-    print('test PaymentMethod');
-    final expectedPaymentMethods = [
-      PaymentMethod.onDelivery,
-      PaymentMethod.inStore,
-      PaymentMethod.online,
-      PaymentMethod.transfer,
-    ];
-    final methods = PaymentMethod.values;
-    methods.forEach((method) {
-      expect(expectedPaymentMethods.contains(method), true);
-      expect(method, PaymentMethod.parse(method.string));
-      expectedPaymentMethods.remove(method);
-    });
-    expect(expectedPaymentMethods.length, 0);
-    print('done test PaymentMethod');
   });
 
   test('order', () {
@@ -394,10 +378,10 @@ void main() {
         user: user,
         merchant: merchant,
         orderType: OrderType.delivery,
-        paymentMethod: PaymentMethod.online,
+        requirePayment: true,
       );
       expect(order3.type, OrderType.delivery);
-      expect(order3.paymentMethod, PaymentMethod.online);
+      expect(order3.paymentStatus, PaymentStatus.unpaid);
       expect(order3.uid, 'uid1234');
       expect(order3.stripeAccountId, merchant.stripeAccountId);
 
@@ -413,11 +397,11 @@ void main() {
         user: user,
         merchant: merchant,
         orderType: OrderType.pickup,
-        paymentMethod: PaymentMethod.transfer,
+        requirePayment: false,
       );
       expect(order4.uid, 'uid444');
       expect(order4.type, OrderType.pickup);
-      expect(order4.paymentMethod, PaymentMethod.transfer);
+      expect(order4.paymentStatus, PaymentStatus.deferred);
       expect(order4.deliveryFee, 0);
 
       final order5 = order3.addVoucher(voucher);
