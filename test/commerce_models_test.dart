@@ -380,9 +380,10 @@ void main() {
         orderType: OrderType.delivery,
         requirePayment: true,
       );
-      expect(order3.type, OrderType.delivery);
-      expect(order3.paymentStatus, PaymentStatus.unpaid);
       expect(order3.uid, 'uid1234');
+      expect(order3.type, OrderType.delivery);
+      expect(order3.status, OrderStatus.pending);
+      expect(order3.paymentStatus, PaymentStatus.unpaid);
       expect(order3.stripeAccountId, merchant.stripeAccountId);
 
       expect(order3.itemsTotalPrice, user.basket.totalPrice);
@@ -401,6 +402,7 @@ void main() {
       );
       expect(order4.uid, 'uid444');
       expect(order4.type, OrderType.pickup);
+      expect(order4.status, OrderStatus.processing);
       expect(order4.paymentStatus, PaymentStatus.deferred);
       expect(order4.deliveryFee, 0);
 
