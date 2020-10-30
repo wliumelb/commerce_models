@@ -27,6 +27,9 @@ class MerchantModel {
   final bool requirePayment;
 
   final String stripeAccountId;
+
+  /// the payout account in stripe
+  final String bankAccountId;
   final AddressModel address;
   final List<String> photoUrlList;
   final List<InfoSectionModel> infoList;
@@ -45,6 +48,7 @@ class MerchantModel {
     @required this.orderTypeList,
     @required this.requirePayment,
     @required this.stripeAccountId,
+    @required this.bankAccountId,
     @required this.address,
     @required this.photoUrlList,
     @required this.infoList,
@@ -91,6 +95,7 @@ class MerchantModel {
       icon: map['icon'],
       requirePayment: map['requirePayment'],
       stripeAccountId: map['stripeAccountId'],
+      bankAccountId: map['bankAccountId'],
       address: address,
       photoUrlList: photoUrlList,
       infoList: infoList,
@@ -111,6 +116,7 @@ class MerchantModel {
       'domainName': domainName,
       'icon': icon,
       'stripeAccountId': stripeAccountId,
+      'bankAccountId': bankAccountId,
       'orderTypeList': orderTypeList.map((type) => type.string).toList(),
       'requirePayment': requirePayment,
       'address': address?.toMap(),
@@ -123,7 +129,7 @@ class MerchantModel {
   }
 
   String toString() =>
-      'MerchantModel(uid: $uid, name: $name, description: $description, phone: $phone, email: $email, domainName: $domainName, icon: $icon, stripeAccountId: $stripeAccountId, orderTypeList: $orderTypeList, requirePayment: $requirePayment, address: $address, photoUrlList: $photoUrlList, infoList: $infoList, productCategoryList: $productCategoryList, createTime: ${DateFormat('yyyy-MM-dd HH:mm').format(createTime)}, deliveryFeeStructure: $deliveryFeeStructure)';
+      'MerchantModel(uid: $uid, name: $name, description: $description, phone: $phone, email: $email, domainName: $domainName, icon: $icon, stripeAccountId: $stripeAccountId, bankAccountId: $bankAccountId, orderTypeList: $orderTypeList, requirePayment: $requirePayment, address: $address, photoUrlList: $photoUrlList, infoList: $infoList, productCategoryList: $productCategoryList, createTime: ${DateFormat('yyyy-MM-dd HH:mm').format(createTime)}, deliveryFeeStructure: $deliveryFeeStructure)';
 
   Map<String, dynamic> changeAddressReturnMap(AddressModel newAddress) => {
         ...toMap(),
