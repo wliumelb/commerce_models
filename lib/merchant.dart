@@ -26,7 +26,7 @@ class MerchantModel {
   /// require payment before order can be processed
   final bool requirePayment;
 
-  final String stripeAccountId;
+  final StripeAccountInfo stripeAccountInfo;
 
   /// the payout account in stripe
   final String bankAccountId;
@@ -47,7 +47,7 @@ class MerchantModel {
     @required this.icon,
     @required this.orderTypeList,
     @required this.requirePayment,
-    @required this.stripeAccountId,
+    @required this.stripeAccountInfo,
     @required this.bankAccountId,
     @required this.address,
     @required this.photoUrlList,
@@ -61,6 +61,8 @@ class MerchantModel {
     final address = map['address'] == null
         ? null
         : AddressModel.fromMap(Map<String, dynamic>.from(map['address']));
+    final stripeAccountInfo =
+        StripeAccountInfo.fromMap(map['stripeAccountInfo']);
 
     final photoUrlList = List<String>.from(map['photoUrlList'] ?? []);
     final productCategoryList =
@@ -94,7 +96,7 @@ class MerchantModel {
       domainName: map['domainName'],
       icon: map['icon'],
       requirePayment: map['requirePayment'],
-      stripeAccountId: map['stripeAccountId'],
+      stripeAccountInfo: stripeAccountInfo,
       bankAccountId: map['bankAccountId'],
       address: address,
       photoUrlList: photoUrlList,
@@ -115,7 +117,7 @@ class MerchantModel {
       'email': email,
       'domainName': domainName,
       'icon': icon,
-      'stripeAccountId': stripeAccountId,
+      'stripeAccountInfo': stripeAccountInfo?.toMap(),
       'bankAccountId': bankAccountId,
       'orderTypeList': orderTypeList.map((type) => type.string).toList(),
       'requirePayment': requirePayment,
@@ -129,7 +131,7 @@ class MerchantModel {
   }
 
   String toString() =>
-      'MerchantModel(uid: $uid, name: $name, description: $description, phone: $phone, email: $email, domainName: $domainName, icon: $icon, stripeAccountId: $stripeAccountId, bankAccountId: $bankAccountId, orderTypeList: $orderTypeList, requirePayment: $requirePayment, address: $address, photoUrlList: $photoUrlList, infoList: $infoList, productCategoryList: $productCategoryList, createTime: ${DateFormat('yyyy-MM-dd HH:mm').format(createTime)}, deliveryFeeStructure: $deliveryFeeStructure)';
+      'MerchantModel(uid: $uid, name: $name, description: $description, phone: $phone, email: $email, domainName: $domainName, icon: $icon, stripeAccountInfo: $stripeAccountInfo, bankAccountId: $bankAccountId, orderTypeList: $orderTypeList, requirePayment: $requirePayment, address: $address, photoUrlList: $photoUrlList, infoList: $infoList, productCategoryList: $productCategoryList, createTime: ${DateFormat('yyyy-MM-dd HH:mm').format(createTime)}, deliveryFeeStructure: $deliveryFeeStructure)';
 
   Map<String, dynamic> changeAddressReturnMap(AddressModel newAddress) => {
         ...toMap(),
@@ -172,4 +174,38 @@ class MerchantModel {
 
   @override
   int get hashCode => this.toString().hashCode;
+}
+
+class StripeAccountInfo {
+  final String id;
+  final String email;
+  final bool chargesEnabled;
+  final bool payoutsEnabled;
+  StripeAccountInfo({
+    @required this.id,
+    @required this.email,
+    @required this.chargesEnabled,
+    @required this.payoutsEnabled,
+  });
+  static StripeAccountInfo fromMap(Map<String, dynamic> map) {
+    if (map == null) return null;
+    return StripeAccountInfo(
+      id: map['id'],
+      email: map['email'],
+      chargesEnabled: map['charges_enabled'],
+      payoutsEnabled: map['payouts_enabled'],
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'email': email,
+      'charges_enabled': chargesEnabled,
+      'payouts_enabled': payoutsEnabled,
+    };
+  }
+
+  String toString() =>
+      'StripeAccountInfo(id: $id, email: $email, chargesEnabled: $chargesEnabled, payoutsEnabled: $payoutsEnabled)';
 }

@@ -384,7 +384,7 @@ void main() {
       expect(order3.type, OrderType.delivery);
       expect(order3.status, OrderStatus.pending);
       expect(order3.paymentStatus, PaymentStatus.unpaid);
-      expect(order3.stripeAccountId, merchant.stripeAccountId);
+      expect(order3.stripeAccountId, merchant.stripeAccountInfo.id);
 
       expect(order3.itemsTotalPrice, user.basket.totalPrice);
       expect(

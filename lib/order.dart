@@ -152,7 +152,7 @@ class OrderModel {
     return OrderModel(
       uid: orderUid,
       merchantUid: user.basket.merchantUid,
-      stripeAccountId: merchant.stripeAccountId,
+      stripeAccountId: merchant.stripeAccountInfo.id,
       note: '',
       orderNumber: null,
       createTime: null,

@@ -15,7 +15,12 @@ final merchantTestData = [
       'email': 'email@email.com',
       'domainName': 'dummy.group.net.au',
       'icon': 's3.awsamazon.com/icon',
-      'stripeAccountId': 'stripe_123',
+      'stripeAccountInfo': {
+        'id': 'stripe_123',
+        'email': 'test@stripe.com',
+        'charges_enabled': true,
+        'payouts_enabled': false,
+      },
       'bankAccountId': 'ba_123',
       'orderTypeList': ['delivery', 'pickup'],
       'requirePayment': true,
@@ -27,7 +32,7 @@ final merchantTestData = [
       'deliveryFeeStructure': deliveryFeeStructureTestData[0]['input'],
     },
     'value':
-        "MerchantModel(uid: userUid1, name: Edwin, description: This is Edwin's shop, phone: 0444444444, email: email@email.com, domainName: dummy.group.net.au, icon: s3.awsamazon.com/icon, stripeAccountId: stripe_123, bankAccountId: ba_123, orderTypeList: [OrderType.delivery, OrderType.pickup], requirePayment: true, address: ${addressTestData[0]['value']}, photoUrlList: [photoUrl1, photoUrl2], infoList: $infoSectionList, productCategoryList: [fresh, meat], createTime: $dateTimeString, deliveryFeeStructure: ${deliveryFeeStructureTestData[0]['value']})",
+        "MerchantModel(uid: userUid1, name: Edwin, description: This is Edwin's shop, phone: 0444444444, email: email@email.com, domainName: dummy.group.net.au, icon: s3.awsamazon.com/icon, stripeAccountInfo: StripeAccountInfo(id: stripe_123, email: test@stripe.com, chargesEnabled: true, payoutsEnabled: false), bankAccountId: ba_123, orderTypeList: [OrderType.delivery, OrderType.pickup], requirePayment: true, address: ${addressTestData[0]['value']}, photoUrlList: [photoUrl1, photoUrl2], infoList: $infoSectionList, productCategoryList: [fresh, meat], createTime: $dateTimeString, deliveryFeeStructure: ${deliveryFeeStructureTestData[0]['value']})",
   },
   {
     'input': {
@@ -42,6 +47,6 @@ final merchantTestData = [
       'requirePayment': false
     },
     'value':
-        'MerchantModel(uid: uid111, name: Edwin Shop, description: null, phone: null, email: email@email.com, domainName: null, icon: null, stripeAccountId: null, bankAccountId: null, orderTypeList: [], requirePayment: false, address: null, photoUrlList: [], infoList: [], productCategoryList: [], createTime: 2020-08-20 10:52, deliveryFeeStructure: DeliveryFeeStructure([]))',
+        'MerchantModel(uid: uid111, name: Edwin Shop, description: null, phone: null, email: email@email.com, domainName: null, icon: null, stripeAccountInfo: null, bankAccountId: null, orderTypeList: [], requirePayment: false, address: null, photoUrlList: [], infoList: [], productCategoryList: [], createTime: 2020-08-20 10:52, deliveryFeeStructure: DeliveryFeeStructure([]))',
   }
 ];
