@@ -1,19 +1,19 @@
 import 'package:commerce_models/item.dart';
 import 'package:flutter/foundation.dart';
 
-class BasketModel {
+class CartModel {
   // key is item uid
   final List<ItemModel> _itemList;
 
   final String merchantUid;
 
-  /// total number of items in the basket
+  /// total number of items in the cart
   final int quantity;
 
   /// sum of items' prices, excluding postage and voucher
   final num totalPrice;
 
-  BasketModel({
+  CartModel({
     @required List<ItemModel> itemList,
     @required this.merchantUid,
     @required this.quantity,
@@ -23,7 +23,7 @@ class BasketModel {
   // this will prevent _itemList from getting mutated
   List<ItemModel> get itemList => [..._itemList];
 
-  static BasketModel fromMapList(List<Map<String, dynamic>> mapList) {
+  static CartModel fromMapList(List<Map<String, dynamic>> mapList) {
     final itemList = mapList
         .map((map) => ItemModel.fromMap(Map<String, dynamic>.from(map)))
         .toList();
@@ -34,7 +34,7 @@ class BasketModel {
       totalPrice += item.quantity * item.price;
     });
 
-    return BasketModel(
+    return CartModel(
       itemList: itemList,
       merchantUid: itemList.length > 0 ? itemList?.first?.merchantUid : null,
       quantity: quantity,
@@ -42,7 +42,7 @@ class BasketModel {
     );
   }
 
-  static BasketModel emptyBasket() => BasketModel(
+  static CartModel emptyCart() => CartModel(
         itemList: [],
         merchantUid: null,
         quantity: 0,
@@ -58,7 +58,7 @@ class BasketModel {
       );
 
   static List<Map<String, dynamic>> addFirstItemReturnMapList(ItemModel item) {
-    return BasketModel(
+    return CartModel(
       itemList: [item],
       merchantUid: item.merchantUid,
       quantity: 1,
@@ -69,7 +69,7 @@ class BasketModel {
   /// need to check merchantUid of the new item and existing items
   List<Map<String, dynamic>> addOneItemReturnMapList(ItemModel addedItem) {
     // check if addedItem is from the same merchantUid as the existing items
-    // if not, clean the basket and replace it with the new item
+    // if not, clean the cart and replace it with the new item
     if (this.merchantUid != addedItem.merchantUid) {
       return [addedItem.toMap()];
     } else {
@@ -107,12 +107,12 @@ class BasketModel {
   }
 
   String toString() {
-    return 'BasketModel(itemList: ${_itemList.map((item) => item.toString()).toList()}, quantity: $quantity, totalPrice: $totalPrice)';
+    return 'CartModel(itemList: ${_itemList.map((item) => item.toString()).toList()}, quantity: $quantity, totalPrice: $totalPrice)';
   }
 
   @override
   bool operator ==(dynamic o) {
-    return o is BasketModel && o.toString() == this.toString();
+    return o is CartModel && o.toString() == this.toString();
   }
 
   @override

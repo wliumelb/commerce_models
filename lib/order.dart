@@ -138,7 +138,7 @@ class OrderModel {
     );
   }
 
-  /// create order from basket and user info. this will be used in the order confirmaiton page
+  /// create order from cart and user info. this will be used in the order confirmaiton page
   static OrderModel create({
     @required UserModel user,
     @required MerchantModel merchant,
@@ -147,11 +147,11 @@ class OrderModel {
     @required String orderUid,
   }) {
     final deliveryFee = orderType == OrderType.delivery
-        ? merchant.deliveryFeeStructure.getDeliveryFee(user.basket.totalPrice)
+        ? merchant.deliveryFeeStructure.getDeliveryFee(user.cart.totalPrice)
         : 0;
     return OrderModel(
       uid: orderUid,
-      merchantUid: user.basket.merchantUid,
+      merchantUid: user.cart.merchantUid,
       stripeAccountId: merchant.stripeAccountInfo.id,
       note: '',
       orderNumber: null,
@@ -166,10 +166,10 @@ class OrderModel {
       email: user.email,
       phone: user.phone,
       storePhone: merchant.phone,
-      totalItems: user.basket.quantity,
-      itemList: user.basket.itemList,
-      itemsTotalPrice: user.basket.totalPrice,
-      orderTotalPrice: user.basket.totalPrice + deliveryFee,
+      totalItems: user.cart.quantity,
+      itemList: user.cart.itemList,
+      itemsTotalPrice: user.cart.totalPrice,
+      orderTotalPrice: user.cart.totalPrice + deliveryFee,
       status: requirePayment ? OrderStatus.pending : OrderStatus.processing,
       type: orderType,
       voucherList: [],

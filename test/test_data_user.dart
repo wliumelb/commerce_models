@@ -1,5 +1,5 @@
 import 'test_data_address.dart';
-import 'test_data_basket.dart';
+import 'test_data_cart.dart';
 
 final dateTimeString = '2020-08-19 11:13';
 final timestamp = DateTime.parse(dateTimeString).millisecondsSinceEpoch;
@@ -17,12 +17,12 @@ final userTestData = [
       'phone': '0444444444',
       'email': 'email@email.com',
       'address': addressTestData[0]['input'],
-      'basket': basketTestData[0]['input'],
+      'cart': cartTestData[0]['input'],
       'createTime': timestamp,
       'lastActiveTime': timestamp2,
     },
     'value':
-        'UserModel(uid: userUid1, stripeCustomerId: sp_123, name: Edwin, isAnonymous: false, phone: 0444444444, email: email@email.com, address: ${addressTestData[0]['value']}, basket: ${basketTestData[0]['value']}, createTime: $dateTimeString, lastActiveTime: $dateTimeString2)',
+        'UserModel(uid: userUid1, stripeCustomerId: sp_123, name: Edwin, isAnonymous: false, phone: 0444444444, email: email@email.com, address: ${addressTestData[0]['value']}, cart: ${cartTestData[0]['value']}, createTime: $dateTimeString, lastActiveTime: $dateTimeString2)',
   },
   {
     'input': {
@@ -32,9 +32,9 @@ final userTestData = [
       'phone': null,
       'email': null,
       'address': null,
-      'basket': [],
+      'cart': [],
     },
     'value':
-        'UserModel(uid: userUid1, stripeCustomerId: null, name: Edwin, isAnonymous: true, phone: null, email: null, address: null, basket: BasketModel(itemList: [], quantity: 0, totalPrice: 0), createTime: 2020-08-20 10:52, lastActiveTime: 2020-08-20 10:52)',
+        'UserModel(uid: userUid1, stripeCustomerId: null, name: Edwin, isAnonymous: true, phone: null, email: null, address: null, cart: CartModel(itemList: [], quantity: 0, totalPrice: 0), createTime: 2020-08-20 10:52, lastActiveTime: 2020-08-20 10:52)',
   }
 ];

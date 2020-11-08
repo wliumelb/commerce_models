@@ -1,7 +1,7 @@
 import 'package:commerce_models/product.dart';
 import 'package:flutter/foundation.dart';
 
-/// ItemModel is used in the basket or order display
+/// ItemModel is used in the cart or order display
 class ItemModel {
   final String uid;
   final String name;
@@ -17,7 +17,7 @@ class ItemModel {
   /// unit price
   final num price;
 
-  /// number of items in the basket / order
+  /// number of items in the cart / order
   final int quantity;
 
   ItemModel({
@@ -40,7 +40,7 @@ class ItemModel {
       description: product.description,
       photoUrl: product.photoUrlList.first,
       price: product.price,
-      // set default quantity to be one because fromProduct will only be called when user add a product to the basket
+      // set default quantity to be one because fromProduct will only be called when user add a product to the cart
       quantity: 1,
     );
   }

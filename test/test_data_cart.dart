@@ -1,11 +1,11 @@
-import 'package:commerce_models/basket.dart';
+import 'package:commerce_models/cart.dart';
 
-final basketTestData = [
+final cartTestData = [
   // add different item from same merchant
   {
     'input': [
       {
-        'uid': 'basketItem1',
+        'uid': 'cartItem1',
         'merchantUid': 'merchant1',
         'category': 'fresh',
         'name': 'Kiwi Fruit',
@@ -15,7 +15,7 @@ final basketTestData = [
         'quantity': 4,
       },
       {
-        'uid': 'basketItem2',
+        'uid': 'cartItem2',
         'merchantUid': 'merchant1',
         'category': 'meat',
         'name': 'Wagu Beaf',
@@ -25,9 +25,9 @@ final basketTestData = [
         'quantity': 1,
       },
     ],
-    // this one add an item not already in the basket
+    // this one add an item not already in the cart
     'addedItemInput': {
-      'uid': 'addedBasketItem1',
+      'uid': 'addedCartItem1',
       'merchantUid': 'merchant1',
       'category': 'fresh',
       'name': 'Eggplant',
@@ -37,7 +37,7 @@ final basketTestData = [
       'quantity': 1,
     },
     'value':
-        "BasketModel(itemList: [ItemModel(uid: basketItem1, merchantUid: merchant1, name: Kiwi Fruit, category: fresh, description: Big Kiwi Fruit from NZ, photoUrl: photoUrl1, price: 8.5, quantity: 4), ItemModel(uid: basketItem2, merchantUid: merchant1, name: Wagu Beaf, category: meat, description: Best beaf, photoUrl: photoUrl2, price: 38, quantity: 1)], quantity: 5, totalPrice: 72.0)",
+        "CartModel(itemList: [ItemModel(uid: cartItem1, merchantUid: merchant1, name: Kiwi Fruit, category: fresh, description: Big Kiwi Fruit from NZ, photoUrl: photoUrl1, price: 8.5, quantity: 4), ItemModel(uid: cartItem2, merchantUid: merchant1, name: Wagu Beaf, category: meat, description: Best beaf, photoUrl: photoUrl2, price: 38, quantity: 1)], quantity: 5, totalPrice: 72.0)",
   },
   {
     'input': [
@@ -62,7 +62,7 @@ final basketTestData = [
         'quantity': 1,
       },
     ],
-    // this one add an item already in the basket
+    // this one add an item already in the cart
     'addedItemInput': {
       'uid': 'itemUid1',
       'merchantUid': 'merchant1',
@@ -74,7 +74,7 @@ final basketTestData = [
       'quantity': 1,
     },
     'value':
-        "BasketModel(itemList: [ItemModel(uid: itemUid1, merchantUid: merchant1, name: Kiwi Fruit, category: fresh, description: Big Kiwi Fruit from NZ, photoUrl: photoUrl1, price: 8.5, quantity: 4), ItemModel(uid: itemUid2, merchantUid: merchant1, name: Wagu Beaf, category: meat, description: Best beaf, photoUrl: photoUrl2, price: 38, quantity: 1)], quantity: 5, totalPrice: 72.0)",
+        "CartModel(itemList: [ItemModel(uid: itemUid1, merchantUid: merchant1, name: Kiwi Fruit, category: fresh, description: Big Kiwi Fruit from NZ, photoUrl: photoUrl1, price: 8.5, quantity: 4), ItemModel(uid: itemUid2, merchantUid: merchant1, name: Wagu Beaf, category: meat, description: Best beaf, photoUrl: photoUrl2, price: 38, quantity: 1)], quantity: 5, totalPrice: 72.0)",
   },
   {
     'input': [
@@ -99,7 +99,7 @@ final basketTestData = [
         'quantity': 1,
       },
     ],
-    // this one add an item already in the basket
+    // this one add an item already in the cart
     'addedItemInput': {
       'uid': 'itemUid3',
       'merchantUid': 'merchant2',
@@ -111,9 +111,9 @@ final basketTestData = [
       'quantity': 1,
     },
     'value':
-        "BasketModel(itemList: [ItemModel(uid: itemUid1, merchantUid: merchant1, name: Kiwi Fruit, category: fresh, description: Big Kiwi Fruit from NZ, photoUrl: photoUrl1, price: 8.5, quantity: 4), ItemModel(uid: itemUid2, merchantUid: merchant1, name: Wagu Beaf, category: meat, description: Best beaf, photoUrl: photoUrl2, price: 38, quantity: 1)], quantity: 5, totalPrice: 72.0)",
+        "CartModel(itemList: [ItemModel(uid: itemUid1, merchantUid: merchant1, name: Kiwi Fruit, category: fresh, description: Big Kiwi Fruit from NZ, photoUrl: photoUrl1, price: 8.5, quantity: 4), ItemModel(uid: itemUid2, merchantUid: merchant1, name: Wagu Beaf, category: meat, description: Best beaf, photoUrl: photoUrl2, price: 38, quantity: 1)], quantity: 5, totalPrice: 72.0)",
   },
 ];
 
-final List<BasketModel> basketModelList =
-    basketTestData.map((map) => BasketModel.fromMapList(map['input'])).toList();
+final List<CartModel> cartModelList =
+    cartTestData.map((map) => CartModel.fromMapList(map['input'])).toList();

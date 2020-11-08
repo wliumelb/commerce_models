@@ -1,6 +1,6 @@
 import 'package:commerce_models/address.dart';
 import 'package:commerce_models/bank_card.dart';
-import 'package:commerce_models/basket.dart';
+import 'package:commerce_models/cart.dart';
 import 'package:commerce_models/delivery_fee_structure.dart';
 import 'package:commerce_models/info_section.dart';
 import 'package:commerce_models/item.dart';
@@ -16,7 +16,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'delivery_fee_structure.dart';
 import 'test_data_address.dart';
 import 'test_data_bank_card.dart';
-import 'test_data_basket.dart';
+import 'test_data_cart.dart';
 import 'test_data_info_section.dart';
 import 'test_data_item.dart';
 import 'test_data_merchant.dart';
@@ -120,55 +120,55 @@ void main() {
     }
   });
 
-  test('basket', () {
-    final n = basketTestData.length;
+  test('cart', () {
+    final n = cartTestData.length;
     for (int i = 0; i < n; i++) {
-      print('test basket section test case $i');
-      final input = List<Map<String, dynamic>>.from(basketTestData[i]['input']);
-      final String stringValue = basketTestData[i]['value'];
-      final basket = BasketModel.fromMapList(input);
-      final map = basket.toMapList();
-      final basket2 = BasketModel.fromMapList(map);
-      expect(basket, basket2);
-      expect(basket2.toString(), stringValue);
+      print('test cart section test case $i');
+      final input = List<Map<String, dynamic>>.from(cartTestData[i]['input']);
+      final String stringValue = cartTestData[i]['value'];
+      final cart = CartModel.fromMapList(input);
+      final map = cart.toMapList();
+      final cart2 = CartModel.fromMapList(map);
+      expect(cart, cart2);
+      expect(cart2.toString(), stringValue);
 
       print('test adding item');
 
       final addedItem = ItemModel.fromMap(
-          Map<String, dynamic>.from(basketTestData[i]['addedItemInput']));
+          Map<String, dynamic>.from(cartTestData[i]['addedItemInput']));
 
-      final basket3 =
-          BasketModel.fromMapList(basket.addOneItemReturnMapList(addedItem));
+      final cart3 =
+          CartModel.fromMapList(cart.addOneItemReturnMapList(addedItem));
 
-      if (addedItem.merchantUid == basket.merchantUid) {
-        if (basket.getItem(addedItem.uid) == null) {
-          expect(basket3.getItem(addedItem.uid), addedItem);
-          final basketAddedMore = BasketModel.fromMapList(
-              basket3.addOneItemReturnMapList(addedItem));
-          expect(basketAddedMore.getItem(addedItem.uid).quantity, 2);
-          final basketDeletedItem = BasketModel.fromMapList(
-              basketAddedMore.deleteItemReturnMapList(addedItem));
-          expect(basketDeletedItem, basket);
+      if (addedItem.merchantUid == cart.merchantUid) {
+        if (cart.getItem(addedItem.uid) == null) {
+          expect(cart3.getItem(addedItem.uid), addedItem);
+          final cartAddedMore =
+              CartModel.fromMapList(cart3.addOneItemReturnMapList(addedItem));
+          expect(cartAddedMore.getItem(addedItem.uid).quantity, 2);
+          final cartDeletedItem = CartModel.fromMapList(
+              cartAddedMore.deleteItemReturnMapList(addedItem));
+          expect(cartDeletedItem, cart);
         } else {
           expect(
-            basket3.getItem(addedItem.uid).quantity,
-            basket.getItem(addedItem.uid).quantity + 1,
+            cart3.getItem(addedItem.uid).quantity,
+            cart.getItem(addedItem.uid).quantity + 1,
           );
         }
-        expect(basket3.quantity, basket.quantity + 1);
-        expect(basket3.totalPrice, basket.totalPrice + addedItem.price);
+        expect(cart3.quantity, cart.quantity + 1);
+        expect(cart3.totalPrice, cart.totalPrice + addedItem.price);
 
-        List<Map<String, dynamic>> thenMinusOneItemBasketMapList =
-            basket3.removeOneItemReturnMapList(addedItem);
+        List<Map<String, dynamic>> thenMinusOneItemCartMapList =
+            cart3.removeOneItemReturnMapList(addedItem);
 
-        final basket4 = BasketModel.fromMapList(thenMinusOneItemBasketMapList);
-        expect(basket, basket4);
+        final cart4 = CartModel.fromMapList(thenMinusOneItemCartMapList);
+        expect(cart, cart4);
       } else {
-        expect(basket3.getItem(addedItem.uid), addedItem);
-        expect(basket3.itemList.length, 1);
+        expect(cart3.getItem(addedItem.uid), addedItem);
+        expect(cart3.itemList.length, 1);
       }
 
-      print('done basket section test case $i\n');
+      print('done cart section test case $i\n');
     }
   });
 
@@ -264,37 +264,34 @@ void main() {
         uid: 'someUid',
       );
 
-      if (user.basket.itemList.length > 0) {
-        final existingItem = user.basket.itemList.first;
+      if (user.cart.itemList.length > 0) {
+        final existingItem = user.cart.itemList.first;
         final user9 =
-            UserModel.fromMap(user.addItemToBasketReturnMap(existingItem));
-        expect(user9.basket.itemList.first.quantity,
-            user.basket.itemList.first.quantity + 1);
+            UserModel.fromMap(user.addItemToCartReturnMap(existingItem));
+        expect(user9.cart.itemList.first.quantity,
+            user.cart.itemList.first.quantity + 1);
 
-        final user10 =
-            UserModel.fromMap(user9.addItemToBasketReturnMap(newItem));
-        expect(user10.basket.itemList.last, newItem);
-        expect(user10.basket.quantity, user.basket.quantity + 2);
-        expect(user10.basket.totalPrice,
-            user.basket.totalPrice + existingItem.price + newItem.price);
+        final user10 = UserModel.fromMap(user9.addItemToCartReturnMap(newItem));
+        expect(user10.cart.itemList.last, newItem);
+        expect(user10.cart.quantity, user.cart.quantity + 2);
+        expect(user10.cart.totalPrice,
+            user.cart.totalPrice + existingItem.price + newItem.price);
 
         final user11 = UserModel.fromMap(
           UserModel.fromMap(
-            user10.removeItemFromBasketReturnMap(existingItem),
-          ).removeItemFromBasketReturnMap(newItem),
+            user10.removeItemFromCartReturnMap(existingItem),
+          ).removeItemFromCartReturnMap(newItem),
         );
 
         expect(user11, user);
       } else {
-        final user12 =
-            UserModel.fromMap(user.addItemToBasketReturnMap(newItem));
-        expect(user12.basket.itemList.last, newItem);
-        expect(user12.basket.quantity, user.basket.quantity + 1);
-        expect(
-            user12.basket.totalPrice, user.basket.totalPrice + newItem.price);
+        final user12 = UserModel.fromMap(user.addItemToCartReturnMap(newItem));
+        expect(user12.cart.itemList.last, newItem);
+        expect(user12.cart.quantity, user.cart.quantity + 1);
+        expect(user12.cart.totalPrice, user.cart.totalPrice + newItem.price);
 
         final user13 = UserModel.fromMap(
-          user12.removeItemFromBasketReturnMap(newItem),
+          user12.removeItemFromCartReturnMap(newItem),
         );
 
         expect(user13, user);
@@ -366,10 +363,10 @@ void main() {
       expect(order, order2);
       expect(order2.toString(), stringValue);
 
-      print('test from basket');
+      print('test from cart');
       final user = UserModel.fromMap({
         ...Map.from(userTestData[0]['input']),
-        'basket': basketTestData[0]['input'],
+        'cart': cartTestData[0]['input'],
       });
       final merchant = MerchantModel.fromMap(merchantTestData[0]['input']);
       final voucher = VoucherModel.fromMap(voucherTestData[0]['input']);
@@ -386,7 +383,7 @@ void main() {
       expect(order3.paymentStatus, PaymentStatus.unpaid);
       expect(order3.stripeAccountId, merchant.stripeAccountInfo.id);
 
-      expect(order3.itemsTotalPrice, user.basket.totalPrice);
+      expect(order3.itemsTotalPrice, user.cart.totalPrice);
       expect(
           order3.orderTotalPrice, order3.itemsTotalPrice + order3.deliveryFee);
       expect(order3.address, user.address);
@@ -557,7 +554,7 @@ void main() {
       );
       expect(deliveryFeeStructure, deliveryFeeStructure4);
 
-      print('done basket section test case $i\n');
+      print('done cart section test case $i\n');
     }
   });
 
@@ -565,7 +562,7 @@ void main() {
     final now = DateTime.now();
     final user = UserModel(
       address: null,
-      basket: BasketModel.emptyBasket(),
+      cart: CartModel.emptyCart(),
       email: null,
       phone: '0129292',
       name: 'Google Name',
