@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:cloud_firestore_platform_interface/cloud_firestore_platform_interface.dart';
 
 class AddressModel {
   final String unitNumber;
@@ -7,14 +6,12 @@ class AddressModel {
   final String suburb;
   final String state;
   final String postcode;
-  final GeoPoint position;
   AddressModel({
     @required this.unitNumber,
     @required this.streetAddress,
     @required this.suburb,
     @required this.state,
     @required this.postcode,
-    this.position,
   });
   static AddressModel fromMap(Map<String, dynamic> map) {
     return AddressModel(
@@ -23,7 +20,6 @@ class AddressModel {
       suburb: (map['suburb'] as String)?.trim(),
       state: (map['state'] as String)?.trim(),
       postcode: (map['postcode'] as String)?.trim(),
-      position: map['position'],
     );
   }
 
@@ -34,7 +30,6 @@ class AddressModel {
       'suburb': this.suburb?.trim(),
       'state': this.state?.trim(),
       'postcode': this.postcode?.trim(),
-      'position': this.position,
     };
   }
 

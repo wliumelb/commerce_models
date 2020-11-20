@@ -236,7 +236,6 @@ void main() {
 
       print('test change address');
       final newAddress = AddressModel(
-        position: null,
         postcode: '2000',
         state: 'NSW',
         streetAddress: '123 Some Road',
@@ -485,7 +484,6 @@ void main() {
 
       print('test change address');
       final newAddress = AddressModel(
-        position: null,
         postcode: '2000',
         state: 'NSW',
         streetAddress: '123 Some Road',
