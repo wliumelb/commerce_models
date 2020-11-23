@@ -11,6 +11,7 @@ class OrderModel {
   final OrderStatus status;
   final OrderType type;
   final String uid;
+  final String userUid;
   final String merchantUid;
 
   /// the connected account id of the merchant
@@ -49,6 +50,7 @@ class OrderModel {
 
   OrderModel({
     @required this.uid,
+    @required this.userUid,
     @required this.merchantUid,
     @required this.stripeAccountId,
     @required this.note,
@@ -110,6 +112,7 @@ class OrderModel {
 
     return OrderModel(
       uid: map['uid'],
+      userUid: map['userUid'],
       merchantUid: map['merchantUid'],
       stripeAccountId: map['stripeAccountId'],
       note: map['note'],
@@ -151,6 +154,7 @@ class OrderModel {
         : 0;
     return OrderModel(
       uid: orderUid,
+      userUid: user.uid,
       merchantUid: user.cart.merchantUid,
       stripeAccountId: merchant.stripeAccountInfo.id,
       note: '',
@@ -196,6 +200,7 @@ class OrderModel {
   Map<String, dynamic> toMap() {
     return {
       'uid': this.uid,
+      'userUid': this.userUid,
       'merchantUid': this.merchantUid,
       'stripeAccountId': this.stripeAccountId,
       'note': this.note,
@@ -261,7 +266,7 @@ class OrderModel {
     final deliveryTimeString = this.deliveryTime == null
         ? null
         : DateFormat('yyyy-MM-dd HH:mm').format(this.deliveryTime);
-    return 'OrderModel(uid: $uid, merchantUid: $merchantUid, stripeAccountId: $stripeAccountId, note: $note, orderNumber: $orderNumber, status: ${status.string}, type: ${type.string}, name: $name, email: $email, phone: $phone, address: $address, storeName: $storeName, storePhone: $storePhone, storeAddress: $storeAddress, itemList: $itemList, voucherList: $voucherList, deliveryFee: $deliveryFee, createTime: $createTimeString, deliveryTime: $deliveryTimeString, paymentId: $paymentId, paymentStatus: ${paymentStatus.string})';
+    return 'OrderModel(uid: $uid, userUid: $userUid, merchantUid: $merchantUid, stripeAccountId: $stripeAccountId, note: $note, orderNumber: $orderNumber, status: ${status.string}, type: ${type.string}, name: $name, email: $email, phone: $phone, address: $address, storeName: $storeName, storePhone: $storePhone, storeAddress: $storeAddress, itemList: $itemList, voucherList: $voucherList, deliveryFee: $deliveryFee, createTime: $createTimeString, deliveryTime: $deliveryTimeString, paymentId: $paymentId, paymentStatus: ${paymentStatus.string})';
   }
 
   @override

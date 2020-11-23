@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 
 class NotificationModel {
   final String uid;
+  final String userUid;
   final String title;
   final String body;
   final NotificationType type;
@@ -16,6 +17,7 @@ class NotificationModel {
 
   NotificationModel({
     @required this.uid,
+    @required this.userUid,
     @required this.title,
     @required this.body,
     @required this.sendTime,
@@ -44,6 +46,7 @@ class NotificationModel {
         : DateTime.fromMillisecondsSinceEpoch(map['viewedTime']);
     return NotificationModel(
       uid: map['uid'],
+      userUid: map['userUid'],
       title: map['title'],
       body: map['body'],
       sendTime: DateTime.fromMillisecondsSinceEpoch(map['sendTime']),
@@ -58,6 +61,7 @@ class NotificationModel {
   Map<String, dynamic> toMap() {
     return {
       'uid': this.uid,
+      'userUid': this.userUid,
       'title': this.title,
       'body': this.body,
       'sendTime': this.sendTime?.millisecondsSinceEpoch,
@@ -86,7 +90,7 @@ class NotificationModel {
     final viewedTimeString = viewedTime == null
         ? null
         : DateFormat('yyyy-MM-dd HH:mm').format(viewedTime);
-    return 'NotificationModel(uid: $uid, title: $title, body: $body, sendTime: $sendTimeString, viewedTime: $viewedTimeString, type: ${type.string}, targetUid: $targetUid, photoUrl: $photoUrl, isViewed: $isViewed)';
+    return 'NotificationModel(uid: $uid, userUid: $userUid, title: $title, body: $body, sendTime: $sendTimeString, viewedTime: $viewedTimeString, type: ${type.string}, targetUid: $targetUid, photoUrl: $photoUrl, isViewed: $isViewed)';
   }
 
   @override
