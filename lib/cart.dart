@@ -42,12 +42,12 @@ class CartModel {
     );
   }
 
-  static CartModel emptyCart() => CartModel(
-        itemList: [],
-        merchantUid: null,
-        quantity: 0,
-        totalPrice: 0,
-      );
+  static CartModel emptyCart = CartModel(
+    itemList: [],
+    merchantUid: null,
+    quantity: 0,
+    totalPrice: 0,
+  );
 
   List<Map<String, dynamic>> toMapList() =>
       _itemList.map((item) => item.toMap()).toList();
