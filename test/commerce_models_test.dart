@@ -122,6 +122,8 @@ void main() {
 
   test('cart', () {
     final n = cartTestData.length;
+    print('test empty cart');
+    expect(CartModel.fromMapList([]), CartModel.emptyCart);
     for (int i = 0; i < n; i++) {
       print('test cart section test case $i');
       final input = List<Map<String, dynamic>>.from(cartTestData[i]['input']);
