@@ -3,6 +3,7 @@ import 'package:commerce_models/user.dart';
 import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'address.dart';
+import 'cart.dart';
 import 'item.dart';
 import 'review.dart';
 import 'voucher.dart';
@@ -144,18 +145,19 @@ class OrderModel {
   /// create order from cart and user info. this will be used in the order confirmaiton page
   static OrderModel create({
     @required UserModel user,
+    @required CartModel cart,
     @required MerchantModel merchant,
     @required OrderType orderType,
     @required bool requirePayment,
     @required String orderUid,
   }) {
     final deliveryFee = orderType == OrderType.delivery
-        ? merchant.deliveryFeeStructure.getDeliveryFee(user.cart.totalPrice)
+        ? merchant.deliveryFeeStructure.getDeliveryFee(cart.totalPrice)
         : 0;
     return OrderModel(
       uid: orderUid,
       userUid: user.uid,
-      merchantUid: user.cart.merchantUid,
+      merchantUid: cart.merchantUid,
       stripeAccountId: merchant.stripeAccountInfo.id,
       note: '',
       orderNumber: null,
@@ -170,10 +172,10 @@ class OrderModel {
       email: user.email,
       phone: user.phone,
       storePhone: merchant.phone,
-      totalItems: user.cart.quantity,
-      itemList: user.cart.itemList,
-      itemsTotalPrice: user.cart.totalPrice,
-      orderTotalPrice: user.cart.totalPrice + deliveryFee,
+      totalItems: cart.quantity,
+      itemList: cart.itemList,
+      itemsTotalPrice: cart.totalPrice,
+      orderTotalPrice: cart.totalPrice + deliveryFee,
       status: requirePayment ? OrderStatus.pending : OrderStatus.processing,
       type: orderType,
       voucherList: [],

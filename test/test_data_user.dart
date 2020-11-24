@@ -22,7 +22,7 @@ final userTestData = [
       'lastActiveTime': timestamp2,
     },
     'value':
-        'UserModel(uid: userUid1, stripeCustomerId: sp_123, name: Edwin, isAnonymous: false, phone: 0444444444, email: email@email.com, address: ${addressTestData[0]['value']}, cart: ${cartTestData[0]['value']}, createTime: $dateTimeString, lastActiveTime: $dateTimeString2)',
+        'UserModel(uid: userUid1, stripeCustomerId: sp_123, name: Edwin, isAnonymous: false, phone: 0444444444, email: email@email.com, address: ${addressTestData[0]['value']}, createTime: $dateTimeString, lastActiveTime: $dateTimeString2)',
   },
   {
     'input': {
@@ -35,6 +35,6 @@ final userTestData = [
       'cart': [],
     },
     'value':
-        'UserModel(uid: userUid1, stripeCustomerId: null, name: Edwin, isAnonymous: true, phone: null, email: null, address: null, cart: CartModel(itemList: [], quantity: 0, totalPrice: 0), createTime: 2020-08-20 10:52, lastActiveTime: 2020-08-20 10:52)',
+        'UserModel(uid: userUid1, stripeCustomerId: null, name: Edwin, isAnonymous: true, phone: null, email: null, address: null, createTime: 2020-08-20 10:52, lastActiveTime: 2020-08-20 10:52)',
   }
 ];

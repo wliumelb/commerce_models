@@ -251,51 +251,6 @@ void main() {
         expect(user8, user);
       }
 
-      print('test add and remove item');
-      final newItem = ItemModel(
-        category: 'fresh',
-        merchantUid: 'merchant1',
-        name: 'New Fruit',
-        description: 'This is a new item',
-        photoUrl: 'photoUrl111',
-        price: 100,
-        quantity: 1,
-        uid: 'someUid',
-      );
-
-      if (user.cart.itemList.length > 0) {
-        final existingItem = user.cart.itemList.first;
-        final user9 =
-            UserModel.fromMap(user.addItemToCartReturnMap(existingItem));
-        expect(user9.cart.itemList.first.quantity,
-            user.cart.itemList.first.quantity + 1);
-
-        final user10 = UserModel.fromMap(user9.addItemToCartReturnMap(newItem));
-        expect(user10.cart.itemList.last, newItem);
-        expect(user10.cart.quantity, user.cart.quantity + 2);
-        expect(user10.cart.totalPrice,
-            user.cart.totalPrice + existingItem.price + newItem.price);
-
-        final user11 = UserModel.fromMap(
-          UserModel.fromMap(
-            user10.removeItemFromCartReturnMap(existingItem),
-          ).removeItemFromCartReturnMap(newItem),
-        );
-
-        expect(user11, user);
-      } else {
-        final user12 = UserModel.fromMap(user.addItemToCartReturnMap(newItem));
-        expect(user12.cart.itemList.last, newItem);
-        expect(user12.cart.quantity, user.cart.quantity + 1);
-        expect(user12.cart.totalPrice, user.cart.totalPrice + newItem.price);
-
-        final user13 = UserModel.fromMap(
-          user12.removeItemFromCartReturnMap(newItem),
-        );
-
-        expect(user13, user);
-      }
-
       print('done user section test case $i\n');
     }
   });
@@ -363,14 +318,13 @@ void main() {
       expect(order2.toString(), stringValue);
 
       print('test from cart');
-      final user = UserModel.fromMap({
-        ...Map.from(userTestData[0]['input']),
-        'cart': cartTestData[0]['input'],
-      });
+      final user = UserModel.fromMap((userTestData[0]['input']));
       final merchant = MerchantModel.fromMap(merchantTestData[0]['input']);
       final voucher = VoucherModel.fromMap(voucherTestData[0]['input']);
+      final cart = CartModel.fromMapList(cartTestData[0]['input']);
       final order3 = OrderModel.create(
         orderUid: 'uid1234',
+        cart: cart,
         user: user,
         merchant: merchant,
         orderType: OrderType.delivery,
@@ -382,7 +336,7 @@ void main() {
       expect(order3.paymentStatus, PaymentStatus.unpaid);
       expect(order3.stripeAccountId, merchant.stripeAccountInfo.id);
 
-      expect(order3.itemsTotalPrice, user.cart.totalPrice);
+      expect(order3.itemsTotalPrice, cart.totalPrice);
       expect(
           order3.orderTotalPrice, order3.itemsTotalPrice + order3.deliveryFee);
       expect(order3.address, user.address);
@@ -392,6 +346,7 @@ void main() {
       final order4 = OrderModel.create(
         orderUid: 'uid444',
         user: user,
+        cart: cart,
         merchant: merchant,
         orderType: OrderType.pickup,
         requirePayment: false,
@@ -560,7 +515,6 @@ void main() {
     final now = DateTime.now();
     final user = UserModel(
       address: null,
-      cart: CartModel.emptyCart(),
       email: null,
       phone: '0129292',
       name: 'Google Name',
