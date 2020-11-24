@@ -142,33 +142,28 @@ void main() {
       final cart3 =
           CartModel.fromMapList(cart.addOneItemReturnMapList(addedItem));
 
-      if (addedItem.merchantUid == cart.merchantUid) {
-        if (cart.getItem(addedItem.uid) == null) {
-          expect(cart3.getItem(addedItem.uid), addedItem);
-          final cartAddedMore =
-              CartModel.fromMapList(cart3.addOneItemReturnMapList(addedItem));
-          expect(cartAddedMore.getItem(addedItem.uid).quantity, 2);
-          final cartDeletedItem = CartModel.fromMapList(
-              cartAddedMore.deleteItemReturnMapList(addedItem));
-          expect(cartDeletedItem, cart);
-        } else {
-          expect(
-            cart3.getItem(addedItem.uid).quantity,
-            cart.getItem(addedItem.uid).quantity + 1,
-          );
-        }
-        expect(cart3.quantity, cart.quantity + 1);
-        expect(cart3.totalPrice, cart.totalPrice + addedItem.price);
-
-        List<Map<String, dynamic>> thenMinusOneItemCartMapList =
-            cart3.removeOneItemReturnMapList(addedItem);
-
-        final cart4 = CartModel.fromMapList(thenMinusOneItemCartMapList);
-        expect(cart, cart4);
-      } else {
+      if (cart.getItem(addedItem.uid) == null) {
         expect(cart3.getItem(addedItem.uid), addedItem);
-        expect(cart3.itemList.length, 1);
+        final cartAddedMore =
+            CartModel.fromMapList(cart3.addOneItemReturnMapList(addedItem));
+        expect(cartAddedMore.getItem(addedItem.uid).quantity, 2);
+        final cartDeletedItem = CartModel.fromMapList(
+            cartAddedMore.deleteItemReturnMapList(addedItem));
+        expect(cartDeletedItem, cart);
+      } else {
+        expect(
+          cart3.getItem(addedItem.uid).quantity,
+          cart.getItem(addedItem.uid).quantity + 1,
+        );
       }
+      expect(cart3.quantity, cart.quantity + 1);
+      expect(cart3.totalPrice, cart.totalPrice + addedItem.price);
+
+      List<Map<String, dynamic>> thenMinusOneItemCartMapList =
+          cart3.removeOneItemReturnMapList(addedItem);
+
+      final cart4 = CartModel.fromMapList(thenMinusOneItemCartMapList);
+      expect(cart, cart4);
 
       print('done cart section test case $i\n');
     }

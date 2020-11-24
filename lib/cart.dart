@@ -5,8 +5,6 @@ class CartModel {
   // key is item uid
   final List<ItemModel> _itemList;
 
-  final String merchantUid;
-
   /// total number of items in the cart
   final int quantity;
 
@@ -15,7 +13,6 @@ class CartModel {
 
   CartModel({
     @required List<ItemModel> itemList,
-    @required this.merchantUid,
     @required this.quantity,
     @required this.totalPrice,
   }) : _itemList = itemList;
@@ -36,7 +33,6 @@ class CartModel {
 
     return CartModel(
       itemList: itemList,
-      merchantUid: itemList.length > 0 ? itemList?.first?.merchantUid : null,
       quantity: quantity,
       totalPrice: totalPrice,
     );
@@ -44,7 +40,6 @@ class CartModel {
 
   static CartModel emptyCart = CartModel(
     itemList: [],
-    merchantUid: null,
     quantity: 0,
     totalPrice: 0,
   );
@@ -60,32 +55,24 @@ class CartModel {
   static List<Map<String, dynamic>> addFirstItemReturnMapList(ItemModel item) {
     return CartModel(
       itemList: [item],
-      merchantUid: item.merchantUid,
       quantity: 1,
       totalPrice: item.price,
     ).toMapList();
   }
 
-  /// need to check merchantUid of the new item and existing items
   List<Map<String, dynamic>> addOneItemReturnMapList(ItemModel addedItem) {
-    // check if addedItem is from the same merchantUid as the existing items
-    // if not, clean the cart and replace it with the new item
-    if (this.merchantUid != addedItem.merchantUid) {
-      return [addedItem.toMap()];
-    } else {
-      final List<Map<String, dynamic>> result = [];
-      bool hasItem = false;
-      this._itemList.forEach((item) {
-        if (item.uid == addedItem.uid) {
-          hasItem = true;
-          result.add(item.addOneReturnMap());
-        } else {
-          result.add(item.toMap());
-        }
-      });
-      if (!hasItem) result.add(addedItem.toMap());
-      return result;
-    }
+    final List<Map<String, dynamic>> result = [];
+    bool hasItem = false;
+    this._itemList.forEach((item) {
+      if (item.uid == addedItem.uid) {
+        hasItem = true;
+        result.add(item.addOneReturnMap());
+      } else {
+        result.add(item.toMap());
+      }
+    });
+    if (!hasItem) result.add(addedItem.toMap());
+    return result;
   }
 
   List<Map<String, dynamic>> removeOneItemReturnMapList(ItemModel removedItem) {

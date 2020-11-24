@@ -157,7 +157,7 @@ class OrderModel {
     return OrderModel(
       uid: orderUid,
       userUid: user.uid,
-      merchantUid: cart.merchantUid,
+      merchantUid: merchant.uid,
       stripeAccountId: merchant.stripeAccountInfo.id,
       note: '',
       orderNumber: null,
