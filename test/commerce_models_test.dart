@@ -320,14 +320,12 @@ void main() {
       final voucher = VoucherModel.fromMap(voucherTestData[0]['input']);
       final cart = CartModel.fromMapList(cartTestData[0]['input']);
       final order3 = OrderModel.create(
-        orderUid: 'uid1234',
         cart: cart,
         user: user,
         merchant: merchant,
         orderType: OrderType.delivery,
         requirePayment: true,
       );
-      expect(order3.uid, 'uid1234');
       expect(order3.type, OrderType.delivery);
       expect(order3.status, OrderStatus.pending);
       expect(order3.paymentStatus, PaymentStatus.unpaid);
@@ -341,14 +339,12 @@ void main() {
       expect(order3.phone, user.phone);
 
       final order4 = OrderModel.create(
-        orderUid: 'uid444',
         user: user,
         cart: cart,
         merchant: merchant,
         orderType: OrderType.pickup,
         requirePayment: false,
       );
-      expect(order4.uid, 'uid444');
       expect(order4.type, OrderType.pickup);
       expect(order4.status, OrderStatus.processing);
       expect(order4.paymentStatus, PaymentStatus.deferred);

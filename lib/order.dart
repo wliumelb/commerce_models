@@ -149,13 +149,12 @@ class OrderModel {
     @required MerchantModel merchant,
     @required OrderType orderType,
     @required bool requirePayment,
-    @required String orderUid,
   }) {
     final deliveryFee = orderType == OrderType.delivery
         ? merchant.deliveryFeeStructure.getDeliveryFee(cart.totalPrice)
         : 0;
     return OrderModel(
-      uid: orderUid,
+      uid: null,
       userUid: user.uid,
       merchantUid: merchant.uid,
       stripeAccountId: merchant.stripeAccountInfo.id,
