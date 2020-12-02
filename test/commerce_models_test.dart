@@ -1,6 +1,7 @@
 import 'package:commerce_models/address.dart';
 import 'package:commerce_models/bank_card.dart';
 import 'package:commerce_models/cart.dart';
+import 'package:commerce_models/customer.dart';
 import 'package:commerce_models/delivery_fee_structure.dart';
 import 'package:commerce_models/info_section.dart';
 import 'package:commerce_models/item.dart';
@@ -17,6 +18,7 @@ import 'delivery_fee_structure.dart';
 import 'test_data_address.dart';
 import 'test_data_bank_card.dart';
 import 'test_data_cart.dart';
+import 'test_data_customer.dart';
 import 'test_data_info_section.dart';
 import 'test_data_item.dart';
 import 'test_data_merchant.dart';
@@ -166,6 +168,21 @@ void main() {
       expect(cart, cart4);
 
       print('done cart section test case $i\n');
+    }
+  });
+
+  test('customer', () {
+    final n = customerTestData.length;
+    for (int i = 0; i < n; i++) {
+      print('test customer section test case $i');
+      final input = Map<String, dynamic>.from(customerTestData[i]['input']);
+      final String stringValue = customerTestData[i]['value'];
+      final customer = CustomerModel.fromMap(input);
+      final map = customer.toMap();
+      final customer2 = CustomerModel.fromMap(map);
+      expect(customer, customer2);
+      expect(customer2.toString(), stringValue);
+      print('done customer section test case $i\n');
     }
   });
 
